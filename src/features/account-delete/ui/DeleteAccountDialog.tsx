@@ -2,7 +2,7 @@ import { useState, useId } from "react";
 import { useTranslation } from "react-i18next";
 import { Trash2 } from "lucide-react";
 import { useDeleteAccount } from "../model";
-import { useCurrentUser } from "@/shared/lib/auth";
+// import { useCurrentUser } from "@/shared/lib/auth"; // Password authentication is temporarily disabled (Google OAuth only)
 import {
     Dialog,
     DialogContent,
@@ -13,17 +13,18 @@ import {
     DialogTrigger,
     Button,
     FormField,
-    PasswordInput,
+    // PasswordInput, // Password authentication is temporarily disabled (Google OAuth only)
     Textarea
 } from "@/shared/ui";
 
 export const DeleteAccountDialog = () => {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
-    const passwordId = useId();
+    // const passwordId = useId(); // Password authentication is temporarily disabled (Google OAuth only)
     const reasonId = useId();
-    const currentUser = useCurrentUser();
-    const hasPassword = currentUser?.hasPassword ?? true;
+    // const currentUser = useCurrentUser(); // Password authentication is temporarily disabled (Google OAuth only)
+    // const hasPassword = currentUser?.hasPassword ?? true;
+    const hasPassword = false;
 
     const { form, onSubmit, isSubmitting } = useDeleteAccount({
         onSuccess: () => {
@@ -79,6 +80,7 @@ export const DeleteAccountDialog = () => {
                         />
                     </FormField>
 
+                    {/* Password authentication is temporarily disabled (Google OAuth only)
                     {hasPassword && (
                         <FormField
                             id={passwordId}
@@ -95,6 +97,7 @@ export const DeleteAccountDialog = () => {
                             />
                         </FormField>
                     )}
+                    */}
 
                     <DialogFooter className="gap-3 sm:gap-4">
                         <Button

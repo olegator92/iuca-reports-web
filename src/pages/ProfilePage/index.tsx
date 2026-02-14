@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pencil } from "lucide-react";
 import { useCurrentUser } from "@/shared/lib";
-import { useChangePassword, ChangePasswordForm } from "@/features/password-change";
-import { useSetPassword, SetPasswordForm } from "@/features/password-set";
+// Password authentication is temporarily disabled (Google OAuth only)
+// import { useChangePassword, ChangePasswordForm } from "@/features/password-change";
+// import { useSetPassword, SetPasswordForm } from "@/features/password-set";
 import { ProfileEditDrawer } from "@/features/profile-edit";
 import { ProfilePhotoUpload } from "@/features/profile-photo";
 import { AccountDeletionStatus } from "@/features/account-delete";
@@ -21,11 +22,10 @@ export const ProfilePage = () => {
         hasChanges: false,
     });
 
-    const changePasswordHook = useChangePassword();
-    const setPasswordHook = useSetPassword();
-
-    // Determine which password form to show based on hasPassword
-    const hasPassword = user?.hasPassword ?? false;
+    // Password authentication is temporarily disabled (Google OAuth only)
+    // const changePasswordHook = useChangePassword();
+    // const setPasswordHook = useSetPassword();
+    // const hasPassword = user?.hasPassword ?? false;
 
     const openEditDrawer = () => setIsEditDrawerOpen(true);
     const closeEditDrawer = () => setIsEditDrawerOpen(false);
@@ -83,7 +83,7 @@ export const ProfilePage = () => {
                 </div>
             </div>
 
-            {/* Password Section - Set or Change */}
+            {/* Password authentication is temporarily disabled (Google OAuth only)
             <div className="space-y-4 rounded-lg border border-border bg-card p-4 shadow-sm sm:p-6">
                 <div className="space-y-2">
                     <h2 className="text-xl font-semibold text-foreground">
@@ -112,6 +112,7 @@ export const ProfilePage = () => {
                     )}
                 </div>
             </div>
+            */}
 
             {/* Delete Account Section */}
             <div className="space-y-4 rounded-lg border border-border bg-card p-4 shadow-sm sm:p-6">

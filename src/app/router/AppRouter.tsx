@@ -6,11 +6,12 @@ import { TemplateEditPage } from '@/pages/TemplateUpdatePage';
 import { RolesPage } from '@/pages/RolesPage';
 import { UsersPage } from '@/pages/UsersPage';
 import { LoginPage } from '@/pages/LoginPage';
-import { RegisterPage } from '@/pages/RegisterPage';
-import { VerifyEmailPage } from '@/pages/VerifyEmailPage';
+// Password authentication is temporarily disabled (Google OAuth only)
+// import { RegisterPage } from '@/pages/RegisterPage';
+// import { VerifyEmailPage } from '@/pages/VerifyEmailPage';
 import { ProfilePage } from '@/pages/ProfilePage';
-import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
-import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
+// import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
+// import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
 import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage';
 import { TermsOfUsePage } from '@/pages/TermsOfUsePage';
 import { ForbiddenPage, NotFoundPage } from '@/pages/errors';
@@ -56,6 +57,7 @@ export const AppRouter = () => {
                             </PublicRoute>
                         }
                     />
+                    {/* Password authentication is temporarily disabled (Google OAuth only)
                     <Route
                         path={ROUTES.REGISTER}
                         element={
@@ -65,10 +67,8 @@ export const AppRouter = () => {
                         }
                     />
 
-                    {/* Email verification - public */}
                     <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmailPage />} />
 
-                    {/* Password management routes - public */}
                     <Route
                         path={ROUTES.FORGOT_PASSWORD}
                         element={
@@ -85,6 +85,7 @@ export const AppRouter = () => {
                             </PublicRoute>
                         }
                     />
+                    */}
 
                     {/* Protected routes - require authentication */}
                     <Route

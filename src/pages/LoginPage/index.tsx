@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { useLogin, LoginForm } from "@/features/auth-login";
+// import { Link } from "react-router-dom";
+// import { useLogin, LoginForm } from "@/features/auth-login";
 import { GoogleSignInButton } from "@/features/auth-google";
 import { useNavigateWithLoading } from "@/shared/lib";
 import { ROUTES } from "@/shared/config";
@@ -9,14 +9,15 @@ export const LoginPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigateWithLoading();
 
-    const { form, onSubmit, isSubmitting } = useLogin({
-        onSuccess: () => {
-            navigate(ROUTES.HOME);
-        },
-        onEmailNotConfirmed: (email) => {
-            navigate(`${ROUTES.REGISTER}?email=${encodeURIComponent(email)}&verified=false`);
-        }
-    });
+    // Password authentication is temporarily disabled (Google OAuth only)
+    // const { form, onSubmit, isSubmitting } = useLogin({
+    //     onSuccess: () => {
+    //         navigate(ROUTES.HOME);
+    //     },
+    //     onEmailNotConfirmed: (email) => {
+    //         navigate(`${ROUTES.REGISTER}?email=${encodeURIComponent(email)}&verified=false`);
+    //     }
+    // });
 
     const handleGoogleSuccess = () => {
         navigate(ROUTES.HOME);
@@ -35,6 +36,7 @@ export const LoginPage = () => {
                 </div>
 
                 <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+                    {/* Password authentication is temporarily disabled (Google OAuth only)
                     <LoginForm
                         form={form}
                         isSubmitting={isSubmitting}
@@ -60,13 +62,14 @@ export const LoginPage = () => {
                             </span>
                         </div>
                     </div>
+                    */}
 
                     <GoogleSignInButton
                         onSuccess={handleGoogleSuccess}
-                        rememberMe={form.watch("rememberMe")}
                     />
                 </div>
 
+                {/* Password authentication is temporarily disabled (Google OAuth only)
                 <div className="text-center text-sm text-muted-foreground">
                     {t("auth.noAccount")}{" "}
                     <Link
@@ -76,6 +79,7 @@ export const LoginPage = () => {
                         {t("auth.registerLink")}
                     </Link>
                 </div>
+                */}
             </div>
         </section>
     );
