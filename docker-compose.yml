@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  web:
+    image: ghcr.io/<your-username>/<your-repo>/web:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped

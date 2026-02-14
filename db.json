@@ -1,0 +1,79 @@
+{
+  "templates": [
+    {
+      "id": "a1f2d4c3-9b8e-4f51-87d2-112233445566",
+      "name": "Alpha Project",
+      "description": "Initial testing project for core functionality validation."
+    },
+    {
+      "id": "b2e3f5a4-7c6d-41a2-9e84-223344556677",
+      "name": "Beta Release",
+      "description": "Pre-release version prepared for stakeholder review."
+    },
+    {
+      "id": "c3f4a6b5-5d4e-42b3-af95-334455667788",
+      "name": "Gamma Update",
+      "description": "Feature update focused on improving user experience."
+    },
+    {
+      "id": "d4a5b7c6-3e2f-43c4-b0a6-445566778899",
+      "name": "Delta Expansion",
+      "description": "Extended functionality with third-party integrations."
+    },
+    {
+      "id": "e5b6c8d7-1f0e-44d5-c1b7-556677889900",
+      "name": "Omega Final",
+      "description": "Stable release prepared for production deployment."
+    },
+    {
+      "id": "f6c7d9e8-2a1b-45e6-d2c8-667788990011",
+      "name": "Sigma Patch",
+      "description": "Minor patch release to address bug fixes and optimizations."
+    },
+    {
+      "id": "07d8eaf9-3b2c-46f7-e3d9-778899001122",
+      "name": "Lambda Prototype",
+      "description": "Prototype implementation for experimental features."
+    },
+    {
+      "id": "18e9fb0a-4c3d-47f8-f4ea-889900112233",
+      "name": "Epsilon Upgrade",
+      "description": "Major upgrade to backend services and APIs."
+    },
+    {
+      "id": "29fa0c1b-5d4e-48f9-05fb-990011223344",
+      "name": "Zeta Service",
+      "description": "New microservice created to support scaling."
+    },
+    {
+      "id": "3a0b1d2c-6e5f-49fa-160c-001122334455",
+      "name": "Theta Migration",
+      "description": "Migration project for moving data to cloud infrastructure."
+    },
+    {
+      "id": "4b1c2e3d-7f6e-4afb-271d-112233445566",
+      "name": "Iota Research",
+      "description": "Research initiative focused on AI-driven enhancements."
+    },
+    {
+      "id": "5c2d3f4e-807f-4b0c-382e-223344556677",
+      "name": "Kappa Trial",
+      "description": "Trial phase for testing distributed system performance."
+    },
+    {
+      "id": "6d3e405f-9180-4c1d-493f-334455667788",
+      "name": "Mu Framework",
+      "description": "Framework development for reusable application modules."
+    },
+    {
+      "id": "7e4f5160-a291-4d2e-5a40-445566778899",
+      "name": "Nu Initiative",
+      "description": "Strategic initiative to expand product adoption globally."
+    },
+    {
+      "id": "8f506271-b3a2-4e3f-6b51-556677889900",
+      "name": "Xi Evolution",
+      "description": "Continuous improvement program for long-term sustainability."
+    }
+  ]
+}
