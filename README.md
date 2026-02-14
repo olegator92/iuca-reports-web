@@ -1,6 +1,12 @@
-# fsdAuth
+# IucaReportsWeb
 
-A production-ready React 19 single-page application (SPA) template with comprehensive authentication, authorization, and CRUD functionality built using Feature-Sliced Design architecture.
+A production-ready React 19 single-page application (SPA) for the IUCA (International University of Central Asia) employee reporting system. The system simplifies and automates employee reporting within the university — employees record their completed work daily as short notes, and the system generates structured weekly reports.
+
+## System Goals
+
+- **Simplify** the report preparation process
+- **Improve** the quality and consistency of reporting
+- **Ensure** transparency of department activities
 
 ## Features
 
@@ -94,7 +100,7 @@ A production-ready React 19 single-page application (SPA) template with comprehe
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd fsdAuth
+cd iuca-reports-web
 ```
 
 2. Install dependencies:
@@ -373,17 +379,9 @@ npm run lint         # Run ESLint
 6. Commit using conventional commits: `feat(scope): description`
 7. Create a pull request with detailed description
 
-## License
-
-[MIT License](LICENSE) - feel free to use this template for your projects.
-
 ## Support
 
 For issues or questions:
 - Check [CLAUDE.md](CLAUDE.md) for technical context
 - Review [DEVELOPMENT.md](DEVELOPMENT.md) for development patterns
 - Open an issue on GitHub
-
----
-
-**Built with** ❤️ **using Feature-Sliced Design, React 19, TypeScript, and Tailwind CSS**

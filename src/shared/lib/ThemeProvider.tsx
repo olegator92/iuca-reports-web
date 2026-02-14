@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, type ReactNode } from "react";
 import { useThemeStore, type Theme } from "./stores/themeStore";
 import { syncBrandForeground } from "./syncBrandForeground";
 
-const STORAGE_KEY = "fsdAuth-theme";
+const STORAGE_KEY = "iuca-reports-web-theme";
 
 const isBrowser = typeof window !== "undefined";
 

@@ -4,7 +4,12 @@ This document provides comprehensive technical context for AI assistants working
 
 ## Project Overview
 
-**fsdAuth** is a production-ready React 19 single-page application (SPA) implementing a comprehensive authentication and authorization system with CRUD functionality. The project serves as a template/starter for building scalable frontend applications with enterprise-grade authentication.
+**IucaReportsWeb** is a production-ready React 19 single-page application (SPA) for the IUCA (International University of Central Asia) employee reporting system. The system simplifies and automates employee reporting within the university — employees record their completed work daily as short notes, and the system generates structured weekly reports.
+
+### System Goals
+- **Simplify** the report preparation process
+- **Improve** the quality and consistency of reporting
+- **Ensure** transparency of department activities
 
 ### Key Characteristics
 - **Architecture**: Feature-Sliced Design (FSD) methodology
@@ -651,7 +656,7 @@ const onSubmit = form.handleSubmit(async (data) => {
 ### Theme Switching
 1. User clicks theme toggle
 2. `next-themes` changes theme
-3. Theme saved to localStorage (`fsdAuth-theme`)
+3. Theme saved to localStorage (`iuca-reports-web-theme`)
 4. CSS variables updated (`.dark` class)
 5. Brand color utility syncs theme colors
 

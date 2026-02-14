@@ -45,11 +45,11 @@
     "themeSystem": "System"
   },
   "header": {
-    "brand": "FSD Templates"
+    "brand": "IUCA Reports"
   },
   "home": {
     "welcomeTitle": "Welcome",
-    "welcomeDescription": "Head over to the Templates page to browse, create, and manage your templates."
+    "welcomeDescription": "Record your daily work notes and generate structured weekly reports. Head over to the Templates page to manage report templates."
   },
   "templates": {
     "pageTitle": "Templates",
@@ -462,7 +462,7 @@
     "lastUpdated": "Last updated: [DATE]",
     "introduction": {
       "title": "Introduction",
-      "content": "This Privacy Policy describes how [COMPANY_NAME] (\"we\", \"us\", or \"our\") collects, uses, and shares your personal information when you use our service. We are committed to protecting your privacy and ensuring transparency about our data practices."
+      "content": "This Privacy Policy describes how International University of Central Asia (IUCA) (\"we\", \"us\", or \"our\") collects, uses, and shares your personal information when you use our service. We are committed to protecting your privacy and ensuring transparency about our data practices."
     },
     "informationCollected": {
       "title": "Information We Collect",
@@ -556,7 +556,7 @@
     "lastUpdated": "Last updated: [DATE]",
     "introduction": {
       "title": "Introduction",
-      "content": "Welcome to [COMPANY_NAME]. These Terms of Use (\"Terms\") govern your access to and use of our services. By accessing or using our service, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our service."
+      "content": "Welcome to International University of Central Asia (IUCA). These Terms of Use (\"Terms\") govern your access to and use of our services. By accessing or using our service, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our service."
     },
     "acceptance": {
       "title": "Acceptance of Terms",
@@ -634,7 +634,7 @@
     },
     "intellectualProperty": {
       "title": "Intellectual Property",
-      "content": "The service and its original content, features, and functionality are owned by [COMPANY_NAME] and are protected by international copyright, trademark, and other intellectual property laws. You may not copy, modify, distribute, sell, or lease any part of our service without our express written permission."
+      "content": "The service and its original content, features, and functionality are owned by International University of Central Asia (IUCA) and are protected by international copyright, trademark, and other intellectual property laws. You may not copy, modify, distribute, sell, or lease any part of our service without our express written permission."
     },
     "disclaimers": {
       "title": "Disclaimers",
@@ -643,7 +643,7 @@
     },
     "liability": {
       "title": "Limitation of Liability",
-      "content": "To the maximum extent permitted by law, [COMPANY_NAME] shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether direct or indirect, or any loss of data, use, goodwill, or other intangible losses resulting from your use of or inability to use the service."
+      "content": "To the maximum extent permitted by law, International University of Central Asia (IUCA) shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether direct or indirect, or any loss of data, use, goodwill, or other intangible losses resulting from your use of or inability to use the service."
     },
     "modifications": {
       "title": "Modifications to Terms",

@@ -42,7 +42,7 @@ export const useSidebarStore = create<SidebarStoreState>()(
             }
         }),
         {
-            name: "fsd-auth-sidebar-state"
+            name: "iuca-reports-web-sidebar-state"
         }
     )
 );
