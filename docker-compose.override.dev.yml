@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   web:
-    image: ghcr.io/<your-username>/<your-repo>/web:dev
+    image: ghcr.io/olegator92/iuca-reports-web/web:dev
     build:
       target: dev
     ports:

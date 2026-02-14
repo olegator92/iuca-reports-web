@@ -11,7 +11,8 @@
       "Bash(mkdir:*)",
       "Bash(tree:*)",
       "Bash(findstr:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(rename:*)"
     ],
     "deny": [],
     "ask": []
