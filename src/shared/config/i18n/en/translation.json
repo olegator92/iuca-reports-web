@@ -33,7 +33,9 @@
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
     "groups": {
-      "administration": "Administration"
+      "administration": "Administration",
+      "management": "Management",
+      "reports": "Reports"
     }
   },
   "settings": {

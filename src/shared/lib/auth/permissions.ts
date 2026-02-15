@@ -18,7 +18,12 @@ export const PERMISSIONS = {
 
     // Role permissions
     ROLE_VIEW: "Role.View",
-    ROLE_EDIT: "Role.Edit"
+    ROLE_EDIT: "Role.Edit",
+
+    // Menu group permissions
+    MENU_ADMINISTRATION: "Menu.Administration",
+    MENU_MANAGEMENT: "Menu.Management",
+    MENU_REPORTS: "Menu.Reports"
 } as const;
 
 export type Permission = typeof PERMISSIONS[keyof typeof PERMISSIONS];
@@ -125,7 +130,7 @@ export const hasPermission = (user: CurrentUser | null, permission: Permission):
             PERMISSIONS.USER_VIEW,
             PERMISSIONS.ROLE_VIEW
         ];
-        return managerPermissions.includes(permission);
+        return (managerPermissions as Permission[]).includes(permission);
     }
 
     // Regular user permissions

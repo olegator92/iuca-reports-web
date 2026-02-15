@@ -33,7 +33,9 @@
     "privacyPolicy": "Политика конфиденциальности",
     "termsOfUse": "Условия использования",
     "groups": {
-      "administration": "Администрирование"
+      "administration": "Администрирование",
+      "management": "Управление",
+      "reports": "Отчёты"
     }
   },
   "settings": {

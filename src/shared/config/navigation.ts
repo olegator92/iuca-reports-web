@@ -28,6 +28,7 @@ const HOME_ITEM: NavItem = {
 const ADMINISTRATION_GROUP: NavGroup = {
     id: "administration",
     labelKey: "navigation.groups.administration",
+    permission: PERMISSIONS.MENU_ADMINISTRATION,
     items: [
         { to: ROUTES.TEMPLATES, labelKey: "navigation.templates", permission: PERMISSIONS.TEMPLATE_VIEW },
         { to: ROUTES.ROLES, labelKey: "navigation.roles", permission: PERMISSIONS.ROLE_VIEW },

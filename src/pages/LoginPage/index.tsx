@@ -24,15 +24,12 @@ export const LoginPage = () => {
     };
 
     return (
-        <section className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
+        <section className="flex min-h-[calc(100vh-4rem)] justify-center p-6 pt-16">
             <div className="w-full max-w-md space-y-6">
                 <div className="space-y-2 text-center">
                     <h1 className="text-3xl font-bold text-foreground">
                         {t("auth.loginTitle")}
                     </h1>
-                    <p className="text-muted-foreground">
-                        {t("auth.loginDescription")}
-                    </p>
                 </div>
 
                 <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
