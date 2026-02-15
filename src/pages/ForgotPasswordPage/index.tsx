@@ -20,7 +20,7 @@ export const ForgotPasswordPage = () => {
                     </p>
                 </div>
 
-                <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+                <div className="rounded-lg border border-border bg-card p-6 shadow-sm lg:p-10">
                     <ForgotPasswordForm
                         form={form}
                         isSubmitting={isSubmitting}

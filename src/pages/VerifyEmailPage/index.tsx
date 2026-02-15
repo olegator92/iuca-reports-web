@@ -56,7 +56,7 @@ export const VerifyEmailPage = () => {
         return (
             <section className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
                 <div className="w-full max-w-md space-y-6">
-                    <div className="rounded-lg border border-border bg-card p-8 shadow-sm text-center space-y-6">
+                    <div className="rounded-lg border border-border bg-card p-8 shadow-sm text-center space-y-6 lg:p-10">
                         <div className="flex justify-center">
                             <Loader2 className="h-12 w-12 text-primary animate-spin" />
                         </div>
@@ -78,7 +78,7 @@ export const VerifyEmailPage = () => {
         return (
             <section className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
                 <div className="w-full max-w-md space-y-6">
-                    <div className="rounded-lg border border-border bg-card p-8 shadow-sm text-center space-y-6">
+                    <div className="rounded-lg border border-border bg-card p-8 shadow-sm text-center space-y-6 lg:p-10">
                         <div className="flex justify-center">
                             <div className="rounded-full bg-green-100 dark:bg-green-900/20 p-3">
                                 <CheckCircle2 className="h-12 w-12 text-green-600 dark:text-green-500" />
@@ -110,7 +110,7 @@ export const VerifyEmailPage = () => {
     return (
         <section className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
             <div className="w-full max-w-md space-y-6">
-                <div className="rounded-lg border border-border bg-card p-8 shadow-sm text-center space-y-6">
+                <div className="rounded-lg border border-border bg-card p-8 shadow-sm text-center space-y-6 lg:p-10">
                     <div className="flex justify-center">
                         <div className="rounded-full bg-red-100 dark:bg-red-900/20 p-3">
                             <XCircle className="h-12 w-12 text-red-600 dark:text-red-500" />

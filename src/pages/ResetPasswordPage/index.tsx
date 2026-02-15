@@ -33,7 +33,7 @@ export const ResetPasswordPage = () => {
                     </p>
                 </div>
 
-                <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+                <div className="rounded-lg border border-border bg-card p-6 shadow-sm lg:p-10">
                     <ResetPasswordForm
                         form={form}
                         isSubmitting={isSubmitting}

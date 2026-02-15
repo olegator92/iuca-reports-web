@@ -18,7 +18,7 @@ export const ForbiddenPage = () => {
 
     return (
         <section className="flex min-h-[60vh] items-center justify-center px-2">
-            <div className="w-full max-w-lg space-y-6 rounded-lg border border-border bg-card p-8 text-center shadow-sm">
+            <div className="w-full max-w-lg space-y-6 rounded-lg border border-border bg-card p-8 text-center shadow-sm lg:p-10">
                 <div className="space-y-3">
                     <span className="text-2xl font-semibold uppercase tracking-wide text-orange-500">
                         403

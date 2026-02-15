@@ -45,7 +45,7 @@ export const ProfilePage = () => {
     return (
         <section className="mx-auto w-full max-w-lg space-y-6 px-2 py-4 sm:p-6">
             {/* User Info Section */}
-            <div className="space-y-4 rounded-lg border border-border bg-card p-4 shadow-sm sm:p-6">
+            <div className="space-y-4 rounded-lg border border-border bg-card p-4 shadow-sm sm:p-6 lg:p-10">
                 <div className="space-y-4">
                     <div className="flex items-start justify-between gap-4">
                         <div className="flex-1 space-y-1">
@@ -115,7 +115,7 @@ export const ProfilePage = () => {
             */}
 
             {/* Delete Account Section */}
-            <div className="space-y-4 rounded-lg border border-border bg-card p-4 shadow-sm sm:p-6">
+            <div className="space-y-4 rounded-lg border border-border bg-card p-4 shadow-sm sm:p-6 lg:p-10">
                 <div className="space-y-2">
                     <h2 className="text-xl font-semibold text-foreground">
                         {t("account.dangerZone")}

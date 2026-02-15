@@ -32,7 +32,7 @@ export const LoginPage = () => {
                     </h1>
                 </div>
 
-                <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+                <div className="rounded-lg border border-border bg-card p-6 shadow-sm lg:p-10">
                     {/* Password authentication is temporarily disabled (Google OAuth only)
                     <LoginForm
                         form={form}

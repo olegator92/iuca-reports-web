@@ -5,7 +5,7 @@ export const PrivacyPolicyPage = () => {
 
     return (
         <section className="mx-auto w-full px-2 py-4 sm:p-6">
-            <div className="space-y-6 rounded-lg border border-border bg-card p-4 shadow-sm transition-colors sm:p-6">
+            <div className="space-y-6 rounded-lg border border-border bg-card p-4 shadow-sm transition-colors sm:p-6 lg:p-10">
                 <div className="border-b border-border pb-4">
                     <h1 className="break-words text-2xl font-bold text-foreground sm:text-4xl">
                         {t("privacy.title")}
