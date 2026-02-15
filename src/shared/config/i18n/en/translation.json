@@ -461,7 +461,7 @@
   },
   "privacy": {
     "title": "Privacy Policy",
-    "lastUpdated": "Last updated: [DATE]",
+    "lastUpdated": "Last updated: February 15, 2026",
     "introduction": {
       "title": "Introduction",
       "content": "This Privacy Policy describes how International University of Central Asia (IUCA) (\"we\", \"us\", or \"our\") collects, uses, and shares your personal information when you use our service. We are committed to protecting your privacy and ensuring transparency about our data practices."
@@ -529,7 +529,7 @@
         "correction": "Update or correct your full name and profile photo at any time",
         "deletion": "Request account deletion through the account settings (includes a grace period during which you can cancel)",
         "withdraw": "Withdraw consent for data processing by deleting your account",
-        "portability": "Request a copy of your data (contact us at [CONTACT_EMAIL])"
+        "portability": "Request a copy of your data (contact us at helpdesk@iuca.kg)"
       }
     },
     "retention": {
@@ -550,12 +550,12 @@
     },
     "contact": {
       "title": "Contact Us",
-      "content": "If you have any questions about this Privacy Policy or our data practices, please contact us at [CONTACT_EMAIL] or [COMPANY_ADDRESS]."
+      "content": "If you have any questions about this Privacy Policy or our data practices, please contact us at helpdesk@iuca.kg or Kyrgyz Republic, Tokmok city, Shamsinskaya 2."
     }
   },
   "terms": {
     "title": "Terms of Use",
-    "lastUpdated": "Last updated: [DATE]",
+    "lastUpdated": "Last updated: February 15, 2026",
     "introduction": {
       "title": "Introduction",
       "content": "Welcome to International University of Central Asia (IUCA). These Terms of Use (\"Terms\") govern your access to and use of our services. By accessing or using our service, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our service."
@@ -653,11 +653,11 @@
     },
     "governingLaw": {
       "title": "Governing Law and Disputes",
-      "content": "These Terms shall be governed by and construed in accordance with the laws of [JURISDICTION], without regard to its conflict of law provisions. Any disputes arising from these Terms or your use of the service shall be resolved in the courts of [JURISDICTION]."
+      "content": "These Terms shall be governed by and construed in accordance with the laws of Kyrgyz Republic, without regard to its conflict of law provisions. Any disputes arising from these Terms or your use of the service shall be resolved in the courts of Kyrgyz Republic."
     },
     "contact": {
       "title": "Contact Information",
-      "content": "If you have any questions about these Terms, please contact us at [CONTACT_EMAIL] or [COMPANY_ADDRESS]."
+      "content": "If you have any questions about these Terms, please contact us at helpdesk@iuca.kg or Kyrgyz Republic, Tokmok city, Shamsinskaya 2."
     }
   }
 }
