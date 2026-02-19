@@ -1,0 +1,663 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "loading": "Loading",
+    "retry": "Try again",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "restore": "Restore",
+    "view": "View",
+    "create": "Create",
+    "searchPlaceholder": "Search...",
+    "details": "Details",
+    "actions": "Actions",
+    "loadingMore": "Loading more templates",
+    "searchAria": "Search items",
+    "clearSearch": "Clear search",
+    "filters": "Filters",
+    "showing": "Showing",
+    "showingCount": "{{label}} {{loaded}} of {{total}}",
+    "reload": "Reload"
+  },
+  "navigation": {
+    "title": "Navigation",
+    "home": "Home",
+    "templates": "Templates",
+    "roles": "Roles",
+    "users": "Users",
+    "toggleMenu": "Toggle navigation menu",
+    "termsAndPolicies": "Terms & Policies",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "groups": {
+      "administration": "Administration",
+      "management": "Management",
+      "reports": "Reports"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "themeLight": "Light mode",
+    "themeDark": "Dark mode",
+    "themeSystem": "System"
+  },
+  "header": {
+    "brand": "IUCA Reports"
+  },
+  "home": {
+    "welcomeTitle": "Welcome",
+    "welcomeDescription": "Record your daily work notes and generate structured weekly reports. Head over to the Templates page to manage report templates."
+  },
+  "templates": {
+    "pageTitle": "Templates",
+    "pageSubtitle": "Design, duplicate, and iterate on the templates that power your product.",
+    "drawer": {
+      "createTitle": "Create template",
+      "viewTitle": "Template details",
+      "editTitle": "Edit template",
+      "createDescription": "Add a new template to keep your projects organised.",
+      "viewDescription": "Review the current template, then switch to edit mode when you're ready to update it.",
+      "editDescription": "Update the template details. Changes apply immediately once saved.",
+      "saveTemplate": "Save template",
+      "saveChanges": "Save changes"
+    },
+    "list": {
+      "quickAction": "Quick Action",
+      "addNew": "Add new template",
+      "addNewDescription": "Start with a blank slate while the latest data loads in the background.",
+      "createTemplate": "Create template",
+      "actionsAlt": "Open template actions"
+    },
+    "update": {
+      "description": "Keep your template details up to date."
+    }
+  },
+  "templateCard": {
+    "noDescription": "No description",
+    "updated": "Updated {{relativeTime}} ago",
+    "viewDetails": "View details",
+    "editTemplate": "Edit template",
+    "deleteTemplate": "Delete template",
+    "deleted": "Deleted"
+  },
+  "templateForm": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Enter template name",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Add template description",
+    "contentLabel": "Content",
+    "contentPlaceholder": "Paste template content",
+    "createSubmit": "Create template",
+    "createSuccess": "Template created",
+    "updateSubmit": "Save changes",
+    "updateSuccess": "Template updated",
+    "cancel": "Cancel",
+    "viewMode": "View",
+    "editMode": "Edit",
+    "errorMissingId": "Missing template identifier",
+    "errorFillAll": "Please fill in all required fields.",
+    "errorNameRequired": "Name is required.",
+    "optionalHint": "(optional)",
+    "noChanges": "No changes to save"
+  },
+  "templateList": {
+    "empty": "There are no templates yet.",
+    "loadMore": "Load more",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "We could not load the templates."
+  },
+  "auth": {
+    "loginTitle": "Sign in to your account",
+    "loginDescription": "Enter your credentials to access your account",
+    "loginButton": "Log in",
+    "logoutButton": "Log out",
+    "registerTitle": "Create an account",
+    "registerDescription": "Enter your information to get started",
+    "registerButton": "Sign up",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPasswordLabel": "Confirm password",
+    "confirmPasswordPlaceholder": "Re-enter your password",
+    "fullNameLabel": "Full name",
+    "fullNamePlaceholder": "Enter your full name",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "registerLink": "Sign up",
+    "loginLink": "Log in",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset password",
+    "changePassword": "Change password",
+    "orContinueWith": "Or continue with",
+    "googleSignIn": "Sign in with Google",
+    "googleSignUp": "Sign up with Google",
+    "rememberMe": "Remember me",
+    "registrationSuccessTitle": "Registration Successful!",
+    "checkEmailInstruction": "Please check your email inbox and click the confirmation link to activate your account.",
+    "goToLogin": "Go to Login",
+    "emailNotReceived": "Didn't receive the email?",
+    "tryAgain": "Try again",
+    "verifyingEmail": "Verifying Email",
+    "verifyingEmailDescription": "Please wait while we verify your email address...",
+    "verifyEmailSuccess": "Email Verified!",
+    "verifyEmailSuccessDescription": "Your email has been successfully verified. You can now log in to your account.",
+    "verifyEmailError": "Verification Failed",
+    "verifyEmailFailed": "Email verification failed. The link may have expired or is invalid.",
+    "verifyEmailTokenMissing": "Verification token is missing. Please use the link from your email.",
+    "verifyEmailEmailMissing": "Email address is missing. Please use the complete link from your email.",
+    "backToRegister": "Back to Registration",
+    "resendEmail": "Resend Email",
+    "emailResent": "Confirmation email has been resent! Please check your inbox.",
+    "emailNotVerifiedMessage": "Your email address has not been verified yet. Please check your inbox and click the confirmation link to activate your account."
+  },
+  "validation": {
+    "required": "This field is required",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email address",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least {{min}} characters",
+    "passwordUppercase": "Password must contain at least one uppercase letter",
+    "passwordLowercase": "Password must contain at least one lowercase letter",
+    "passwordNumber": "Password must contain at least one number",
+    "passwordSpecialChar": "Password must contain at least one special character (@$!%*?&#)",
+    "passwordComplexity": "Password must contain uppercase, lowercase, digit, and special character",
+    "confirmPasswordRequired": "Please confirm your password",
+    "confirmNewPasswordRequired": "Please confirm your new password",
+    "passwordsNoMatch": "Passwords do not match",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "fullNameRequired": "Full name is required",
+    "fullNameMinLength": "Full name must be at least 2 characters",
+    "fullNameMaxLength": "Full name must be 100 characters or less",
+    "currentPasswordRequired": "Current password is required",
+    "tokenRequired": "Reset token is required",
+    "fileRequired": "Please select a file",
+    "fileTooLarge": "File size must be less than 5MB",
+    "invalidFileType": "Only JPEG, PNG, and WebP images are allowed"
+  },
+  "password": {
+    "changeButton": "Change password",
+    "changeSuccess": "Password changed successfully",
+    "changeDescription": "Update your password to keep your account secure",
+    "currentPasswordLabel": "Current password",
+    "currentPasswordPlaceholder": "Enter your current password",
+    "newPasswordLabel": "New password",
+    "newPasswordPlaceholder": "Enter your new password",
+    "newPassword": "New password",
+    "enterNewPassword": "Enter your new password",
+    "confirmPassword": "Confirm password",
+    "confirmNewPassword": "Confirm your new password",
+    "forgotTitle": "Forgot your password?",
+    "forgotDescription": "Enter your email address and we'll send you a reset link",
+    "forgotButton": "Send reset link",
+    "forgotSuccess": "Password reset link sent to your email",
+    "resetTitle": "Reset your password",
+    "resetDescription": "Enter your new password below",
+    "resetButton": "Reset password",
+    "resetSuccess": "Password reset successfully",
+    "resetTokenLabel": "Reset token",
+    "resetTokenPlaceholder": "Enter the token from your email",
+    "rememberPassword": "Remember your password?",
+    "setPassword": "Set Password",
+    "setPasswordDescription": "Set a password to enable email/password login as an alternative to Google",
+    "setPasswordInfo": "You signed in with Google. Set a password to enable traditional email/password login.",
+    "setSuccess": "Password set successfully",
+    "settingPassword": "Setting password..."
+  },
+  "profile": {
+    "title": "Your Profile",
+    "description": "Manage your account information and settings",
+    "nameLabel": "Full Name",
+    "rolesLabel": "Roles",
+    "statusLabel": "Account Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "uploadPhoto": "Upload photo",
+    "changePhoto": "Change photo",
+    "deletePhoto": "Delete photo",
+    "uploading": "Uploading...",
+    "deleting": "Deleting...",
+    "photoUploadSuccess": "Profile photo uploaded successfully",
+    "photoDeleteSuccess": "Profile photo deleted successfully",
+    "photoUploadError": "Failed to upload photo",
+    "photoDeleteError": "Failed to delete photo",
+    "previewError": "Failed to create image preview",
+    "deletePhotoTitle": "Delete profile photo?",
+    "deletePhotoConfirm": "This will permanently remove your profile photo. You can always upload a new one later.",
+    "editProfile": "Edit Profile",
+    "editDescription": "Update your profile information",
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "updateButton": "Update Profile",
+    "updateSuccess": "Profile updated successfully",
+    "profilePhoto": "Profile Photo"
+  },
+  "account": {
+    "dangerZone": "Account Deletion",
+    "dangerZoneDescription": "Manage account deletion settings",
+    "deleteAccount": "Delete Account",
+    "deleteAccountTitle": "Delete Account",
+    "deleteAccountWarning": "Your account will be scheduled for deletion. All data will be removed after a grace period. You can cancel before the final deletion.",
+    "deleteAccountConfirm": "This action is permanent after the grace period.",
+    "deleteReasonLabel": "Reason for deletion (optional)",
+    "deleteReasonPlaceholder": "Help us improve by telling us why you're leaving...",
+    "confirmPasswordLabel": "Enter your password to confirm",
+    "confirmPasswordPlaceholder": "Your current password",
+    "deleteAccountConfirmButton": "Delete my account",
+    "deletionScheduled": "Account deletion scheduled. You will receive further instructions via email.",
+    "deletionCancelled": "Account deletion has been cancelled",
+    "deletionScheduledNotice": "Your account is scheduled for deletion on {{date}}",
+    "cancelDeletion": "Cancel Deletion"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "more": "More pages"
+  },
+  "errors": {
+    "forbiddenTitle": "Access denied",
+    "forbiddenDescription": "You do not have permission to view this page.",
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The page you are looking for could not be found.",
+    "backHome": "Back to home",
+    "serverTitle": "Something went wrong",
+    "serverDescription": "An unexpected error occurred while rendering this page. Try reloading or head back home.",
+    "globalTitle": "Something went wrong",
+    "globalDefaultMessage": "The request could not be completed. Please try again.",
+    "globalDescription": "Try the action again in a moment. If the issue continues, share the trace ID below with support so we can investigate quickly.",
+    "traceId": "Trace ID",
+    "copy": "Copy",
+    "copied": "Copied",
+    "requestFailed": "Request failed",
+    "serverUnavailable": "Server unavailable. Please try again later.",
+    "noData": "No data returned from server"
+  },
+  "deleteTemplate": {
+    "title": "Delete template",
+    "description": "This action cannot be undone. This will permanently delete the template.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "roles": {
+    "pageTitle": "Roles",
+    "pageSubtitle": "Manage roles and assign permissions to control access throughout your application.",
+    "createRole": "Create role",
+    "systemRole": "System Role",
+    "permissions": "Permissions",
+    "noPermissions": "No permissions assigned",
+    "drawer": {
+      "createTitle": "Create role",
+      "viewTitle": "Role details",
+      "editTitle": "Edit role",
+      "createDescription": "Add a new role to manage access control.",
+      "viewDescription": "Review the role details and permissions.",
+      "editDescription": "Update the role name and manage permissions.",
+      "saveRole": "Save role",
+      "saveChanges": "Save changes"
+    },
+    "list": {
+      "quickAction": "Quick Action",
+      "addNew": "Add new role",
+      "addNewDescription": "Start with a blank role while the latest data loads in the background.",
+      "createRole": "Create role",
+      "actionsAlt": "Open role actions"
+    }
+  },
+  "roleForm": {
+    "nameLabel": "Role Name",
+    "namePlaceholder": "Enter role name",
+    "createSubmit": "Create role",
+    "updateSubmit": "Save changes",
+    "cancel": "Cancel",
+    "editMode": "Edit",
+    "errorNameRequired": "Role name is required",
+    "errorNameTooLong": "Role name must be 256 characters or less",
+    "noChanges": "No changes to save",
+    "roleCreated": "Role created successfully",
+    "roleUpdated": "Role updated successfully",
+    "roleDeleted": "Role deleted successfully"
+  },
+  "rolePermissions": {
+    "title": "Permissions",
+    "save": "Save Permissions",
+    "noPermissionsSelected": "Please select at least one permission",
+    "permissionsAssigned": "Permissions assigned successfully",
+    "permissionRemoved": "Permission removed successfully",
+    "permissionsUpdated": "Permissions updated successfully",
+    "systemRoleNotice": "System roles cannot be modified"
+  },
+  "deleteRole": {
+    "title": "Delete role",
+    "description": "This action cannot be undone. This will permanently delete the role.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "users": {
+    "pageTitle": "Users",
+    "pageSubtitle": "Manage user accounts, roles, and permissions across your application.",
+    "createUser": "Create user",
+    "drawer": {
+      "createTitle": "Create user",
+      "viewTitle": "User details",
+      "editTitle": "Edit user",
+      "rolesTitle": "Manage Roles",
+      "createDescription": "Add a new user to your application.",
+      "viewDescription": "Review the user details and manage their roles.",
+      "editDescription": "Update the user's information and account status.",
+      "rolesDescription": "Assign or remove roles for this user.",
+      "saveUser": "Save user",
+      "saveChanges": "Save changes"
+    },
+    "list": {
+      "quickAction": "Quick Action",
+      "addNew": "Add new user",
+      "addNewDescription": "Create a new user account while the latest data loads in the background.",
+      "createUser": "Create user",
+      "actionsAlt": "Open user actions",
+      "enable": "Enable account",
+      "disable": "Disable account",
+      "manageRoles": "Manage roles"
+    }
+  },
+  "userCard": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "viewDetails": "View details",
+    "editUser": "Edit user",
+    "deleteUser": "Delete user"
+  },
+  "userForm": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "user@example.com",
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder": "Enter full name",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter password",
+    "passwordOptionalHint": "Leave empty to keep current password",
+    "isActiveLabel": "Active account",
+    "createSubmit": "Create user",
+    "updateSubmit": "Save changes",
+    "cancel": "Cancel",
+    "editMode": "Edit",
+    "errorEmailRequired": "Email is required",
+    "errorEmailInvalid": "Invalid email address",
+    "errorFullNameRequired": "Full name is required",
+    "errorFullNameTooLong": "Full name must be 200 characters or less",
+    "errorPasswordWeak": "Password must be at least 8 characters and include uppercase, lowercase, digit, and special character",
+    "passwordRequirements": "Password requirements:",
+    "passwordReqMinLength": "Minimum 8 characters",
+    "passwordReqUppercase": "At least one uppercase letter",
+    "passwordReqLowercase": "At least one lowercase letter",
+    "passwordReqDigit": "At least one digit",
+    "passwordReqSpecial": "At least one special character",
+    "noChanges": "No changes to save"
+  },
+  "userRoles": {
+    "title": "Roles",
+    "assignRole": "Assign role",
+    "assignRoleTitle": "Assign role to user",
+    "assignRoleDescription": "Select a role to assign to this user:",
+    "assign": "Assign",
+    "removeRole": "Remove {{role}} role",
+    "noRoles": "No roles assigned",
+    "noAvailableRoles": "All available roles have been assigned to this user",
+    "systemRole": "System Role"
+  },
+  "deleteUser": {
+    "title": "Delete user",
+    "description": "This action will permanently delete the user. This cannot be undone.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "restoreTemplate": {
+    "title": "Restore template",
+    "description": "This action will restore the deleted template and make it available again.",
+    "confirm": "Restore",
+    "cancel": "Cancel"
+  },
+  "userFilters": {
+    "title": "Filters",
+    "resetFilters": "Clear",
+    "accountStatus": "Account Status",
+    "all": "All",
+    "activeOnly": "Active",
+    "inactiveOnly": "Inactive",
+    "role": "Role",
+    "allRoles": "All Roles",
+    "activeFilters": "Active filters",
+    "tabFilters": "Filters",
+    "tabSorting": "Sorting",
+    "sortField": "Sort by",
+    "sortDirection": "Direction",
+    "sortFieldNone": "None",
+    "sortFieldName": "Name",
+    "sortFieldEmail": "Email",
+    "sortFieldCreated": "Created date",
+    "ascending": "Ascending",
+    "descending": "Descending"
+  },
+  "templateFilters": {
+    "title": "Filters",
+    "resetFilters": "Clear",
+    "deletedTemplates": "Deleted Templates",
+    "excludeDeleted": "Exclude",
+    "includeDeleted": "Include",
+    "activeFilters": "Active filters",
+    "tabFilters": "Filters",
+    "tabSorting": "Sorting",
+    "sortField": "Sort by",
+    "sortDirection": "Direction",
+    "sortFieldNone": "None",
+    "sortFieldName": "Name",
+    "sortFieldCreated": "Created date",
+    "sortFieldUpdated": "Updated date",
+    "ascending": "Ascending",
+    "descending": "Descending"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: February 15, 2026",
+    "introduction": {
+      "title": "Introduction",
+      "content": "This Privacy Policy describes how International University of Central Asia (IUCA) (\"we\", \"us\", or \"our\") collects, uses, and shares your personal information when you use our service. We are committed to protecting your privacy and ensuring transparency about our data practices."
+    },
+    "informationCollected": {
+      "title": "Information We Collect",
+      "accountInfo": {
+        "title": "Account Information",
+        "content": "When you create an account, we collect the following information:",
+        "items": {
+          "email": "Email address (required for authentication and communication)",
+          "fullName": "Full name (for personalization)",
+          "password": "Password (encrypted and securely stored)",
+          "profilePhoto": "Profile photo (optional, stored as image file up to 5MB)"
+        }
+      },
+      "authenticationData": {
+        "title": "Authentication Data",
+        "content": "We use JWT (JSON Web Tokens) for authentication. Access tokens and refresh tokens are stored in your browser's local storage. If you sign in with Google OAuth, we receive and store your Google ID token and associated profile information (name and email)."
+      },
+      "usageData": {
+        "title": "Usage Information",
+        "content": "We collect information about your account activity, including assigned roles, permissions, account status (active/inactive), account creation date, and last update timestamp. We do not use third-party analytics or behavior tracking tools."
+      }
+    },
+    "howWeUse": {
+      "title": "How We Use Your Information",
+      "items": {
+        "provideServices": "To provide, maintain, and improve our services",
+        "authentication": "To authenticate your identity and manage your account sessions",
+        "communication": "To send you service-related emails (email verification, password reset, account notifications)",
+        "improve": "To understand how users interact with our service and improve user experience",
+        "security": "To detect, prevent, and address security issues and fraudulent activity"
+      }
+    },
+    "thirdParty": {
+      "title": "Third-Party Services",
+      "content": "We use the following third-party services that may collect and process your data:",
+      "google": {
+        "title": "Google OAuth 2.0",
+        "content": "When you sign in with Google, we use Google's OAuth service. Google's privacy policy governs their collection and use of your data. We only receive your basic profile information (name, email, and profile picture) that you authorize Google to share with us."
+      }
+    },
+    "dataStorage": {
+      "title": "Data Storage and Security",
+      "content": "Your account data is stored securely in our database. We implement industry-standard security measures including password hashing, encrypted connections (HTTPS), and secure authentication tokens.",
+      "localStorage": {
+        "title": "Browser Local Storage",
+        "content": "We store the following data in your browser's local storage:",
+        "items": {
+          "authTokens": "Authentication tokens (access token and refresh token for session management)",
+          "language": "Language preference (to remember your selected language)",
+          "theme": "Theme preference (light/dark mode)"
+        }
+      }
+    },
+    "security": {
+      "title": "Data Security",
+      "content": "We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security."
+    },
+    "yourRights": {
+      "title": "Your Rights and Choices",
+      "items": {
+        "access": "Access and review your personal information in your profile settings",
+        "correction": "Update or correct your full name and profile photo at any time",
+        "deletion": "Request account deletion through the account settings (includes a grace period during which you can cancel)",
+        "withdraw": "Withdraw consent for data processing by deleting your account",
+        "portability": "Request a copy of your data (contact us at helpdesk@iuca.kg)"
+      }
+    },
+    "retention": {
+      "title": "Data Retention",
+      "content": "We retain your personal information for as long as your account is active. When you request account deletion, your account is scheduled for deletion with a grace period. After the grace period expires, all your personal data is permanently deleted from our systems. You may cancel the deletion during the grace period."
+    },
+    "children": {
+      "title": "Children's Privacy",
+      "content": "Our service is not intended for users under the age of 13 (or the minimum age in your jurisdiction). We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child without parental consent, we will take steps to delete that information."
+    },
+    "international": {
+      "title": "International Data Transfers",
+      "content": "Your information may be transferred to and processed in countries other than your country of residence. These countries may have data protection laws that are different from the laws of your country. We ensure appropriate safeguards are in place to protect your information in accordance with this Privacy Policy."
+    },
+    "changes": {
+      "title": "Changes to This Privacy Policy",
+      "content": "We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the \"Last Updated\" date. Your continued use of the service after changes are posted constitutes your acceptance of the updated Privacy Policy."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "content": "If you have any questions about this Privacy Policy or our data practices, please contact us at helpdesk@iuca.kg or Kyrgyz Republic, Tokmok city, Shamsinskaya 2."
+    }
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "lastUpdated": "Last updated: February 15, 2026",
+    "introduction": {
+      "title": "Introduction",
+      "content": "Welcome to International University of Central Asia (IUCA). These Terms of Use (\"Terms\") govern your access to and use of our services. By accessing or using our service, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our service."
+    },
+    "acceptance": {
+      "title": "Acceptance of Terms",
+      "content": "By creating an account or using our service, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. You also represent that you have the legal capacity to enter into these Terms."
+    },
+    "accounts": {
+      "title": "User Accounts",
+      "registration": {
+        "title": "Account Registration",
+        "content": "To use certain features of our service, you must create an account by providing accurate, complete, and current information including your email address and full name. You may register using email and password, or through Google OAuth authentication. Email verification is required to activate your account."
+      },
+      "security": {
+        "title": "Account Security",
+        "content": "You are responsible for maintaining the security of your account and password. Your password must meet our security requirements:",
+        "items": {
+          "passwordRequirements": "Minimum 8 characters with at least one uppercase letter, lowercase letter, number, and special character (@$!%*?&#)",
+          "confidentiality": "Keep your password confidential and do not share it with others",
+          "unauthorized": "Notify us immediately of any unauthorized access to your account",
+          "liability": "You are responsible for all activities that occur under your account"
+        }
+      },
+      "emailVerification": {
+        "title": "Email Verification",
+        "content": "You must verify your email address by clicking the confirmation link sent to your email. Unverified accounts may have limited functionality. You may request to resend the verification email if needed."
+      }
+    },
+    "responsibilities": {
+      "title": "User Responsibilities",
+      "intro": "When using our service, you agree to:",
+      "items": {
+        "accurate": "Provide accurate, current, and complete information",
+        "lawful": "Use the service only for lawful purposes and in compliance with all applicable laws",
+        "noHarm": "Not attempt to interfere with, compromise, or disrupt the service or servers",
+        "noImpersonation": "Not impersonate any person or entity or falsely represent your affiliation",
+        "noUnauthorized": "Not attempt to gain unauthorized access to any part of the service",
+        "respectRights": "Respect the intellectual property rights of others"
+      }
+    },
+    "authentication": {
+      "title": "Authentication and Sessions",
+      "content": "Our service uses JWT (JSON Web Token) authentication to manage user sessions. When you log in, you receive an access token and a refresh token.",
+      "tokens": {
+        "title": "Session Tokens",
+        "content": "Access tokens are short-lived and automatically refresh. Refresh tokens are stored in your browser's local storage. You may choose \"Remember Me\" during login to maintain your session across browser restarts. You are responsible for logging out on shared devices."
+      },
+      "oauth": {
+        "title": "Google OAuth",
+        "content": "If you sign in with Google, you agree to Google's Terms of Service and Privacy Policy. We receive only the information you authorize Google to share with us. You may set a password later to enable traditional email/password login in addition to Google authentication."
+      }
+    },
+    "uploads": {
+      "title": "File Uploads and Content",
+      "content": "You may upload a profile photo to personalize your account. By uploading content, you represent that:",
+      "items": {
+        "fileTypes": "Files must be in JPEG, PNG, or WebP format",
+        "maxSize": "File size must not exceed 5MB",
+        "appropriate": "Content is appropriate and does not violate any laws or third-party rights",
+        "rights": "You have the necessary rights to upload and share the content"
+      }
+    },
+    "rolesPermissions": {
+      "title": "Roles and Permissions",
+      "content": "Your account may be assigned one or more roles by administrators. Roles determine your permissions and access levels within the service. We reserve the right to modify, assign, or remove roles at our discretion. You may not attempt to access features or data beyond your assigned permissions."
+    },
+    "termination": {
+      "title": "Account Termination",
+      "byUser": {
+        "title": "Termination by You",
+        "content": "You may request account deletion at any time through your account settings. When you request deletion, your account will be scheduled for deletion after a grace period. During the grace period, you may cancel the deletion request. After the grace period expires, your account and all associated data will be permanently deleted."
+      },
+      "byUs": {
+        "title": "Termination by Us",
+        "content": "We reserve the right to suspend or terminate your account at any time, with or without notice, for violating these Terms, engaging in fraudulent activity, or for any other reason at our sole discretion. We may also disable accounts that remain inactive for extended periods."
+      }
+    },
+    "intellectualProperty": {
+      "title": "Intellectual Property",
+      "content": "The service and its original content, features, and functionality are owned by International University of Central Asia (IUCA) and are protected by international copyright, trademark, and other intellectual property laws. You may not copy, modify, distribute, sell, or lease any part of our service without our express written permission."
+    },
+    "disclaimers": {
+      "title": "Disclaimers",
+      "asIs": "The service is provided \"as is\" and \"as available\" without warranties of any kind.",
+      "content": "We do not guarantee that the service will be uninterrupted, secure, or error-free. We disclaim all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement. Your use of the service is at your own risk."
+    },
+    "liability": {
+      "title": "Limitation of Liability",
+      "content": "To the maximum extent permitted by law, International University of Central Asia (IUCA) shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether direct or indirect, or any loss of data, use, goodwill, or other intangible losses resulting from your use of or inability to use the service."
+    },
+    "modifications": {
+      "title": "Modifications to Terms",
+      "content": "We reserve the right to modify these Terms at any time. We will notify you of material changes by posting the updated Terms on this page and updating the \"Last Updated\" date. Your continued use of the service after changes are posted constitutes your acceptance of the modified Terms."
+    },
+    "governingLaw": {
+      "title": "Governing Law and Disputes",
+      "content": "These Terms shall be governed by and construed in accordance with the laws of Kyrgyz Republic, without regard to its conflict of law provisions. Any disputes arising from these Terms or your use of the service shall be resolved in the courts of Kyrgyz Republic."
+    },
+    "contact": {
+      "title": "Contact Information",
+      "content": "If you have any questions about these Terms, please contact us at helpdesk@iuca.kg or Kyrgyz Republic, Tokmok city, Shamsinskaya 2."
+    }
+  }
+}

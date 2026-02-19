@@ -1,0 +1,1 @@
+export { useUserDelete } from "./useUserDelete";

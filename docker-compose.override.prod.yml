@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  web:
+    image: ghcr.io/olegator92/iuca-reports-web/web:latest
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
