@@ -2,7 +2,9 @@ import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { UseFormReturn } from "react-hook-form";
 
-import { Button, FormField, Input, Loader, PasswordInput } from "@/shared/ui";
+import { Button, FormField, Input, Loader } from "@/shared/ui";
+// Password authentication is temporarily disabled (Google OAuth only)
+// import { PasswordInput } from "@/shared/ui";
 import type { UserFormData } from "../model/validation";
 
 type UserFormMode = "create" | "edit" | "view";
@@ -35,7 +37,8 @@ export const UserForm = ({
     const { t } = useTranslation();
     const emailInputId = useId();
     const fullNameInputId = useId();
-    const passwordInputId = useId();
+    // Password authentication is temporarily disabled (Google OAuth only)
+    // const passwordInputId = useId();
 
     const isViewMode = mode === "view";
     const isCreateMode = mode === "create";
@@ -50,7 +53,8 @@ export const UserForm = ({
 
     const emailError = form.formState.errors.email?.message;
     const fullNameError = form.formState.errors.fullName?.message;
-    const passwordError = form.formState.errors.password?.message;
+    // Password authentication is temporarily disabled (Google OAuth only)
+    // const passwordError = form.formState.errors.password?.message;
 
     return (
         <form id="user-form" onSubmit={onSubmit} className="space-y-4">
@@ -83,6 +87,7 @@ export const UserForm = ({
                     {...form.register("fullName")}
                 />
             </FormField>
+            {/* Password authentication is temporarily disabled (Google OAuth only)
             <FormField
                 id={passwordInputId}
                 label={t("userForm.passwordLabel")}
@@ -99,6 +104,7 @@ export const UserForm = ({
                     {...form.register("password")}
                 />
             </FormField>
+            */}
             {!hideFooter && (
                 <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:justify-end">
                     {onCancel ? (
