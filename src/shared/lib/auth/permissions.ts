@@ -15,6 +15,7 @@ export const PERMISSIONS = {
     // User permissions
     USER_VIEW: "User.View",
     USER_EDIT: "User.Edit",
+    USER_ROLE_EDIT: "User.RoleEdit",
 
     // Role permissions
     ROLE_VIEW: "Role.View",
@@ -94,7 +95,7 @@ export const hasActualPermission = (user: CurrentUser & { permissions?: string[]
  * Note: Permission checking is role-based on the backend.
  * Frontend role checks should match backend permission structure:
  * - Admin role has * (wildcard - all permissions)
- * - Manager role has Template.Edit, User.View, Role.View
+ * - Manager role has Template.Edit, User.View, User.Edit, Role.View, Menu.Management
  * - User role has Template.View
  *
  * For accurate permission checking, fetch actual permissions from backend
@@ -128,7 +129,9 @@ export const hasPermission = (user: CurrentUser | null, permission: Permission):
             PERMISSIONS.TEMPLATE_VIEW,
             PERMISSIONS.TEMPLATE_EDIT,
             PERMISSIONS.USER_VIEW,
-            PERMISSIONS.ROLE_VIEW
+            PERMISSIONS.USER_EDIT,
+            PERMISSIONS.ROLE_VIEW,
+            PERMISSIONS.MENU_MANAGEMENT,
         ];
         return (managerPermissions as Permission[]).includes(permission);
     }

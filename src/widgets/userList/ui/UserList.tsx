@@ -4,7 +4,7 @@ import { UserCard } from "@/entities/user/ui";
 import { DeleteUserButton } from "@/features/user-delete/ui/DeleteUserButton";
 import { CrudList } from "@/widgets/crudPage";
 import { Button, Loader, Skeleton } from "@/shared/ui";
-import { cn } from "@/shared/lib";
+import { cn, useHasPermission, PERMISSIONS } from "@/shared/lib";
 import { Pencil, Trash2, MoreVertical, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -89,6 +89,7 @@ const UserActionsDropdown = ({
 }: UserActionsDropdownProps) => {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
+    const canManageRoles = useHasPermission(PERMISSIONS.USER_ROLE_EDIT);
     const triggerRef = useRef<HTMLButtonElement | null>(null);
     const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -170,15 +171,17 @@ const UserActionsDropdown = ({
                         <Pencil className="h-5 w-5 md:h-4 md:w-4" />
                         {t("common.edit")}
                     </button>
-                    <button
-                        type="button"
-                        role="menuitem"
-                        className={menuItemStyles}
-                        onClick={() => handleSelect(onManageRoles)(user)}
-                    >
-                        <Shield className="h-5 w-5 md:h-4 md:w-4" />
-                        {t("users.list.manageRoles")}
-                    </button>
+                    {canManageRoles && (
+                        <button
+                            type="button"
+                            role="menuitem"
+                            className={menuItemStyles}
+                            onClick={() => handleSelect(onManageRoles)(user)}
+                        >
+                            <Shield className="h-5 w-5 md:h-4 md:w-4" />
+                            {t("users.list.manageRoles")}
+                        </button>
+                    )}
                     <DeleteUserButton
                         id={user.id}
                         navigateAfterDelete={false}

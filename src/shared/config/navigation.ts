@@ -25,6 +25,15 @@ const HOME_ITEM: NavItem = {
 };
 
 // Navigation groups
+const MANAGEMENT_GROUP: NavGroup = {
+    id: "management",
+    labelKey: "navigation.groups.management",
+    permission: PERMISSIONS.MENU_MANAGEMENT,
+    items: [
+        { to: ROUTES.USERS, labelKey: "navigation.users", permission: PERMISSIONS.USER_VIEW }
+    ]
+};
+
 const ADMINISTRATION_GROUP: NavGroup = {
     id: "administration",
     labelKey: "navigation.groups.administration",
@@ -32,22 +41,22 @@ const ADMINISTRATION_GROUP: NavGroup = {
     items: [
         { to: ROUTES.TEMPLATES, labelKey: "navigation.templates", permission: PERMISSIONS.TEMPLATE_VIEW },
         { to: ROUTES.ROLES, labelKey: "navigation.roles", permission: PERMISSIONS.ROLE_VIEW },
-        { to: ROUTES.USERS, labelKey: "navigation.users", permission: PERMISSIONS.USER_VIEW }
     ]
 };
 
 // Main navigation configuration
 export const NAV_CONFIG: NavConfig = [
     HOME_ITEM,
-    ADMINISTRATION_GROUP
+    ADMINISTRATION_GROUP,
+    MANAGEMENT_GROUP,
 ];
 
 // Legacy export for backwards compatibility
 export const NAV_ITEMS: NavItem[] = [
     { to: ROUTES.HOME, labelKey: "navigation.home", end: true },
+    { to: ROUTES.USERS, labelKey: "navigation.users", permission: PERMISSIONS.USER_VIEW },
     { to: ROUTES.TEMPLATES, labelKey: "navigation.templates", permission: PERMISSIONS.TEMPLATE_VIEW },
     { to: ROUTES.ROLES, labelKey: "navigation.roles", permission: PERMISSIONS.ROLE_VIEW },
-    { to: ROUTES.USERS, labelKey: "navigation.users", permission: PERMISSIONS.USER_VIEW },
 ];
 
 export const TERMS_ITEMS: NavItem[] = [
