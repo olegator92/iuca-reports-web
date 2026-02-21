@@ -577,7 +577,18 @@
     "hierarchyEmpty": "Иерархия подразделений пуста",
     "rootDepartment": "Корневое",
     "subDepartmentsCount": "{{count}} подразделений",
-    "addChild": "Добавить подразделение"
+    "addChild": "Добавить подразделение",
+    "supervisorsSection": "Руководители",
+    "supervisorsLabel": "Руководители",
+    "supervisorsCount": "{{count}} руководителей",
+    "noSupervisors": "Руководители не назначены",
+    "assignSupervisor": "Назначить руководителя",
+    "assignSupervisorTitle": "Назначить руководителя",
+    "assignSupervisorDescription": "Выберите пользователя для назначения руководителем подразделения.",
+    "noAvailableSupervisors": "Нет доступных пользователей для назначения",
+    "assign": "Назначить",
+    "removeSupervisor": "Убрать {{name}} из руководителей?",
+    "removeSupervisorDescription": "Пользователь будет удалён из руководителей данного подразделения."
   },
   "privacy": {
     "title": "Политика конфиденциальности",

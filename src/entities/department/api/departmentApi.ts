@@ -169,6 +169,29 @@ export const departmentApi = rtkApi.injectEndpoints({
                 { type: "Department", id },
                 { type: "Department", id: "LIST" }
             ]
+        }),
+        assignDepartmentSupervisor: builder.mutation<ExtractedResult<Department>, { departmentId: string; userId: string }>({
+            query: ({ departmentId, userId }) => ({
+                url: `${DEPARTMENT_ENDPOINT}/${departmentId}/supervisors`,
+                method: "POST",
+                body: { userId }
+            }),
+            transformResponse: (response: ResultEnvelope<Department>) => ensureSuccess(response),
+            invalidatesTags: (_result, _error, { departmentId }) => [
+                { type: "Department", id: departmentId },
+                { type: "Department", id: "LIST" }
+            ]
+        }),
+        removeDepartmentSupervisor: builder.mutation<ExtractedResult<Department>, { departmentId: string; userId: string }>({
+            query: ({ departmentId, userId }) => ({
+                url: `${DEPARTMENT_ENDPOINT}/${departmentId}/supervisors/${userId}`,
+                method: "DELETE"
+            }),
+            transformResponse: (response: ResultEnvelope<Department>) => ensureSuccess(response),
+            invalidatesTags: (_result, _error, { departmentId }) => [
+                { type: "Department", id: departmentId },
+                { type: "Department", id: "LIST" }
+            ]
         })
     }),
     overrideExisting: false
@@ -183,7 +206,9 @@ export const {
     useCreateDepartmentMutation,
     useUpdateDepartmentMutation,
     useDeleteDepartmentMutation,
-    useRestoreDepartmentMutation
+    useRestoreDepartmentMutation,
+    useAssignDepartmentSupervisorMutation,
+    useRemoveDepartmentSupervisorMutation
 } = departmentApi;
 
 export type { GetDepartmentsParams, GetDepartmentsResult };

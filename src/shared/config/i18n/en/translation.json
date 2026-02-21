@@ -577,7 +577,18 @@
     "hierarchyEmpty": "No departments in hierarchy",
     "rootDepartment": "Root",
     "subDepartmentsCount": "{{count}} sub-departments",
-    "addChild": "Add sub-department"
+    "addChild": "Add sub-department",
+    "supervisorsSection": "Supervisors",
+    "supervisorsLabel": "Supervisors",
+    "supervisorsCount": "{{count}} supervisors",
+    "noSupervisors": "No supervisors assigned",
+    "assignSupervisor": "Assign Supervisor",
+    "assignSupervisorTitle": "Assign Supervisor",
+    "assignSupervisorDescription": "Select a user to assign as supervisor of this department.",
+    "noAvailableSupervisors": "No available users to assign",
+    "assign": "Assign",
+    "removeSupervisor": "Remove {{name}} as supervisor?",
+    "removeSupervisorDescription": "This will remove the user as a supervisor of this department."
   },
   "privacy": {
     "title": "Privacy Policy",

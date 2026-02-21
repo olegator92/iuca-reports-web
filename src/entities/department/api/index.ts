@@ -8,6 +8,8 @@ export {
     useCreateDepartmentMutation,
     useUpdateDepartmentMutation,
     useDeleteDepartmentMutation,
-    useRestoreDepartmentMutation
+    useRestoreDepartmentMutation,
+    useAssignDepartmentSupervisorMutation,
+    useRemoveDepartmentSupervisorMutation
 } from "./departmentApi";
 export type { GetDepartmentsParams, GetDepartmentsResult } from "./departmentApi";

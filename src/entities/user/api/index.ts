@@ -12,7 +12,8 @@ export {
     useRemoveRoleFromUserMutation,
     useAssignPositionToUserMutation,
     useRemovePositionFromUserMutation,
-    useGetUserPermissionsQuery
+    useGetUserPermissionsQuery,
+    useGetAllUsersQuery
 } from "./userApi";
 
 export type { GetUsersParams, GetUsersResult } from "./userApi";

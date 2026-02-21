@@ -353,6 +353,16 @@ export const userApi = rtkApi.injectEndpoints({
             }),
             transformResponse: (response: ResultEnvelope<string[]>) => ensureSuccess(response).data,
             providesTags: (_result, _error, userId) => [{ type: "User", id: `${userId}-permissions` }]
+        }),
+        getAllUsers: builder.query<User[], void>({
+            query: () => ({
+                url: `${USER_ENDPOINT}/all`
+            }),
+            transformResponse: (response: ResultEnvelope<User[]>) => {
+                const { data } = ensureSuccess(response);
+                return data ?? [];
+            },
+            providesTags: [{ type: "User" as const, id: "LIST" }]
         })
     }),
     overrideExisting: false
@@ -371,7 +381,8 @@ export const {
     useRemoveRoleFromUserMutation,
     useAssignPositionToUserMutation,
     useRemovePositionFromUserMutation,
-    useGetUserPermissionsQuery
+    useGetUserPermissionsQuery,
+    useGetAllUsersQuery
 } = userApi;
 
 export type { GetUsersParams, GetUsersResult };

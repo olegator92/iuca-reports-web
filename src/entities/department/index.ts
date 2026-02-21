@@ -1,5 +1,6 @@
 export type {
     Department,
+    DepartmentSupervisor,
     CreateDepartmentDto,
     UpdateDepartmentDto,
     DepartmentListParams,
@@ -29,7 +30,9 @@ export {
     useCreateDepartmentMutation,
     useUpdateDepartmentMutation,
     useDeleteDepartmentMutation,
-    useRestoreDepartmentMutation
+    useRestoreDepartmentMutation,
+    useAssignDepartmentSupervisorMutation,
+    useRemoveDepartmentSupervisorMutation
 } from "./model";
 
 export type { GetDepartmentsParams, GetDepartmentsResult } from "./api";

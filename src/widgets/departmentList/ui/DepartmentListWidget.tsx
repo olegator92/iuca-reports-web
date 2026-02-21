@@ -210,6 +210,11 @@ const DepartmentCard = ({ department, onView, onEdit, onAddChild, onMutated }: D
                             {t("departments.subDepartmentsCount", { count: department.subDepartments.length })}
                         </Badge>
                     )}
+                    {department.supervisors.length > 0 && (
+                        <Badge variant="secondary" className="text-xs">
+                            {t("departments.supervisorsCount", { count: department.supervisors.length })}
+                        </Badge>
+                    )}
                 </div>
             </header>
         </article>

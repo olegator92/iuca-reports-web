@@ -1,4 +1,4 @@
-import type { Department, CreateDepartmentDto, UpdateDepartmentDto, DepartmentListParams, DepartmentSortField, DepartmentState } from "./types";
+import type { Department, DepartmentSupervisor, CreateDepartmentDto, UpdateDepartmentDto, DepartmentListParams, DepartmentSortField, DepartmentState } from "./types";
 import departmentReducer, {
     setPage,
     setSearchQuery,
@@ -10,7 +10,7 @@ import departmentReducer, {
     resetFilters
 } from "./departmentSlice";
 
-export type { Department, CreateDepartmentDto, UpdateDepartmentDto, DepartmentListParams, DepartmentSortField, DepartmentState };
+export type { Department, DepartmentSupervisor, CreateDepartmentDto, UpdateDepartmentDto, DepartmentListParams, DepartmentSortField, DepartmentState };
 export {
     departmentReducer,
     setPage,
@@ -33,5 +33,7 @@ export {
     useCreateDepartmentMutation,
     useUpdateDepartmentMutation,
     useDeleteDepartmentMutation,
-    useRestoreDepartmentMutation
+    useRestoreDepartmentMutation,
+    useAssignDepartmentSupervisorMutation,
+    useRemoveDepartmentSupervisorMutation
 } from "../api/departmentApi";

@@ -4,6 +4,8 @@ import type { UseFormReturn } from "react-hook-form";
 import { Button, Combobox, FormField, Input, Loader } from "@/shared/ui";
 import type { ComboboxOption } from "@/shared/ui";
 import { useGetAllDepartmentsQuery } from "@/entities/department/model";
+import type { Department } from "@/entities/department/model";
+import { AssignSupervisorButton, DepartmentSupervisorsList } from "@/features/department-supervisors";
 import type { DepartmentFormData } from "../model/validation";
 
 type DepartmentFormMode = "create" | "edit" | "view";
@@ -16,6 +18,7 @@ interface DepartmentFormProps {
     submitLabel?: string;
     isLoading?: boolean;
     currentDepartmentId?: string;
+    department?: Department;
     onSubmit: (e: React.FormEvent) => void;
     onCancel?: () => void;
     onModeChange?: (mode: "view" | "edit") => void;
@@ -30,6 +33,7 @@ export const DepartmentForm = ({
     submitLabel,
     isLoading,
     currentDepartmentId,
+    department,
     onSubmit,
     onCancel,
     onModeChange,
@@ -65,6 +69,7 @@ export const DepartmentForm = ({
     }
 
     const nameError = form.formState.errors.name?.message;
+    const showSupervisorsSection = !isCreateMode && department;
 
     return (
         <form id="department-form" onSubmit={onSubmit} className="space-y-4">
@@ -101,6 +106,25 @@ export const DepartmentForm = ({
                     />
                 )}
             </FormField>
+
+            {showSupervisorsSection && (
+                <div className="space-y-4 pt-6 border-t border-border">
+                    <section aria-label={t("departments.supervisorsSection")}>
+                        <div className="flex items-center justify-between gap-2">
+                            <h3 className="text-sm font-medium">
+                                {t("departments.supervisorsLabel")}
+                            </h3>
+                            {mode === "edit" && (
+                                <AssignSupervisorButton department={department} />
+                            )}
+                        </div>
+                        <div className="mt-3">
+                            <DepartmentSupervisorsList department={department} />
+                        </div>
+                    </section>
+                </div>
+            )}
+
             {!hideFooter && (
                 <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:justify-end">
                     {onCancel ? (

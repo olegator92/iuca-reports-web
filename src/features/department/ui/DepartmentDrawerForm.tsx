@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { useCreateDepartmentMutation, useUpdateDepartmentMutation } from "@/entities/department/model";
+import { useGetDepartmentByIdQuery } from "@/entities/department/model";
 import type { Department } from "@/entities/department/model";
 import { departmentFormSchema, type DepartmentFormData } from "../model/validation";
 import { DepartmentForm } from "./DepartmentForm";
@@ -90,6 +91,10 @@ const ExistingDepartmentDrawerForm = ({
     const { t } = useTranslation();
     const [updateDepartment, { isLoading: isSubmitting }] = useUpdateDepartmentMutation();
 
+    // Subscribe to live cache so supervisor changes reflect immediately in the drawer
+    const { data: liveDepartment } = useGetDepartmentByIdQuery(department.id);
+    const effectiveDepartment = liveDepartment ?? department;
+
     const defaultValues: DepartmentFormData = {
         name: department.name,
         parentDepartmentId: department.parentDepartmentId
@@ -156,6 +161,7 @@ const ExistingDepartmentDrawerForm = ({
             submitLabel={submitLabel ?? t("departments.editTitle")}
             hideFooter={hideFooter}
             currentDepartmentId={department.id}
+            department={effectiveDepartment}
         />
     );
 };

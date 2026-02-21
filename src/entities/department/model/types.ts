@@ -1,9 +1,16 @@
+export interface DepartmentSupervisor {
+    userId: string;
+    fullName: string;
+    email: string;
+}
+
 export interface Department {
     id: string;
     name: string;
     parentDepartmentId: string | null;
     parentDepartmentName: string | null;
     subDepartments: Department[];
+    supervisors: DepartmentSupervisor[];
     createdBy: string | null;
     createdAt: string;
     updatedBy: string | null;
