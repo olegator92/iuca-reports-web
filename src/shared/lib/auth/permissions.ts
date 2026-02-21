@@ -21,6 +21,10 @@ export const PERMISSIONS = {
     DEPARTMENT_VIEW: "Department.View",
     DEPARTMENT_EDIT: "Department.Edit",
 
+    // Position permissions
+    POSITION_VIEW: "Position.View",
+    POSITION_EDIT: "Position.Edit",
+
     // Role permissions
     ROLE_VIEW: "Role.View",
     ROLE_EDIT: "Role.Edit",
@@ -135,6 +139,10 @@ export const hasPermission = (user: CurrentUser | null, permission: Permission):
             PERMISSIONS.USER_VIEW,
             PERMISSIONS.USER_EDIT,
             PERMISSIONS.ROLE_VIEW,
+            PERMISSIONS.DEPARTMENT_VIEW,
+            PERMISSIONS.DEPARTMENT_EDIT,
+            PERMISSIONS.POSITION_VIEW,
+            PERMISSIONS.POSITION_EDIT,
             PERMISSIONS.MENU_MANAGEMENT,
         ];
         return (managerPermissions as Permission[]).includes(permission);

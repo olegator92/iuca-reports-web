@@ -20,7 +20,9 @@
     "filters": "Filters",
     "showing": "Showing",
     "showingCount": "{{label}} {{loaded}} of {{total}}",
-    "reload": "Reload"
+    "reload": "Reload",
+    "createdAt": "Created",
+    "updatedAt": "Updated"
   },
   "navigation": {
     "title": "Navigation",
@@ -29,6 +31,7 @@
     "roles": "Roles",
     "users": "Users",
     "departments": "Departments",
+    "positions": "Positions",
     "toggleMenu": "Toggle navigation menu",
     "termsAndPolicies": "Terms & Policies",
     "privacyPolicy": "Privacy Policy",
@@ -408,6 +411,88 @@
     "noRoles": "No roles assigned",
     "noAvailableRoles": "All available roles have been assigned to this user",
     "systemRole": "System Role"
+  },
+  "positions": {
+    "pageTitle": "Positions",
+    "pageSubtitle": "Manage positions across departments and assign roles to users.",
+    "title": "Positions",
+    "assignPosition": "Assign position",
+    "assignPositionTitle": "Assign position to user",
+    "assignPositionDescription": "Select a position to assign to this user:",
+    "assign": "Assign",
+    "removePosition": "Remove {{position}} position",
+    "removePositionDescription": "Are you sure you want to remove the position \"{{position}}\" from this user?",
+    "noPositions": "No positions assigned",
+    "noAvailablePositions": "All available positions have been assigned to this user",
+    "sectionTitle": "Positions",
+    "deletedBadge": "Deleted",
+    "edit": "Edit",
+    "delete": "Delete",
+    "restore": "Restore",
+    "nameLabel": "Position Name",
+    "namePlaceholder": "Enter position name",
+    "departmentLabel": "Department",
+    "departmentPlaceholder": "Select department",
+    "createSubmit": "Create position",
+    "updateSubmit": "Save changes",
+    "cancel": "Cancel",
+    "editMode": "Edit",
+    "drawer": {
+      "createTitle": "Create position",
+      "viewTitle": "Position details",
+      "editTitle": "Edit position",
+      "savePosition": "Save position",
+      "saveChanges": "Save changes"
+    },
+    "deleteDialog": {
+      "title": "Delete position",
+      "description": "This will soft delete the position. It can be restored later.",
+      "warningAssignedUsers": "Users assigned to this position will remain assigned, but the position will be hidden from active listings.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "restoreDialog": {
+      "title": "Restore position",
+      "description": "This will restore the position and make it visible in active listings.",
+      "confirm": "Restore",
+      "cancel": "Cancel"
+    },
+    "list": {
+      "quickAction": "Quick Action",
+      "addNew": "Add new position",
+      "addNewDescription": "Create a new position for your department structure.",
+      "createPosition": "Create position",
+      "actionsAlt": "Open position actions",
+      "loadingMore": "Loading more positions"
+    },
+    "filters": {
+      "title": "Filters",
+      "resetFilters": "Clear",
+      "deletedPositions": "Deleted Positions",
+      "excludeDeleted": "Exclude",
+      "includeDeleted": "Include",
+      "activeFilters": "Active filters",
+      "tabFilters": "Filters",
+      "tabSorting": "Sorting",
+      "sortField": "Sort by",
+      "sortDirection": "Direction",
+      "sortFieldNone": "None",
+      "sortFieldName": "Name",
+      "sortFieldCreated": "Created date",
+      "sortFieldUpdated": "Updated date",
+      "ascending": "Ascending",
+      "descending": "Descending"
+    }
+  },
+  "positionForm": {
+    "errorNameRequired": "Position name is required",
+    "errorNameTooLong": "Position name must be 256 characters or less",
+    "errorDepartmentRequired": "Department is required",
+    "positionCreated": "Position created successfully",
+    "positionUpdated": "Position updated successfully",
+    "positionDeleted": "Position deleted successfully",
+    "positionRestored": "Position restored successfully",
+    "noChanges": "No changes to save"
   },
   "deleteUser": {
     "title": "Delete user",

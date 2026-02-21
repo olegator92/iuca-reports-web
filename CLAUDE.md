@@ -135,17 +135,19 @@ src/
 │   ├── stores/            # Redux store configuration
 │   │   └── mainStore/     # Combined store with slices
 │   └── styles/            # Global styles and Tailwind imports
-├── entities/              # Business entities (5 total)
+├── entities/              # Business entities (7 total)
 │   ├── account/          # User account management (minimal)
 │   ├── auth/             # Authentication entity (JWT, OAuth, session)
+│   ├── department/       # Department management (CRUD)
+│   ├── position/         # Position management (CRUD + department relationship)
 │   ├── role/             # Role management (CRUD + permissions)
 │   ├── template/         # Template CRUD entity (reference implementation)
-│   └── user/             # User management (CRUD + roles + status)
+│   └── user/             # User management (CRUD + roles + status + positions)
 │   # Each entity contains:
 │   #   ├── api/          # RTK Query endpoints
 │   #   ├── model/        # Types, interfaces, state slices
 │   #   └── ui/           # Entity-specific UI components
-├── features/              # User features and interactions (34 total)
+├── features/              # User features and interactions (52 total)
 │   # Authentication Features (8)
 │   ├── auth-login/       # Login form and logic
 │   ├── auth-register/    # Registration form
@@ -168,7 +170,7 @@ src/
 │   ├── template-search/  # Search templates
 │   ├── template-filters/ # Filter & sort templates
 │   └── template-pagination/ # Pagination controls
-│   # User Features (8)
+│   # User Features (9)
 │   ├── user/             # User drawer form (create/edit/view)
 │   ├── user-create/      # Create user
 │   ├── user-update/      # Update user
@@ -176,13 +178,33 @@ src/
 │   ├── user-search/      # Search users
 │   ├── user-filters/     # Filter & sort users
 │   ├── user-roles/       # Assign/remove roles from users
-│   └── user-status/      # Enable/disable user account
+│   ├── user-status/      # Enable/disable user account
+│   └── user-positions/   # Assign/remove positions from users
 │   # Role Features (5)
 │   ├── role/             # Role drawer form (create/edit/view)
 │   ├── role-create/      # Create role
 │   ├── role-update/      # Update role
 │   ├── role-delete/      # Delete role
 │   └── role-permissions/ # Manage role permissions (assign/remove)
+│   # Department Features (9)
+│   ├── department/       # Department drawer form (create/edit/view)
+│   ├── department-create/# Create department
+│   ├── department-update/# Update department
+│   ├── department-delete/# Delete department (soft delete)
+│   ├── department-restore/ # Restore deleted department
+│   ├── department-search/# Search departments
+│   ├── department-filters/ # Filter & sort departments
+│   ├── department-manager/ # Assign department manager
+│   └── department-visibility/ # Manage department visibility
+│   # Position Features (9)
+│   ├── position/         # Position drawer form (create/edit/view)
+│   ├── position-create/  # Create position
+│   ├── position-update/  # Update position
+│   ├── position-delete/  # Delete position (soft delete)
+│   ├── position-restore/ # Restore deleted position
+│   ├── position-search/  # Search positions
+│   ├── position-filters/ # Filter & sort positions
+│   └── position-department/ # Link position to department
 │   # UI Features (2)
 │   ├── theme-switcher/   # Dark/light mode toggle (mobile-optimized)
 │   └── language-switcher/# Language selection (mobile-optimized)
@@ -190,28 +212,32 @@ src/
 │   #   ├── ui/           # Feature UI components
 │   #   ├── model/        # Feature logic, hooks, validation
 │   #   └── index.ts      # Public API (barrel export)
-├── widgets/               # Composite UI blocks (7 total)
+├── widgets/               # Composite UI blocks (9 total)
 │   ├── header/           # App header with navigation, theme/language switchers
 │   ├── sidebar/          # Sidebar navigation with collapsible groups (Zustand)
 │   ├── crudPage/         # Reusable CRUD page layout (mobile-optimized)
 │   ├── crudList/         # Generic list rendering component
 │   ├── templateList/     # Template list with infinite scroll
 │   ├── userList/         # User list with infinite scroll
-│   └── roleList/         # Role list widget
-├── pages/                 # Route pages (16 total)
+│   ├── roleList/         # Role list widget
+│   ├── departmentList/   # Department list with infinite scroll
+│   └── positionList/     # Position list with infinite scroll
+├── pages/                 # Route pages (18 total)
 │   # Authentication Pages (5)
 │   ├── LoginPage/        # Login with email/password and Google OAuth
 │   ├── RegisterPage/     # User registration
 │   ├── VerifyEmailPage/  # Email verification from token
 │   ├── ForgotPasswordPage/ # Initiate password reset
 │   └── ResetPasswordPage/  # Reset password with token
-│   # Main Application Pages (6)
+│   # Main Application Pages (8)
 │   ├── HomePage/         # Welcome page
 │   ├── ProfilePage/      # User profile viewing and editing
 │   ├── TemplatesPage/    # Full CRUD for templates with filters/sorting
 │   ├── TemplateUpdatePage/ # Dedicated template edit page
 │   ├── UsersPage/        # Full CRUD for users with filters/sorting
-│   └── RolesPage/        # Full CRUD for roles with permissions
+│   ├── RolesPage/        # Full CRUD for roles with permissions
+│   ├── DepartmentsPage/  # Full CRUD for departments with manager assignment
+│   └── PositionsPage/    # Full CRUD for positions with department linking
 │   # Informational Pages (2)
 │   ├── PrivacyPolicyPage/ # Privacy policy content
 │   └── TermsOfUsePage/   # Terms of use content
@@ -417,12 +443,48 @@ export const entityApi = baseApi.injectEndpoints({
 export const { useGetEntityQuery, useCreateEntityMutation } = entityApi;
 ```
 
+### API Endpoints by Entity
+
+#### Position API Endpoints
+```typescript
+// Position CRUD operations
+GET    /positions                  # Get paginated positions (supports departmentId, searchQuery, sortBy, sortDescending, includeDeleted)
+GET    /positions/all              # Get all active positions (no pagination)
+GET    /positions/{id}             # Get position by ID (includes department object)
+POST   /positions                  # Create new position (requires: name, departmentId)
+PUT    /positions/{id}             # Update position (can update: name, departmentId)
+DELETE /positions/{id}             # Soft delete position
+POST   /positions/{id}/restore     # Restore soft-deleted position
+
+// User-Position assignment operations
+GET    /users/{userId}/positions   # Get all positions assigned to user
+POST   /users/{userId}/positions/{positionId}    # Assign position to user
+DELETE /users/{userId}/positions/{positionId}    # Remove position from user
+```
+
+#### Department API Endpoints
+```typescript
+// Department CRUD operations
+GET    /departments                # Get paginated departments (supports searchQuery, sortBy, sortDescending, includeDeleted)
+GET    /departments/all            # Get all active departments (no pagination)
+GET    /departments/{id}           # Get department by ID
+POST   /departments                # Create new department
+PUT    /departments/{id}           # Update department
+DELETE /departments/{id}           # Soft delete department
+POST   /departments/{id}/restore   # Restore soft-deleted department
+PUT    /departments/{id}/manager   # Assign manager to department
+PUT    /departments/{id}/visibility # Toggle department visibility
+```
+
 ### Cache Tags
 RTK Query uses tags for cache invalidation:
 - `Template` - Template data (list and individual)
 - `User` - User data (list and individual)
 - `UserPermissions` - User permission data
+- `UserPositions` - User position assignments
 - `Role` - Role data (list and individual)
+- `Department` - Department data (list and individual)
+- `Position` - Position data (list and individual)
 - `CurrentUser` - Current authenticated user profile
 - `Auth` - Authentication-related data
 
@@ -441,6 +503,8 @@ export const ROUTES = {
   TEMPLATE_EDIT: '/templates/:id/edit',
   ROLES: '/roles',
   USERS: '/users',
+  DEPARTMENTS: '/departments',
+  POSITIONS: '/positions',
   VERIFY_EMAIL: '/verify-email',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
@@ -509,6 +573,23 @@ RootState = {
     pageSize: number;
     searchQuery: string;
   },
+  department: {
+    page: number;
+    pageSize: number;
+    searchQuery: string;
+    includeDeleted: boolean;
+    sortBy: 'name' | 'createdAt' | 'updatedAt' | null;
+    sortDescending: boolean;
+  },
+  position: {
+    page: number;
+    pageSize: number;
+    searchQuery: string;
+    filterDepartmentId: string | null;
+    includeDeleted: boolean;
+    sortBy: 'name' | 'createdAt' | 'updatedAt' | null;
+    sortDescending: boolean;
+  },
   [rtkApi.reducerPath]: {
     // RTK Query cache with all API endpoints
   }
@@ -565,7 +646,15 @@ Located at [src/app/styles/index.css](src/app/styles/index.css):
 
 ### Authorization (RBAC)
 - **Permissions**: Defined in `PERMISSIONS` constant
+  - Template: `TEMPLATE_VIEW`, `TEMPLATE_EDIT`
+  - User: `USER_VIEW`, `USER_EDIT`
+  - Role: `ROLE_VIEW`, `ROLE_EDIT`
+  - Department: `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`
+  - Position: `POSITION_VIEW`, `POSITION_EDIT`
 - **System Roles**: Admin, Manager, User
+  - **Admin**: All permissions (`"*"` wildcard)
+  - **Manager**: `TEMPLATE_VIEW`, `TEMPLATE_EDIT`, `USER_VIEW`, `USER_EDIT`, `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`, `POSITION_VIEW`, `POSITION_EDIT`
+  - **User**: `TEMPLATE_VIEW`
 - **Permission Checks**:
   - Route-level: `ProtectedRoute` with `requiredPermissions`
   - Component-level: `ProtectedContent` wrapper
@@ -573,7 +662,7 @@ Located at [src/app/styles/index.css](src/app/styles/index.css):
 - **Wildcard Permission**: `"*"` grants all access
 
 ### CRUD Pattern (Template as Reference Implementation)
-All CRUD entities (Template, User, Role) follow this pattern:
+All CRUD entities (Template, User, Role, Department, Position) follow this pattern:
 
 1. **List**:
    - Infinite scroll with Intersection Observer
@@ -611,10 +700,21 @@ All CRUD entities (Template, User, Role) follow this pattern:
 **Additional Patterns (User Entity):**
 - **Status Management**: Enable/disable user accounts with status switcher
 - **Role Assignment**: Assign/remove roles to/from users
+- **Position Assignment**: Assign/remove positions to/from users
 - **Permission Viewing**: View all permissions for a user
 
 **Additional Patterns (Role Entity):**
 - **Permission Management**: Assign/remove permissions to/from roles with checkbox UI
+
+**Additional Patterns (Department Entity):**
+- **Manager Assignment**: Assign a manager (user) to a department
+- **Visibility Management**: Toggle department visibility
+- **Position Linking**: View and manage positions belonging to the department
+
+**Additional Patterns (Position Entity):**
+- **Department Linking**: Each position belongs to exactly one department
+- **User Assignment**: View and manage users assigned to the position
+- **Cross-Department Assignment**: Users can be assigned to positions from different departments
 
 ### Form Validation Pattern
 All forms use React Hook Form + Zod:
@@ -696,15 +796,50 @@ useEffect(() => {
 ```
 
 ### Sorting and Filtering Pattern
-Templates and Users support multi-field sorting:
+Templates, Users, Departments, and Positions support multi-field sorting and filtering:
 
 1. **Tabbed UI**: Tabs component for switching between filters and sorting
 2. **Sort Fields**:
    - Template: name, createdAt, updatedAt
    - User: fullName, email, createdAt
-3. **Sort Direction**: Ascending (A→Z, oldest→newest) or Descending (Z→A, newest→oldest)
-4. **State Management**: Sort preferences stored in Redux slice
-5. **Mobile Optimization**: Collapsible panel with tabs for filter/sort selection
+   - Department: name, createdAt, updatedAt
+   - Position: name, createdAt, updatedAt
+3. **Filter Options**:
+   - Template: Show deleted toggle
+   - User: Active status, role name
+   - Department: Show deleted toggle
+   - Position: Department filter, show deleted toggle
+4. **Sort Direction**: Ascending (A→Z, oldest→newest) or Descending (Z→A, newest→oldest)
+5. **State Management**: Sort and filter preferences stored in Redux slice
+6. **Mobile Optimization**: Collapsible panel with tabs for filter/sort selection
+
+### Position-Department Relationship
+Positions are tightly coupled with departments in the system:
+
+1. **One-to-Many Relationship**: Each position belongs to exactly one department
+2. **Department Selection**: Required field when creating/editing a position
+3. **Filtering by Department**: Positions can be filtered by department on the positions list page
+4. **Cascading Operations**: When a department is soft-deleted, its positions remain but can be filtered out
+5. **Department Context**: Position cards and forms display the associated department name
+6. **API Endpoints**:
+   - `GET /positions` - Supports `departmentId` query parameter for filtering
+   - `GET /positions/{id}` - Includes full department object in response
+   - `POST /positions` - Requires `departmentId` in request body
+   - `PUT /positions/{id}` - Can update `departmentId` to move position to different department
+
+### User-Position Assignment
+Users can be assigned to multiple positions across different departments:
+
+1. **Many-to-Many Relationship**: Users can have multiple positions, positions can have multiple users
+2. **Cross-Department Assignment**: Users can hold positions from different departments simultaneously
+3. **Assignment UI**: Checkbox-based multi-select interface on user form
+4. **Position Display**: User cards show assigned positions with department badges
+5. **API Endpoints**:
+   - `GET /users/{userId}/positions` - Fetch all positions for a user
+   - `POST /users/{userId}/positions/{positionId}` - Assign position to user
+   - `DELETE /users/{userId}/positions/{positionId}` - Remove position from user
+6. **Cache Invalidation**: Position assignments invalidate `UserPositions` and `User` cache tags
+7. **Permission Requirements**: Requires `USER_EDIT` permission for assignment operations
 
 ## Key Design Decisions
 

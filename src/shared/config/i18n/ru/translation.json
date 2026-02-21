@@ -20,7 +20,9 @@
     "filters": "Фильтры",
     "showing": "Показано",
     "showingCount": "{{label}} {{loaded}} из {{total}}",
-    "reload": "Обновить"
+    "reload": "Обновить",
+    "createdAt": "Создано",
+    "updatedAt": "Обновлено"
   },
   "navigation": {
     "title": "Навигация",
@@ -29,6 +31,7 @@
     "roles": "Роли",
     "users": "Пользователи",
     "departments": "Подразделения",
+    "positions": "Должности",
     "toggleMenu": "Открыть меню навигации",
     "termsAndPolicies": "Условия и политики",
     "privacyPolicy": "Политика конфиденциальности",
@@ -408,6 +411,88 @@
     "noRoles": "Роли не назначены",
     "noAvailableRoles": "Все доступные роли уже назначены этому пользователю",
     "systemRole": "Системная роль"
+  },
+  "positions": {
+    "pageTitle": "Должности",
+    "pageSubtitle": "Управляйте должностями в подразделениях и назначайте роли пользователям.",
+    "title": "Должности",
+    "assignPosition": "Назначить должность",
+    "assignPositionTitle": "Назначить должность пользователю",
+    "assignPositionDescription": "Выберите должность для назначения этому пользователю:",
+    "assign": "Назначить",
+    "removePosition": "Удалить должность {{position}}",
+    "removePositionDescription": "Вы уверены, что хотите снять должность \"{{position}}\" с этого пользователя?",
+    "noPositions": "Должности не назначены",
+    "noAvailablePositions": "Все доступные должности уже назначены этому пользователю",
+    "sectionTitle": "Должности",
+    "deletedBadge": "Удалено",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "restore": "Восстановить",
+    "nameLabel": "Название должности",
+    "namePlaceholder": "Введите название должности",
+    "departmentLabel": "Подразделение",
+    "departmentPlaceholder": "Выберите подразделение",
+    "createSubmit": "Создать должность",
+    "updateSubmit": "Сохранить изменения",
+    "cancel": "Отмена",
+    "editMode": "Редактировать",
+    "drawer": {
+      "createTitle": "Создать должность",
+      "viewTitle": "Детали должности",
+      "editTitle": "Редактировать должность",
+      "savePosition": "Сохранить должность",
+      "saveChanges": "Сохранить изменения"
+    },
+    "deleteDialog": {
+      "title": "Удалить должность",
+      "description": "Это действие выполнит мягкое удаление должности. Её можно будет восстановить позже.",
+      "warningAssignedUsers": "Пользователи, назначенные на эту должность, останутся назначенными, но должность будет скрыта из активных списков.",
+      "confirm": "Удалить",
+      "cancel": "Отмена"
+    },
+    "restoreDialog": {
+      "title": "Восстановить должность",
+      "description": "Это действие восстановит должность и сделает её видимой в активных списках.",
+      "confirm": "Восстановить",
+      "cancel": "Отмена"
+    },
+    "list": {
+      "quickAction": "Быстрое действие",
+      "addNew": "Добавить новую должность",
+      "addNewDescription": "Создайте новую должность для вашей структуры подразделений.",
+      "createPosition": "Создать должность",
+      "actionsAlt": "Открыть действия с должностью",
+      "loadingMore": "Загрузка дополнительных должностей"
+    },
+    "filters": {
+      "title": "Фильтры",
+      "resetFilters": "Очистить",
+      "deletedPositions": "Удалённые должности",
+      "excludeDeleted": "Исключить",
+      "includeDeleted": "Включить",
+      "activeFilters": "Активные фильтры",
+      "tabFilters": "Фильтры",
+      "tabSorting": "Сортировка",
+      "sortField": "Сортировать по",
+      "sortDirection": "Направление",
+      "sortFieldNone": "Нет",
+      "sortFieldName": "Название",
+      "sortFieldCreated": "Дата создания",
+      "sortFieldUpdated": "Дата обновления",
+      "ascending": "По возрастанию",
+      "descending": "По убыванию"
+    }
+  },
+  "positionForm": {
+    "errorNameRequired": "Название должности обязательно",
+    "errorNameTooLong": "Название должности должно быть не более 256 символов",
+    "errorDepartmentRequired": "Подразделение обязательно",
+    "positionCreated": "Должность успешно создана",
+    "positionUpdated": "Должность успешно обновлена",
+    "positionDeleted": "Должность успешно удалена",
+    "positionRestored": "Должность успешно восстановлена",
+    "noChanges": "Нет изменений для сохранения"
   },
   "deleteUser": {
     "title": "Удалить пользователя",

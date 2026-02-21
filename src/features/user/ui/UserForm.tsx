@@ -1,8 +1,10 @@
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { UseFormReturn } from "react-hook-form";
-
-import { Button, FormField, Input, Loader } from "@/shared/ui";
+import type { User } from "@/entities/user/model";
+import { AssignPositionButton, UserPositionsList } from "@/features/user-positions";
+import { Button, FormField, Input, Loader, Badge, ProtectedContent } from "@/shared/ui";
+import { PERMISSIONS } from "@/shared/lib/auth/permissions";
 // Password authentication is temporarily disabled (Google OAuth only)
 // import { PasswordInput } from "@/shared/ui";
 import type { UserFormData } from "../model/validation";
@@ -20,6 +22,7 @@ interface UserFormProps {
     onCancel?: () => void;
     onModeChange?: (mode: "view" | "edit") => void;
     hideFooter?: boolean;
+    user?: User;
 }
 
 export const UserForm = ({
@@ -33,6 +36,7 @@ export const UserForm = ({
     onCancel,
     onModeChange,
     hideFooter,
+    user,
 }: UserFormProps) => {
     const { t } = useTranslation();
     const emailInputId = useId();
@@ -46,6 +50,8 @@ export const UserForm = ({
         submitLabel ??
         (isCreateMode ? t("userForm.createSubmit") : t("userForm.updateSubmit"));
     const cancelLabel = isViewMode ? t("common.close") : t("userForm.cancel");
+
+    const showPositionsSection = !isCreateMode && user;
 
     if (isLoading) {
         return <Loader className="py-8" label={t("common.loading")} />;
@@ -105,6 +111,28 @@ export const UserForm = ({
                 />
             </FormField>
             */}
+
+            {showPositionsSection && (
+                <div className="space-y-4 pt-6 border-t border-border">
+                    <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                            <h3 className="text-base font-semibold">
+                                {t("positions.sectionTitle")}
+                            </h3>
+                            <Badge variant="secondary" className="text-xs">
+                                {user.positions.length}
+                            </Badge>
+                        </div>
+                        <ProtectedContent requiredPermissions={[PERMISSIONS.USER_EDIT]}>
+                            {mode === "edit" && (
+                                <AssignPositionButton user={user} />
+                            )}
+                        </ProtectedContent>
+                    </div>
+                    <UserPositionsList user={user} />
+                </div>
+            )}
+
             {!hideFooter && (
                 <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:justify-end">
                     {onCancel ? (

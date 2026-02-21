@@ -10,6 +10,8 @@ export {
     useDisableUserMutation,
     useAssignRoleToUserMutation,
     useRemoveRoleFromUserMutation,
+    useAssignPositionToUserMutation,
+    useRemovePositionFromUserMutation,
     useGetUserPermissionsQuery
 } from "./userApi";
 
