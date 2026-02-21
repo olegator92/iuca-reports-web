@@ -30,7 +30,8 @@ const MANAGEMENT_GROUP: NavGroup = {
     labelKey: "navigation.groups.management",
     permission: PERMISSIONS.MENU_MANAGEMENT,
     items: [
-        { to: ROUTES.USERS, labelKey: "navigation.users", permission: PERMISSIONS.USER_VIEW }
+        { to: ROUTES.USERS, labelKey: "navigation.users", permission: PERMISSIONS.USER_VIEW },
+        { to: ROUTES.DEPARTMENTS, labelKey: "navigation.departments", permission: PERMISSIONS.DEPARTMENT_VIEW }
     ]
 };
 

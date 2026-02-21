@@ -1,5 +1,6 @@
 export const ROUTES = {
     HOME: '/',
+    DEPARTMENTS: '/departments',
     TEMPLATES: '/templates',
     TEMPLATE_EDIT: '/templates/:id/edit',
     ROLES: '/roles',

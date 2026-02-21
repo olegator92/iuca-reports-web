@@ -5,6 +5,7 @@ import { TemplatesPage } from '@/pages/TemplatesPage';
 import { TemplateEditPage } from '@/pages/TemplateUpdatePage';
 import { RolesPage } from '@/pages/RolesPage';
 import { UsersPage } from '@/pages/UsersPage';
+import { DepartmentsPage } from '@/pages/DepartmentsPage';
 import { LoginPage } from '@/pages/LoginPage';
 // Password authentication is temporarily disabled (Google OAuth only)
 // import { RegisterPage } from '@/pages/RegisterPage';
@@ -125,6 +126,14 @@ export const AppRouter = () => {
                         element={
                             <ProtectedRoute requiredPermissions={[PERMISSIONS.USER_VIEW]}>
                                 <UsersPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path={ROUTES.DEPARTMENTS}
+                        element={
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DEPARTMENT_VIEW]}>
+                                <DepartmentsPage />
                             </ProtectedRoute>
                         }
                     />

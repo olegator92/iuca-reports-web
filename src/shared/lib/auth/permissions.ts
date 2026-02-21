@@ -17,6 +17,10 @@ export const PERMISSIONS = {
     USER_EDIT: "User.Edit",
     USER_ROLE_EDIT: "User.RoleEdit",
 
+    // Department permissions
+    DEPARTMENT_VIEW: "Department.View",
+    DEPARTMENT_EDIT: "Department.Edit",
+
     // Role permissions
     ROLE_VIEW: "Role.View",
     ROLE_EDIT: "Role.Edit",
