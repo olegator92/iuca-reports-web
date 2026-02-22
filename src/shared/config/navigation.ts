@@ -24,6 +24,13 @@ const HOME_ITEM: NavItem = {
     end: true
 };
 
+// Daily Notes item (available to all authenticated users)
+const DAILY_NOTES_ITEM: NavItem = {
+    to: ROUTES.DAILY_NOTES,
+    labelKey: "navigation.dailyNotes",
+    permission: PERMISSIONS.DAILY_NOTE_VIEW
+};
+
 // Navigation groups
 const MANAGEMENT_GROUP: NavGroup = {
     id: "management",
@@ -49,6 +56,7 @@ const ADMINISTRATION_GROUP: NavGroup = {
 // Main navigation configuration
 export const NAV_CONFIG: NavConfig = [
     HOME_ITEM,
+    DAILY_NOTES_ITEM,
     ADMINISTRATION_GROUP,
     MANAGEMENT_GROUP,
 ];

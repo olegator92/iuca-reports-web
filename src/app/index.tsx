@@ -35,27 +35,29 @@ function App() {
                         <LocalizationProvider>
                             <RouterProvider>
                                 <ErrorBoundaryProvider>
-                                    <div className="flex min-h-screen bg-background">
+                                    <div className="flex h-dvh overflow-hidden bg-background">
                                         <Sidebar
                                             isOpen={isSidebarOpen}
                                             onClose={closeSidebar}
                                         />
-                                        <div className="flex flex-1 flex-col">
+                                        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
                                             <Header
                                                 isSidebarOpen={isSidebarOpen}
                                                 onToggleSidebar={toggleSidebar}
                                                 onLogoClick={closeSidebar}
                                             />
-                                            <main
-                                                className={cn(
-                                                    "flex-1",
-                                                    isSidebarOpen
-                                                        ? "overflow-hidden md:overflow-y-auto"
-                                                        : "overflow-y-auto",
-                                                )}
-                                            >
-                                                <div className="mx-auto w-full max-w-6xl px-2 py-6 md:px-8">
-                                                    <AppRouter />
+                                            <main className="flex flex-1 min-h-0 flex-col overflow-hidden">
+                                                <div
+                                                    className={cn(
+                                                        "flex-1 min-h-0",
+                                                        isSidebarOpen
+                                                            ? "overflow-hidden md:overflow-y-auto"
+                                                            : "overflow-y-auto",
+                                                    )}
+                                                >
+                                                    <div className="mx-auto h-full w-full max-w-6xl px-2 py-6 md:px-8">
+                                                        <AppRouter />
+                                                    </div>
                                                 </div>
                                             </main>
                                         </div>

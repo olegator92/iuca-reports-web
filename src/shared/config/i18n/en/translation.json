@@ -27,6 +27,7 @@
   "navigation": {
     "title": "Navigation",
     "home": "Home",
+    "dailyNotes": "Daily Notes",
     "templates": "Templates",
     "roles": "Roles",
     "users": "Users",
@@ -280,6 +281,44 @@
     "requestFailed": "Request failed",
     "serverUnavailable": "Server unavailable. Please try again later.",
     "noData": "No data returned from server"
+  },
+  "dailyNotes": {
+    "pageTitle": "Daily Notes",
+    "dateHeader": {
+      "today": "Today",
+      "previousDay": "Previous day",
+      "nextDay": "Next day",
+      "selectDate": "Select date"
+    },
+    "messages": {
+      "empty": "No notes for this day. Start writing below.",
+      "noMoreOlder": "Beginning of notes for this day",
+      "loadingOlder": "Loading earlier notes...",
+      "loadMore": "Load earlier notes"
+    },
+    "input": {
+      "placeholder": "Write a note...",
+      "send": "Send",
+      "editing": "Editing message",
+      "characterCount": "{{count}}/5000"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "openMenu": "Open message actions"
+    },
+    "edited": "edited",
+    "position": {
+      "noPositions": "No positions assigned"
+    }
+  },
+  "deleteNote": {
+    "title": "Delete note",
+    "description": "This note will be removed. This action cannot be undone.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
   },
   "deleteTemplate": {
     "title": "Delete template",

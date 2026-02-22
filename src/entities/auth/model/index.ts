@@ -14,5 +14,6 @@ export type {
     UpdateProfileRequest,
     DeleteAccountRequest,
     CurrentUser,
+    CurrentUserPosition,
     AuthState
 } from "./types";
