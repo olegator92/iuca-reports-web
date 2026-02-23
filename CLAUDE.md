@@ -135,9 +135,11 @@ src/
 │   ├── stores/            # Redux store configuration
 │   │   └── mainStore/     # Combined store with slices
 │   └── styles/            # Global styles and Tailwind imports
-├── entities/              # Business entities (7 total)
+├── entities/              # Business entities (9 total)
 │   ├── account/          # User account management (minimal)
 │   ├── auth/             # Authentication entity (JWT, OAuth, session)
+│   ├── daily-note/       # Daily note entity (CRUD + pagination)
+│   ├── daily-report/     # Daily report entity (generate/edit/regenerate + Redux slice)
 │   ├── department/       # Department management (CRUD)
 │   ├── position/         # Position management (CRUD + department relationship)
 │   ├── role/             # Role management (CRUD + permissions)
@@ -205,6 +207,10 @@ src/
 │   ├── position-search/  # Search positions
 │   ├── position-filters/ # Filter & sort positions
 │   └── position-department/ # Link position to department
+│   # Daily Report Features (3)
+│   ├── daily-report-generate/    # Generate daily report (AI generation button)
+│   ├── daily-report-regenerate/  # Regenerate report (confirmation dialog + AI overwrite)
+│   └── daily-report-edit/        # Edit report content (drawer form + Zod validation)
 │   # UI Features (2)
 │   ├── theme-switcher/   # Dark/light mode toggle (mobile-optimized)
 │   └── language-switcher/# Language selection (mobile-optimized)
@@ -212,7 +218,7 @@ src/
 │   #   ├── ui/           # Feature UI components
 │   #   ├── model/        # Feature logic, hooks, validation
 │   #   └── index.ts      # Public API (barrel export)
-├── widgets/               # Composite UI blocks (9 total)
+├── widgets/               # Composite UI blocks (11 total)
 │   ├── header/           # App header with navigation, theme/language switchers
 │   ├── sidebar/          # Sidebar navigation with collapsible groups (Zustand)
 │   ├── crudPage/         # Reusable CRUD page layout (mobile-optimized)
@@ -221,15 +227,17 @@ src/
 │   ├── userList/         # User list with infinite scroll
 │   ├── roleList/         # Role list widget
 │   ├── departmentList/   # Department list with infinite scroll
-│   └── positionList/     # Position list with infinite scroll
-├── pages/                 # Route pages (18 total)
+│   ├── positionList/     # Position list with infinite scroll
+│   ├── dailyNoteChat/    # Daily notes chat interface with date navigation
+│   └── dailyReportView/  # Daily report viewer with generate/edit/regenerate actions
+├── pages/                 # Route pages (20 total)
 │   # Authentication Pages (5)
 │   ├── LoginPage/        # Login with email/password and Google OAuth
 │   ├── RegisterPage/     # User registration
 │   ├── VerifyEmailPage/  # Email verification from token
 │   ├── ForgotPasswordPage/ # Initiate password reset
 │   └── ResetPasswordPage/  # Reset password with token
-│   # Main Application Pages (8)
+│   # Main Application Pages (10)
 │   ├── HomePage/         # Welcome page
 │   ├── ProfilePage/      # User profile viewing and editing
 │   ├── TemplatesPage/    # Full CRUD for templates with filters/sorting
@@ -237,7 +245,9 @@ src/
 │   ├── UsersPage/        # Full CRUD for users with filters/sorting
 │   ├── RolesPage/        # Full CRUD for roles with permissions
 │   ├── DepartmentsPage/  # Full CRUD for departments with manager assignment
-│   └── PositionsPage/    # Full CRUD for positions with department linking
+│   ├── PositionsPage/    # Full CRUD for positions with department linking
+│   ├── DailyNotesPage/   # Daily notes chat interface
+│   └── DailyReportsPage/ # Daily reports viewer with AI generation
 │   # Informational Pages (2)
 │   ├── PrivacyPolicyPage/ # Privacy policy content
 │   └── TermsOfUsePage/   # Terms of use content
@@ -476,6 +486,16 @@ PUT    /departments/{id}/manager   # Assign manager to department
 PUT    /departments/{id}/visibility # Toggle department visibility
 ```
 
+#### Daily Report API Endpoints
+```typescript
+// Daily Report operations
+GET    /daily-reports              # Get report for a specific date (supports date query param)
+GET    /daily-reports/{id}         # Get report by ID
+POST   /daily-reports/{date}/generate  # Generate report for a date (AI generation)
+PUT    /daily-reports/{id}         # Update report content manually
+POST   /daily-reports/{id}/regenerate  # Regenerate report (AI overwrites manual edits)
+```
+
 ### Cache Tags
 RTK Query uses tags for cache invalidation:
 - `Template` - Template data (list and individual)
@@ -487,6 +507,7 @@ RTK Query uses tags for cache invalidation:
 - `Position` - Position data (list and individual)
 - `CurrentUser` - Current authenticated user profile
 - `Auth` - Authentication-related data
+- `DailyReport` - Daily report data
 
 ## Routing Structure
 
@@ -505,6 +526,8 @@ export const ROUTES = {
   USERS: '/users',
   DEPARTMENTS: '/departments',
   POSITIONS: '/positions',
+  DAILY_NOTES: '/daily-notes',
+  DAILY_REPORTS: '/daily-reports',
   VERIFY_EMAIL: '/verify-email',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
@@ -590,6 +613,9 @@ RootState = {
     sortBy: 'name' | 'createdAt' | 'updatedAt' | null;
     sortDescending: boolean;
   },
+  dailyReport: {
+    currentDate: string;  // yyyy-MM-dd, defaults to today
+  },
   [rtkApi.reducerPath]: {
     // RTK Query cache with all API endpoints
   }
@@ -651,10 +677,12 @@ Located at [src/app/styles/index.css](src/app/styles/index.css):
   - Role: `ROLE_VIEW`, `ROLE_EDIT`
   - Department: `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`
   - Position: `POSITION_VIEW`, `POSITION_EDIT`
+  - Daily Note: `DAILY_NOTE_VIEW`
+  - Daily Report: `DAILY_REPORT_VIEW`, `DAILY_REPORT_EDIT`
 - **System Roles**: Admin, Manager, User
   - **Admin**: All permissions (`"*"` wildcard)
-  - **Manager**: `TEMPLATE_VIEW`, `TEMPLATE_EDIT`, `USER_VIEW`, `USER_EDIT`, `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`, `POSITION_VIEW`, `POSITION_EDIT`
-  - **User**: `TEMPLATE_VIEW`
+  - **Manager**: `TEMPLATE_VIEW`, `TEMPLATE_EDIT`, `USER_VIEW`, `USER_EDIT`, `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`, `POSITION_VIEW`, `POSITION_EDIT`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`, `DAILY_REPORT_EDIT`
+  - **User**: `TEMPLATE_VIEW`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`
 - **Permission Checks**:
   - Route-level: `ProtectedRoute` with `requiredPermissions`
   - Component-level: `ProtectedContent` wrapper

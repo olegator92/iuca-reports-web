@@ -31,6 +31,13 @@ const DAILY_NOTES_ITEM: NavItem = {
     permission: PERMISSIONS.DAILY_NOTE_VIEW
 };
 
+// Daily Reports item
+const DAILY_REPORTS_ITEM: NavItem = {
+    to: ROUTES.DAILY_REPORTS,
+    labelKey: "navigation.dailyReports",
+    permission: PERMISSIONS.DAILY_REPORT_VIEW
+};
+
 // Navigation groups
 const MANAGEMENT_GROUP: NavGroup = {
     id: "management",
@@ -57,6 +64,7 @@ const ADMINISTRATION_GROUP: NavGroup = {
 export const NAV_CONFIG: NavConfig = [
     HOME_ITEM,
     DAILY_NOTES_ITEM,
+    DAILY_REPORTS_ITEM,
     ADMINISTRATION_GROUP,
     MANAGEMENT_GROUP,
 ];

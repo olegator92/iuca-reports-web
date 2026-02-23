@@ -7,6 +7,7 @@ export const ROUTES = {
     ROLES: '/roles',
     USERS: '/users',
     DAILY_NOTES: '/daily-notes',
+    DAILY_REPORTS: '/daily-reports',
     LOGIN: '/login',
     REGISTER: '/register',
     VERIFY_EMAIL: '/verify-email',

@@ -6,6 +6,7 @@ import { userReducer } from "@/entities/user/model";
 import { departmentReducer } from "@/entities/department/model";
 import { positionReducer } from "@/entities/position";
 import { dailyNoteReducer } from "@/entities/daily-note";
+import { dailyReportReducer } from "@/entities/daily-report";
 import { rtkApi } from "@/shared/api";
 
 export const rootReducer = combineReducers({
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers({
     department: departmentReducer,
     position: positionReducer,
     dailyNote: dailyNoteReducer,
+    dailyReport: dailyReportReducer,
     [rtkApi.reducerPath]: rtkApi.reducer
 });

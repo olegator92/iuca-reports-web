@@ -28,6 +28,7 @@
     "title": "Navigation",
     "home": "Home",
     "dailyNotes": "Daily Notes",
+    "dailyReports": "Daily Reports",
     "templates": "Templates",
     "roles": "Roles",
     "users": "Users",
@@ -828,6 +829,57 @@
     "contact": {
       "title": "Contact Information",
       "content": "If you have any questions about these Terms, please contact us at helpdesk@iuca.kg or Kyrgyz Republic, Tokmok city, Shamsinskaya 2."
+    }
+  },
+  "dailyReports": {
+    "title": "Daily Report",
+    "position": {
+      "noPositions": "No positions assigned"
+    },
+    "dateHeader": {
+      "today": "Today",
+      "prev": "Previous day",
+      "next": "Next day"
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "generated": "Generated"
+    },
+    "actions": {
+      "generate": "Generate",
+      "edit": "Edit",
+      "regenerate": "Regenerate",
+      "copy": "Copy",
+      "copied": "Copied!"
+    },
+    "noReport": "No notes exist for this date — report has not been created yet.",
+    "notGenerated": "Notes exist for this date but the report has not been generated yet.",
+    "unprocessedUpdates": {
+      "banner": "New notes have been added since the last report generation.",
+      "regenerateHint": "Regenerate the report to include the latest notes."
+    },
+    "editDrawer": {
+      "title": "Edit Report",
+      "statusLabel": "Status",
+      "contentLabel": "Report Content",
+      "save": "Save",
+      "close": "Close",
+      "validation": {
+        "required": "Content is required.",
+        "tooLong": "Content must be 20,000 characters or fewer."
+      }
+    },
+    "generate": {
+      "success": "Report generated successfully."
+    },
+    "regenerate": {
+      "success": "Report regenerated successfully.",
+      "confirmTitle": "Regenerate Report?",
+      "confirmDescription": "This will overwrite any manual edits you have made. The AI will re-generate the report content based on the latest daily notes. This action cannot be undone.",
+      "confirmButton": "Regenerate"
+    },
+    "edit": {
+      "success": "Report updated successfully."
     }
   }
 }

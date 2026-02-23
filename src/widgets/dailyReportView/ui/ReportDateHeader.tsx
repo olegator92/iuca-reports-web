@@ -6,16 +6,17 @@ import { Button } from "@/shared/ui";
 import { cn } from "@/shared/lib";
 import { ROUTES } from "@/shared/config/routes";
 import { useAppDispatch } from "@/app/stores/mainStore/hooks";
-import { setCurrentDate as setReportCurrentDate, useGetDailyReportByDateQuery } from "@/entities/daily-report";
+import { setCurrentDate as setNoteCurrentDate } from "@/entities/daily-note";
+import type { DailyReportStatus } from "@/entities/daily-report";
 
-interface DateHeaderProps {
+interface ReportDateHeaderProps {
     currentDate: string;
     onDateChange: (date: string) => void;
+    reportStatus?: DailyReportStatus | null;
 }
 
 const formatDate = (isoDate: string): string => {
     const [year, month, day] = isoDate.split("-").map(Number);
-    // Use UTC to avoid timezone shifts
     const date = new Date(Date.UTC(year, month - 1, day));
     return date.toLocaleDateString(undefined, {
         weekday: "long",
@@ -34,14 +35,11 @@ const offsetDate = (isoDate: string, days: number): string => {
 
 const getTodayString = (): string => new Date().toISOString().split("T")[0];
 
-export const DateHeader = ({ currentDate, onDateChange }: DateHeaderProps) => {
+export const ReportDateHeader = ({ currentDate, onDateChange, reportStatus }: ReportDateHeaderProps) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const dateInputRef = useRef<HTMLInputElement>(null);
-
-    const { data: report } = useGetDailyReportByDateQuery(currentDate);
-    const reportStatus = report?.status ?? null;
     const today = getTodayString();
 
     const handlePrev = () => onDateChange(offsetDate(currentDate, -1));
@@ -63,16 +61,16 @@ export const DateHeader = ({ currentDate, onDateChange }: DateHeaderProps) => {
             <div className="flex">
                 <button
                     type="button"
-                    onClick={() => navigate(ROUTES.DAILY_NOTES)}
-                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium bg-white/20 text-white transition-colors"
+                    onClick={() => { dispatch(setNoteCurrentDate(currentDate)); navigate(ROUTES.DAILY_NOTES); }}
+                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/15 hover:text-white transition-colors"
                 >
                     <StickyNote className="h-3.5 w-3.5" />
                     {t("navigation.dailyNotes")}
                 </button>
                 <button
                     type="button"
-                    onClick={() => { dispatch(setReportCurrentDate(currentDate)); navigate(ROUTES.DAILY_REPORTS); }}
-                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/15 hover:text-white transition-colors"
+                    onClick={() => navigate(ROUTES.DAILY_REPORTS)}
+                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium bg-white/20 text-white transition-colors"
                 >
                     <BarChart2 className="h-3.5 w-3.5" />
                     {t("navigation.dailyReports")}
@@ -96,7 +94,7 @@ export const DateHeader = ({ currentDate, onDateChange }: DateHeaderProps) => {
                 size="icon"
                 onClick={handlePrev}
                 className={cn("min-h-[48px] min-w-[48px] md:min-h-9 md:min-w-9 text-white hover:bg-white/15 hover:text-white")}
-                aria-label={t("dailyNotes.dateHeader.previousDay")}
+                aria-label={t("dailyReports.dateHeader.prev")}
             >
                 <ChevronLeft className="h-5 w-5" />
             </Button>
@@ -128,7 +126,7 @@ export const DateHeader = ({ currentDate, onDateChange }: DateHeaderProps) => {
                 size="icon"
                 onClick={handleNext}
                 className={cn("min-h-[48px] min-w-[48px] md:min-h-9 md:min-w-9 text-white hover:bg-white/15 hover:text-white disabled:text-white/40")}
-                aria-label={t("dailyNotes.dateHeader.nextDay")}
+                aria-label={t("dailyReports.dateHeader.next")}
                 disabled={currentDate >= today}
             >
                 <ChevronRight className="h-5 w-5" />

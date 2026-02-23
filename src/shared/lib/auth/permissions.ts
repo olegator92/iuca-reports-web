@@ -32,6 +32,10 @@ export const PERMISSIONS = {
     // Daily Note permissions
     DAILY_NOTE_VIEW: "DailyNote.View",
 
+    // Daily Report permissions
+    DAILY_REPORT_VIEW: "DailyReport.View",
+    DAILY_REPORT_EDIT: "DailyReport.Edit",
+
     // Menu group permissions
     MENU_ADMINISTRATION: "Menu.Administration",
     MENU_MANAGEMENT: "Menu.Management",
@@ -147,6 +151,8 @@ export const hasPermission = (user: CurrentUser | null, permission: Permission):
             PERMISSIONS.POSITION_VIEW,
             PERMISSIONS.POSITION_EDIT,
             PERMISSIONS.DAILY_NOTE_VIEW,
+            PERMISSIONS.DAILY_REPORT_VIEW,
+            PERMISSIONS.DAILY_REPORT_EDIT,
             PERMISSIONS.MENU_MANAGEMENT,
         ];
         return (managerPermissions as Permission[]).includes(permission);
@@ -154,7 +160,7 @@ export const hasPermission = (user: CurrentUser | null, permission: Permission):
 
     // Regular user permissions
     if (hasRole(user, SYSTEM_ROLES.USER)) {
-        return permission === PERMISSIONS.TEMPLATE_VIEW || permission === PERMISSIONS.DAILY_NOTE_VIEW;
+        return permission === PERMISSIONS.TEMPLATE_VIEW || permission === PERMISSIONS.DAILY_NOTE_VIEW || permission === PERMISSIONS.DAILY_REPORT_VIEW;
     }
 
     return false;
