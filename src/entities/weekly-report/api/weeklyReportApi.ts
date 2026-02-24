@@ -28,8 +28,7 @@ export const weeklyReportApi = rtkApi.injectEndpoints({
                 return { data: Array.isArray(raw) ? raw : [raw] };
             },
             extraOptions: { suppress404: true },
-            providesTags: ["WeeklyReport"],
-            refetchOnMountOrArgChange: true
+            providesTags: ["WeeklyReport"]
         }),
         getWeeklyReportById: builder.query<WeeklyReport, string>({
             query: (id) => ({

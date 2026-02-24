@@ -17,6 +17,7 @@ This document defines mandatory development rules and patterns for this project.
 - [Legal Documents](#legal-documents)
 - [Git Rules](#git-rules)
 - [Documentation Update Requirements](#documentation-update-requirements)
+- [TypeScript Strict Mode Rules](#typescript-strict-mode-rules)
 
 ---
 
@@ -854,6 +855,210 @@ return (
 - Keep previous data visible while fetching next page (no full-page loading)
 - Use skeleton placeholders (3-5 skeletons) for loading state
 - Disconnect observer on component unmount
+
+---
+
+---
+
+## TypeScript Strict Mode Rules
+
+The project uses `verbatimModuleSyntax` and strict TypeScript. The rules below address recurring build errors that break `docker compose up` and CI. Violations cause type errors that do **not** surface during `vite dev` (which skips `tsc`), but fail at build time.
+
+### Type-Only Imports
+
+When importing only types (no runtime value), use `import { type X }` syntax. This is required by `verbatimModuleSyntax`.
+
+```typescript
+// ❌ WRONG — fails build
+import { ReactNode } from "react";
+
+// ✅ CORRECT
+import { type ReactNode } from "react";
+```
+
+**Applies to:** `ReactNode`, interface/type imports across layers. If TypeScript reports `error TS1484: 'X' is a type and must be imported using a type-only import`, add the `type` keyword.
+
+---
+
+### RTK Query — `refetchOnMountOrArgChange` Placement
+
+`refetchOnMountOrArgChange` is **not** a valid property at the endpoint builder level in RTK Query 2.x. It must be passed to the hook call at the component level instead.
+
+```typescript
+// ❌ WRONG — causes TS2353 at build
+getDailyReportByDate: builder.query({
+    query: ...,
+    providesTags: [...],
+    refetchOnMountOrArgChange: true  // NOT here
+})
+
+// ✅ CORRECT — pass at the call site
+const { data } = useGetDailyReportByDateQuery(date, {
+    refetchOnMountOrArgChange: true
+});
+```
+
+---
+
+### Barrel Exports — Keep Indexes in Sync
+
+Every type and value defined in `model/types.ts` and used outside the entity **must** be re-exported through the entity's `model/index.ts` and the entity's root `index.ts`.
+
+**Checklist when adding a new type:**
+- [ ] Defined in `model/types.ts`
+- [ ] Exported from `model/index.ts`
+- [ ] Exported from `entities/<entity>/index.ts` (if consumed by other layers)
+
+Failure to do this causes `TS2305: Module has no exported member` at build time even though your editor may resolve it via path aliases.
+
+---
+
+### Zod Schemas + `zodResolver` — Avoid `.default()` in Schema
+
+In `@hookform/resolvers` v5.x with Zod 4, `zodResolver` uses the **input** type (before transformation) for `TFieldValues`. Fields with `.default()` have input type `T | undefined`, which conflicts with the form's generic type and causes a `Resolver` type assignment error.
+
+**Rule:** Do not use `.default()` or `.optional().default()` in Zod schemas passed to `zodResolver`. Instead, provide default values in `useForm`'s `defaultValues` option (which is already required for controlled inputs).
+
+```typescript
+// ❌ WRONG — causes TS2322 on zodResolver
+const schema = z.object({
+    rememberMe: z.boolean().default(false),
+    reason: z.string().optional().default("")
+});
+
+// ✅ CORRECT — schema defines shape only; defaults live in useForm
+const schema = z.object({
+    rememberMe: z.boolean(),
+    reason: z.string()
+});
+
+useForm({
+    resolver: zodResolver(schema),
+    defaultValues: { rememberMe: false, reason: "" }
+});
+```
+
+---
+
+### React 19 — `useRef` Returns `RefObject<T | null>`
+
+In React 19, `useRef<T>(null)` returns `RefObject<T | null>`, not `RefObject<T>`. Component prop types that accept refs must reflect this.
+
+```typescript
+// ❌ WRONG — causes TS2322 when a React 19 ref is passed
+interface Props {
+    containerRef: React.RefObject<HTMLDivElement>;
+}
+
+// ✅ CORRECT
+interface Props {
+    containerRef: React.RefObject<HTMLDivElement | null>;
+}
+```
+
+---
+
+### API Request Types — Only Pass Fields the Type Declares
+
+When calling an RTK Query mutation, only pass properties that exist on the request type. Do not pass extra fields from form state (e.g., `confirmPassword`) that are only needed for frontend validation.
+
+```typescript
+// ❌ WRONG — ChangePasswordRequest has no confirmPassword field
+await changePassword({
+    currentPassword: data.currentPassword,
+    newPassword: data.newPassword,
+    confirmPassword: data.confirmPassword  // frontend-only field
+}).unwrap();
+
+// ✅ CORRECT — strip frontend-only fields before the API call
+await changePassword({
+    currentPassword: data.currentPassword,
+    newPassword: data.newPassword
+}).unwrap();
+```
+
+---
+
+### Avoid Duplicate Keys in Object Spreads
+
+When building a fallback object that includes a spread of `args`, do not also explicitly include a field that already exists in `args`.
+
+```typescript
+// ❌ WRONG — 'id' appears twice (TS2783)
+const fallback = { id: args.id, ...args };
+
+// ✅ CORRECT — args already contains id
+const fallback = { ...args };
+```
+
+---
+
+### Remove Unused Declarations Before Committing
+
+The following patterns cause `TS6133` errors and fail the build:
+- Variables declared but never read (e.g., `const isDrawerOpen = ...`)
+- Imported names that are never used in the file
+- Callback parameters that are not read (prefix with `_` to signal intentional discard)
+
+```typescript
+// ❌ WRONG — isDrawerOpen declared but never used
+const isDrawerOpen = drawerState.type !== "closed";
+
+// ❌ WRONG — unused import
+import { Button, Input, PasswordInput } from "@/shared/ui"; // Input unused
+
+// ❌ WRONG — unused callback param causes TS6133
+const handleDeleted = useCallback((roleId: string) => { refetch(); }, [refetch]);
+
+// ✅ CORRECT — prefix with _ to indicate intentional discard
+const handleDeleted = useCallback((_roleId: string) => { refetch(); }, [refetch]);
+```
+
+---
+
+### Verify Store Property Names Before Using
+
+When selecting from a Zustand store, verify the property name against the store's type definition. Accessing a non-existent property silently returns `undefined` in JS but fails TypeScript build.
+
+```typescript
+// ❌ WRONG — 'resolvedTheme' does not exist on ThemeStoreState
+const theme = useThemeStore((state) => state.resolvedTheme);
+
+// ✅ CORRECT — check the store definition in shared/lib/stores/
+const theme = useThemeStore((state) => state.theme);
+```
+
+---
+
+### Shared Layout Components — Make Optional What Isn't Always Used
+
+When adding required props to shared layout widgets (e.g., `CrudPageLayout`), consider whether every consumer of that widget will always need that prop. If any page omits the prop (e.g., a list page without search), the prop must be optional.
+
+```typescript
+// ❌ WRONG — forces every page to pass a search handler even if irrelevant
+interface CrudPageLayoutProps {
+    searchValue: string;           // required
+    onSearchChange: (v: string) => void;  // required
+}
+
+// ✅ CORRECT — optional props, rendered conditionally inside the component
+interface CrudPageLayoutProps {
+    searchValue?: string;
+    onSearchChange?: (v: string) => void;
+}
+```
+
+---
+
+### Pre-commit Build Check
+
+`vite dev` does **not** run `tsc`. Type errors are invisible during development but break `npm run build` (and therefore Docker). Before pushing or opening a PR, always run:
+
+```bash
+npm run build
+```
+
+This runs `tsc -b` followed by the Vite build. Fix all TypeScript errors before committing. If CI or Docker fails with TypeScript errors, they will never appear during local `vite dev`.
 
 ---
 

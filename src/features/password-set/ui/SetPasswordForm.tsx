@@ -42,7 +42,7 @@ export const SetPasswordForm = ({ form, isSubmitting, onSubmit }: SetPasswordFor
                         autoComplete="new-password"
                         placeholder={t("password.enterNewPassword")}
                         disabled={isSubmitting}
-                        error={errors.newPassword?.message}
+                        aria-invalid={Boolean(errors.newPassword)}
                         {...register("newPassword")}
                     />
                     <button
@@ -76,7 +76,7 @@ export const SetPasswordForm = ({ form, isSubmitting, onSubmit }: SetPasswordFor
                         autoComplete="new-password"
                         placeholder={t("password.confirmNewPassword")}
                         disabled={isSubmitting}
-                        error={errors.confirmPassword?.message}
+                        aria-invalid={Boolean(errors.confirmPassword)}
                         {...register("confirmPassword")}
                     />
                     <button

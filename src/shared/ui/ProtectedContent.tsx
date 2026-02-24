@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { useAuth, useHasAnyPermission, useHasAnyRole, type Permission } from "@/shared/lib";
 
 interface ProtectedContentProps {

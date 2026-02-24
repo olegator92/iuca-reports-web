@@ -10,7 +10,7 @@ export const createLoginFormSchema = (t: TFunction) => z.object({
     password: z
         .string()
         .min(1, { message: t("validation.passwordRequired") }),
-    rememberMe: z.boolean().default(false)
+    rememberMe: z.boolean()
 });
 
 export type LoginFormData = z.infer<ReturnType<typeof createLoginFormSchema>>;

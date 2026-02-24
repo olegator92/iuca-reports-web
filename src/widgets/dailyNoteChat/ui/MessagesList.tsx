@@ -8,8 +8,8 @@ interface MessagesListProps {
     isInitialLoading: boolean;
     isLoadingOlder: boolean;
     hasMoreOlder: boolean;
-    chatBottomRef: React.RefObject<HTMLDivElement>;
-    scrollContainerRef: React.RefObject<HTMLDivElement>;
+    chatBottomRef: React.RefObject<HTMLDivElement | null>;
+    scrollContainerRef: React.RefObject<HTMLDivElement | null>;
     onEdit: (note: DailyNote) => void;
     onDelete: (note: DailyNote) => void;
     onLoadMore: () => void;

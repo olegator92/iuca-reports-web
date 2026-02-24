@@ -14,8 +14,8 @@ interface GoogleSignInButtonProps {
  * to better integrate with the application's design system
  */
 export const GoogleSignInButton = ({ onSuccess, rememberMe = false }: GoogleSignInButtonProps) => {
-    const { handleGoogleLogin, isLoading } = useGoogleLogin({ onSuccess });
-    const resolvedTheme = useThemeStore((state) => state.resolvedTheme);
+    const { handleGoogleLogin } = useGoogleLogin({ onSuccess });
+    const resolvedTheme = useThemeStore((state) => state.theme);
 
     const handleSuccess = (credentialResponse: any) => {
         if (credentialResponse.credential) {

@@ -181,7 +181,7 @@ export const userApi = rtkApi.injectEndpoints({
             }),
             transformResponse: (response: ResultEnvelope<User>, _meta, args) => {
                 const result = ensureSuccess(response, { allowNullData: true });
-                const resolvedData = result.data ?? { id: args.id, ...args };
+                const resolvedData = result.data ?? { ...args };
                 return {
                     ...result,
                     data: resolvedData as User

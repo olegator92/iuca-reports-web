@@ -8,6 +8,7 @@ export type {
     LogoutRequest,
     RevokeTokenRequest,
     ChangePasswordRequest,
+    SetPasswordRequest,
     ForgotPasswordRequest,
     ResetPasswordRequest,
     GoogleLoginRequest,

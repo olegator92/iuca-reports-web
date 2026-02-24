@@ -92,8 +92,7 @@ export const dailyNoteApi = rtkApi.injectEndpoints({
                 }
                 const entityTags = result.data.map((note) => ({ type: "DailyNote" as const, id: note.id }));
                 return [...entityTags, { type: "DailyNote" as const, id: "LIST" }];
-            },
-            refetchOnMountOrArgChange: true
+            }
         }),
         getDailyNoteById: builder.query<DailyNote, string>({
             query: (id) => ({

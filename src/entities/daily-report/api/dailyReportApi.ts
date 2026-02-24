@@ -13,8 +13,7 @@ export const dailyReportApi = rtkApi.injectEndpoints({
             }),
             transformResponse: (response: ResultEnvelope<DailyReport[]>) =>
                 ensureSuccess(response).data ?? [],
-            providesTags: ["DailyReport"],
-            refetchOnMountOrArgChange: true
+            providesTags: ["DailyReport"]
         }),
         getDailyReportsByRange: builder.query<DailyReport[], GetDailyReportsByRangeDto>({
             query: ({ dateFrom, dateTo }) => ({
@@ -23,8 +22,7 @@ export const dailyReportApi = rtkApi.injectEndpoints({
             }),
             transformResponse: (response: ResultEnvelope<DailyReport[]>) =>
                 ensureSuccess(response).data ?? [],
-            providesTags: ["DailyReport"],
-            refetchOnMountOrArgChange: true
+            providesTags: ["DailyReport"]
         }),
         getDailyReportById: builder.query<DailyReport, string>({
             query: (id) => ({

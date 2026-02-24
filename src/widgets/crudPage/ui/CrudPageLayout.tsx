@@ -12,8 +12,8 @@ interface CrudPageLayoutProps {
         total: number;
         label?: string;
     };
-    searchValue: string;
-    onSearchChange: (value: string) => void;
+    searchValue?: string;
+    onSearchChange?: (value: string) => void;
     onSearchClear?: () => void;
     searchPlaceholder?: string;
     filtersSlot?: ReactNode;
@@ -44,6 +44,7 @@ export const CrudPageLayout = ({
         loaded: quantity.loaded,
         total: quantity.total,
     });
+    const hasSearch = searchValue !== undefined && onSearchChange !== undefined;
 
     return (
         <div
@@ -74,34 +75,38 @@ export const CrudPageLayout = ({
                 </section>
             ) : null}
 
-            <div className="-mx-4 bg-background/95 px-4 py-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="relative w-full sm:max-w-md lg:max-w-lg">
-                        <Input
-                            value={searchValue}
-                            aria-label={t("common.searchAria")}
-                            placeholder={resolvedSearchPlaceholder}
-                            onChange={(event) => onSearchChange(event.target.value)}
-                            className="h-12 md:h-11 w-full rounded-md border border-border/70 bg-background pr-10 text-sm focus-visible:ring-2 focus-visible:ring-ring"
-                        />
-                        {searchValue && (
-                            <Button
-                                type="button"
-                                size="icon"
-                                variant="ghost"
-                                onClick={onSearchClear}
-                                className="absolute right-1.5 top-1/2 h-9 w-9 md:h-8 md:w-8 -translate-y-1/2 rounded-md text-muted-foreground hover:text-foreground"
-                                aria-label={t("common.clearSearch")}
-                            >
-                                <X className="h-4 w-4" />
-                            </Button>
+            {(hasSearch || headerActions) && (
+                <div className="-mx-4 bg-background/95 px-4 py-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        {hasSearch && (
+                            <div className="relative w-full sm:max-w-md lg:max-w-lg">
+                                <Input
+                                    value={searchValue}
+                                    aria-label={t("common.searchAria")}
+                                    placeholder={resolvedSearchPlaceholder}
+                                    onChange={(event) => onSearchChange!(event.target.value)}
+                                    className="h-12 md:h-11 w-full rounded-md border border-border/70 bg-background pr-10 text-sm focus-visible:ring-2 focus-visible:ring-ring"
+                                />
+                                {searchValue && (
+                                    <Button
+                                        type="button"
+                                        size="icon"
+                                        variant="ghost"
+                                        onClick={onSearchClear}
+                                        className="absolute right-1.5 top-1/2 h-9 w-9 md:h-8 md:w-8 -translate-y-1/2 rounded-md text-muted-foreground hover:text-foreground"
+                                        aria-label={t("common.clearSearch")}
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                )}
+                            </div>
                         )}
+                        {headerActions ? (
+                            <div className="flex w-full sm:w-auto">{headerActions}</div>
+                        ) : null}
                     </div>
-                    {headerActions ? (
-                        <div className="flex w-full sm:w-auto">{headerActions}</div>
-                    ) : null}
                 </div>
-            </div>
+            )}
 
             <div className="flex flex-col gap-3">
                 <span className="self-end text-xs font-medium uppercase tracking-wide text-muted-foreground sm:text-sm">
