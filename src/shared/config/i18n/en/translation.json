@@ -31,6 +31,7 @@
     "dailyReports": "Daily Reports",
     "notes": "Notes",
     "reports": "Reports",
+    "weeklyReports": "Weekly Reports",
     "templates": "Templates",
     "roles": "Roles",
     "users": "Users",
@@ -883,5 +884,56 @@
     "edit": {
       "success": "Report updated successfully."
     }
+  },
+  "weeklyReports": {
+    "tabs": {
+      "dailyReports": "Daily Reports",
+      "weeklyReport": "Weekly Report"
+    },
+    "dateHeader": {
+      "prev": "Previous week",
+      "next": "Next week",
+      "selectDate": "Select date"
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "generated": "Generated"
+    },
+    "position": {
+      "noPositions": "No positions assigned"
+    },
+    "actions": {
+      "generate": "Generate",
+      "regenerate": "Regenerate",
+      "edit": "Edit",
+      "copy": "Copy",
+      "copied": "Copied!"
+    },
+    "generate": {
+      "success": "Weekly report generated successfully."
+    },
+    "regenerate": {
+      "confirmTitle": "Regenerate Weekly Report?",
+      "confirmDescription": "This will overwrite any manual edits with a fresh AI-generated summary based on daily reports for this week. This action cannot be undone.",
+      "confirmButton": "Regenerate",
+      "success": "Weekly report regenerated successfully."
+    },
+    "editDrawer": {
+      "title": "Edit Weekly Report",
+      "statusLabel": "Status",
+      "contentLabel": "Report Content",
+      "save": "Save",
+      "close": "Close",
+      "validation": {
+        "required": "Content is required.",
+        "tooLong": "Content must be 50,000 characters or fewer."
+      }
+    },
+    "edit": {
+      "success": "Weekly report updated successfully."
+    },
+    "noReport": "No daily reports with generated status for this week — a weekly report cannot be generated yet.",
+    "noDailyReports": "No daily reports with generated status found for this week.",
+    "unprocessedUpdates": "New daily reports have been added since this weekly report was generated. Consider regenerating."
   }
 }

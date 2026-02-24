@@ -11,3 +11,6 @@ export type { Theme } from "./stores/themeStore";
 
 // Auth utilities
 export * from "./auth";
+
+// Week utilities
+export { getWorkWeekBounds, offsetWorkWeek } from "./weekUtils";

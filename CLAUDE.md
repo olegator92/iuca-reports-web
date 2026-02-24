@@ -135,7 +135,7 @@ src/
 │   ├── stores/            # Redux store configuration
 │   │   └── mainStore/     # Combined store with slices
 │   └── styles/            # Global styles and Tailwind imports
-├── entities/              # Business entities (9 total)
+├── entities/              # Business entities (10 total)
 │   ├── account/          # User account management (minimal)
 │   ├── auth/             # Authentication entity (JWT, OAuth, session)
 │   ├── daily-note/       # Daily note entity (CRUD + pagination)
@@ -144,12 +144,13 @@ src/
 │   ├── position/         # Position management (CRUD + department relationship)
 │   ├── role/             # Role management (CRUD + permissions)
 │   ├── template/         # Template CRUD entity (reference implementation)
-│   └── user/             # User management (CRUD + roles + status + positions)
+│   ├── user/             # User management (CRUD + roles + status + positions)
+│   └── weekly-report/    # Weekly report entity (generate/edit/regenerate + Redux slice)
 │   # Each entity contains:
 │   #   ├── api/          # RTK Query endpoints
 │   #   ├── model/        # Types, interfaces, state slices
 │   #   └── ui/           # Entity-specific UI components
-├── features/              # User features and interactions (52 total)
+├── features/              # User features and interactions (55 total)
 │   # Authentication Features (8)
 │   ├── auth-login/       # Login form and logic
 │   ├── auth-register/    # Registration form
@@ -211,6 +212,10 @@ src/
 │   ├── daily-report-generate/    # Generate daily report (AI generation button)
 │   ├── daily-report-regenerate/  # Regenerate report (confirmation dialog + AI overwrite)
 │   └── daily-report-edit/        # Edit report content (drawer form + Zod validation)
+│   # Weekly Report Features (3)
+│   ├── weekly-report-generate/   # Generate weekly report (AI generation button)
+│   ├── weekly-report-regenerate/ # Regenerate weekly report (confirmation dialog + AI overwrite)
+│   └── weekly-report-edit/       # Edit weekly report content (drawer form + Zod validation, max 50,000 chars)
 │   # UI Features (2)
 │   ├── theme-switcher/   # Dark/light mode toggle (mobile-optimized)
 │   └── language-switcher/# Language selection (mobile-optimized)
@@ -218,7 +223,7 @@ src/
 │   #   ├── ui/           # Feature UI components
 │   #   ├── model/        # Feature logic, hooks, validation
 │   #   └── index.ts      # Public API (barrel export)
-├── widgets/               # Composite UI blocks (11 total)
+├── widgets/               # Composite UI blocks (12 total)
 │   ├── header/           # App header with navigation, theme/language switchers
 │   ├── sidebar/          # Sidebar navigation with collapsible groups (Zustand)
 │   ├── crudPage/         # Reusable CRUD page layout (mobile-optimized)
@@ -229,8 +234,9 @@ src/
 │   ├── departmentList/   # Department list with infinite scroll
 │   ├── positionList/     # Position list with infinite scroll
 │   ├── dailyNoteChat/    # Daily notes chat interface with date navigation
-│   └── dailyReportView/  # Daily report viewer with generate/edit/regenerate actions
-├── pages/                 # Route pages (20 total)
+│   ├── dailyReportView/  # Daily report viewer with generate/edit/regenerate actions
+│   └── weeklyReportView/ # Weekly report viewer with two-tab layout (daily reports + weekly report)
+├── pages/                 # Route pages (21 total)
 │   # Authentication Pages (5)
 │   ├── LoginPage/        # Login with email/password and Google OAuth
 │   ├── RegisterPage/     # User registration
@@ -247,7 +253,8 @@ src/
 │   ├── DepartmentsPage/  # Full CRUD for departments with manager assignment
 │   ├── PositionsPage/    # Full CRUD for positions with department linking
 │   ├── DailyNotesPage/   # Daily notes chat interface
-│   └── DailyReportsPage/ # Daily reports viewer with AI generation
+│   ├── DailyReportsPage/ # Daily reports viewer with AI generation
+│   └── WeeklyReportsPage/ # Weekly reports viewer with AI generation (two-tab layout)
 │   # Informational Pages (2)
 │   ├── PrivacyPolicyPage/ # Privacy policy content
 │   └── TermsOfUsePage/   # Terms of use content
@@ -489,11 +496,21 @@ PUT    /departments/{id}/visibility # Toggle department visibility
 #### Daily Report API Endpoints
 ```typescript
 // Daily Report operations
-GET    /daily-reports              # Get report for a specific date (supports date query param)
+GET    /daily-reports              # Get report for a specific date (supports date, dateFrom, dateTo query params)
 GET    /daily-reports/{id}         # Get report by ID
 POST   /daily-reports/{date}/generate  # Generate report for a date (AI generation)
 PUT    /daily-reports/{id}         # Update report content manually
 POST   /daily-reports/{id}/regenerate  # Regenerate report (AI overwrites manual edits)
+```
+
+#### Weekly Report API Endpoints
+```typescript
+// Weekly Report operations
+GET    /weekly-reports             # Get weekly reports for a date range (supports weekStart, weekEnd query params)
+GET    /weekly-reports/{id}        # Get weekly report by ID
+POST   /weekly-reports/generate    # Generate weekly report (body: { weekStart, weekEnd, positionId })
+PUT    /weekly-reports/{id}        # Update weekly report content manually (body: { content, status })
+POST   /weekly-reports/{id}/regenerate  # Regenerate weekly report (AI overwrites manual edits)
 ```
 
 ### Cache Tags
@@ -508,6 +525,7 @@ RTK Query uses tags for cache invalidation:
 - `CurrentUser` - Current authenticated user profile
 - `Auth` - Authentication-related data
 - `DailyReport` - Daily report data
+- `WeeklyReport` - Weekly report data
 
 ## Routing Structure
 
@@ -528,6 +546,7 @@ export const ROUTES = {
   POSITIONS: '/positions',
   DAILY_NOTES: '/daily-notes',
   DAILY_REPORTS: '/daily-reports',
+  WEEKLY_REPORTS: '/weekly-reports',
   VERIFY_EMAIL: '/verify-email',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
@@ -616,6 +635,11 @@ RootState = {
   dailyReport: {
     currentDate: string;  // yyyy-MM-dd, defaults to today
   },
+  weeklyReport: {
+    currentWeekStart: string;  // yyyy-MM-dd (Friday), defaults to current work week
+    currentWeekEnd: string;    // yyyy-MM-dd (Thursday), defaults to current work week
+    currentPositionId: string | null;  // auto-selected from user's first position
+  },
   [rtkApi.reducerPath]: {
     // RTK Query cache with all API endpoints
   }
@@ -679,10 +703,11 @@ Located at [src/app/styles/index.css](src/app/styles/index.css):
   - Position: `POSITION_VIEW`, `POSITION_EDIT`
   - Daily Note: `DAILY_NOTE_VIEW`
   - Daily Report: `DAILY_REPORT_VIEW`, `DAILY_REPORT_EDIT`
+  - Weekly Report: `WEEKLY_REPORT_VIEW`, `WEEKLY_REPORT_EDIT`
 - **System Roles**: Admin, Manager, User
   - **Admin**: All permissions (`"*"` wildcard)
-  - **Manager**: `TEMPLATE_VIEW`, `TEMPLATE_EDIT`, `USER_VIEW`, `USER_EDIT`, `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`, `POSITION_VIEW`, `POSITION_EDIT`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`, `DAILY_REPORT_EDIT`
-  - **User**: `TEMPLATE_VIEW`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`
+  - **Manager**: `TEMPLATE_VIEW`, `TEMPLATE_EDIT`, `USER_VIEW`, `USER_EDIT`, `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`, `POSITION_VIEW`, `POSITION_EDIT`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`, `DAILY_REPORT_EDIT`, `WEEKLY_REPORT_VIEW`, `WEEKLY_REPORT_EDIT`
+  - **User**: `TEMPLATE_VIEW`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`, `WEEKLY_REPORT_VIEW`
 - **Permission Checks**:
   - Route-level: `ProtectedRoute` with `requiredPermissions`
   - Component-level: `ProtectedContent` wrapper

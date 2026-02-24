@@ -45,6 +45,11 @@ type BaseQueryArgs = string | FetchArgs;
 type BaseQueryResult = unknown;
 type BaseQueryError = FetchBaseQueryError | ApiError;
 
+export interface BaseQueryExtraOptions {
+    /** When true, 404 responses are silently returned without displaying a global error */
+    suppress404?: boolean;
+}
+
 const isEnvelope = (value: unknown): value is ResultEnvelope<unknown> =>
     typeof value === "object" && value !== null && ("data" in value || "errorCode" in value || "message" in value);
 
@@ -108,7 +113,7 @@ const refreshAuthToken = async (
 /**
  * Base query with automatic token refresh on 401 errors
  */
-export const baseQueryWithReauth: BaseQueryFn<BaseQueryArgs, BaseQueryResult, BaseQueryError> = async (
+export const baseQueryWithReauth: BaseQueryFn<BaseQueryArgs, BaseQueryResult, BaseQueryError, BaseQueryExtraOptions> = async (
     args,
     api,
     extraOptions
@@ -151,9 +156,11 @@ export const baseQueryWithReauth: BaseQueryFn<BaseQueryArgs, BaseQueryResult, Ba
         }
     }
 
-    // Handle errors (suppress for logout/revoke endpoints)
+    // Handle errors (suppress for logout/revoke endpoints, or when caller opts out of 404 display)
     if (result.error) {
-        if (!isLogoutEndpoint) {
+        const status = "status" in result.error ? result.error.status : undefined;
+        const is404Suppressed = status === 404 && extraOptions?.suppress404;
+        if (!isLogoutEndpoint && !is404Suppressed) {
             useGlobalErrorStore.getState().showError(resolveApiError(result.error));
         }
         return result;

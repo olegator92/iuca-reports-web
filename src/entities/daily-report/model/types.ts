@@ -22,3 +22,8 @@ export interface GenerateReportDto {
     date: string;
     positionId: string;
 }
+
+export interface GetDailyReportsByRangeDto {
+    dateFrom: string;   // yyyy-MM-dd
+    dateTo: string;     // yyyy-MM-dd
+}

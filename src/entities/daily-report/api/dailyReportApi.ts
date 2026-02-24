@@ -1,6 +1,6 @@
 import { ensureSuccess, rtkApi } from "@/shared/api";
 import type { ExtractedResult, ResultEnvelope } from "@/shared/api";
-import type { DailyReport, GenerateReportDto, UpdateReportContentDto } from "../model/types";
+import type { DailyReport, GenerateReportDto, UpdateReportContentDto, GetDailyReportsByRangeDto } from "../model/types";
 
 const DAILY_REPORTS_ENDPOINT = "/daily-reports";
 
@@ -10,6 +10,16 @@ export const dailyReportApi = rtkApi.injectEndpoints({
             query: (date) => ({
                 url: DAILY_REPORTS_ENDPOINT,
                 params: { date }
+            }),
+            transformResponse: (response: ResultEnvelope<DailyReport[]>) =>
+                ensureSuccess(response).data ?? [],
+            providesTags: ["DailyReport"],
+            refetchOnMountOrArgChange: true
+        }),
+        getDailyReportsByRange: builder.query<DailyReport[], GetDailyReportsByRangeDto>({
+            query: ({ dateFrom, dateTo }) => ({
+                url: DAILY_REPORTS_ENDPOINT,
+                params: { dateFrom, dateTo }
             }),
             transformResponse: (response: ResultEnvelope<DailyReport[]>) =>
                 ensureSuccess(response).data ?? [],
@@ -59,6 +69,7 @@ export const dailyReportApi = rtkApi.injectEndpoints({
 
 export const {
     useGetDailyReportByDateQuery,
+    useGetDailyReportsByRangeQuery,
     useGetDailyReportByIdQuery,
     useGenerateDailyReportMutation,
     useUpdateDailyReportContentMutation,

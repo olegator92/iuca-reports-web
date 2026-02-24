@@ -9,6 +9,7 @@ import { DepartmentsPage } from '@/pages/DepartmentsPage';
 import { PositionsPage } from '@/pages/PositionsPage';
 import { DailyNotesPage } from '@/pages/DailyNotesPage';
 import { DailyReportsPage } from '@/pages/DailyReportsPage';
+import { WeeklyReportsPage } from '@/pages/WeeklyReportsPage';
 import { LoginPage } from '@/pages/LoginPage';
 // Password authentication is temporarily disabled (Google OAuth only)
 // import { RegisterPage } from '@/pages/RegisterPage';
@@ -161,6 +162,14 @@ export const AppRouter = () => {
                         element={
                             <ProtectedRoute requiredPermissions={[PERMISSIONS.DAILY_REPORT_VIEW]}>
                                 <DailyReportsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path={ROUTES.WEEKLY_REPORTS}
+                        element={
+                            <ProtectedRoute requiredPermissions={[PERMISSIONS.WEEKLY_REPORT_VIEW]}>
+                                <WeeklyReportsPage />
                             </ProtectedRoute>
                         }
                     />
