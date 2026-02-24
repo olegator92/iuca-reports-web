@@ -5,8 +5,8 @@ import { Calendar, ChevronLeft, ChevronRight, StickyNote, BarChart2 } from "luci
 import { Button } from "@/shared/ui";
 import { cn } from "@/shared/lib";
 import { ROUTES } from "@/shared/config/routes";
-import { useAppDispatch } from "@/app/stores/mainStore/hooks";
-import { setCurrentDate as setNoteCurrentDate } from "@/entities/daily-note";
+import { useAppDispatch, useAppSelector } from "@/app/stores/mainStore/hooks";
+import { setCurrentDate as setNoteCurrentDate, setCurrentPosition as setNoteCurrentPosition } from "@/entities/daily-note";
 import type { DailyReportStatus } from "@/entities/daily-report";
 
 interface ReportDateHeaderProps {
@@ -39,6 +39,7 @@ export const ReportDateHeader = ({ currentDate, onDateChange, reportStatus }: Re
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const currentPositionId = useAppSelector((state) => state.dailyReport.currentPositionId);
     const dateInputRef = useRef<HTMLInputElement>(null);
     const today = getTodayString();
 
@@ -57,36 +58,6 @@ export const ReportDateHeader = ({ currentDate, onDateChange, reportStatus }: Re
 
     return (
         <div className="flex flex-col bg-brand">
-            {/* Switcher row */}
-            <div className="flex">
-                <button
-                    type="button"
-                    onClick={() => { dispatch(setNoteCurrentDate(currentDate)); navigate(ROUTES.DAILY_NOTES); }}
-                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/15 hover:text-white transition-colors"
-                >
-                    <StickyNote className="h-3.5 w-3.5" />
-                    {t("navigation.dailyNotes")}
-                </button>
-                <button
-                    type="button"
-                    onClick={() => navigate(ROUTES.DAILY_REPORTS)}
-                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium bg-white/20 text-white transition-colors"
-                >
-                    <BarChart2 className="h-3.5 w-3.5" />
-                    {t("navigation.dailyReports")}
-                    {reportStatus === "Generated" && (
-                        <span className="rounded-full bg-green-400/30 px-1.5 py-0.5 text-[10px] font-medium text-green-100">
-                            {t("dailyReports.status.generated")}
-                        </span>
-                    )}
-                    {reportStatus === "InProgress" && (
-                        <span className="rounded-full bg-amber-400/30 px-1.5 py-0.5 text-[10px] font-medium text-amber-100">
-                            {t("dailyReports.status.inProgress")}
-                        </span>
-                    )}
-                </button>
-            </div>
-
             {/* Date nav row */}
             <div className="flex items-center justify-between px-3 py-2 sm:px-4">
             <Button
@@ -131,6 +102,36 @@ export const ReportDateHeader = ({ currentDate, onDateChange, reportStatus }: Re
             >
                 <ChevronRight className="h-5 w-5" />
             </Button>
+            </div>
+
+            {/* Switcher row */}
+            <div className="flex">
+                <button
+                    type="button"
+                    onClick={() => { dispatch(setNoteCurrentDate(currentDate)); if (currentPositionId) dispatch(setNoteCurrentPosition(currentPositionId)); navigate(ROUTES.DAILY_NOTES); }}
+                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/15 hover:text-white transition-colors"
+                >
+                    <StickyNote className="h-3.5 w-3.5" />
+                    {t("navigation.notes")}
+                </button>
+                <button
+                    type="button"
+                    onClick={() => navigate(ROUTES.DAILY_REPORTS)}
+                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium bg-white/20 text-white transition-colors"
+                >
+                    <BarChart2 className="h-3.5 w-3.5" />
+                    {t("navigation.reports")}
+                    {reportStatus === "Generated" && (
+                        <span className="rounded-full bg-green-400/30 px-1.5 py-0.5 text-[10px] font-medium text-green-100">
+                            {t("dailyReports.status.generated")}
+                        </span>
+                    )}
+                    {reportStatus === "InProgress" && (
+                        <span className="rounded-full bg-amber-400/30 px-1.5 py-0.5 text-[10px] font-medium text-amber-100">
+                            {t("dailyReports.status.inProgress")}
+                        </span>
+                    )}
+                </button>
             </div>
         </div>
     );

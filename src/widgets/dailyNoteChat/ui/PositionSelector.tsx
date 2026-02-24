@@ -25,7 +25,7 @@ export const PositionSelector = ({ positions, currentPositionId, onPositionChang
 
     if (positions.length === 1) {
         return (
-            <div className="flex items-center gap-2 border-b border-border bg-muted/40 px-4 py-2">
+            <div className="flex items-center justify-center gap-2 border-b border-border bg-muted/40 px-4 py-2">
                 <Briefcase className="h-4 w-4 shrink-0 text-muted-foreground" />
                 <span className="truncate text-xs font-medium text-foreground">
                     {positions[0].name}
@@ -41,14 +41,13 @@ export const PositionSelector = ({ positions, currentPositionId, onPositionChang
 
     return (
         <div className="border-b border-border bg-muted/40">
-            <div className="flex items-center justify-end gap-1 overflow-x-auto px-2 py-1 scrollbar-none">
-                <Briefcase className="h-4 w-4 shrink-0 text-muted-foreground ml-1 mr-0.5" />
+            <div className="flex overflow-x-auto scrollbar-none">
                 {positions.map((position) => (
                     <button
                         key={position.id}
                         onClick={() => onPositionChange(position.id)}
                         className={cn(
-                            "shrink-0 rounded-none px-3 py-1 text-xs font-medium transition-colors whitespace-nowrap cursor-pointer",
+                            "flex-1 rounded-none px-3 py-1 text-xs font-medium transition-colors whitespace-nowrap cursor-pointer",
                             "min-h-[32px] touch-manipulation",
                             currentPositionId === position.id
                                 ? "bg-brand/15 text-foreground border-b-2 border-b-brand/60"

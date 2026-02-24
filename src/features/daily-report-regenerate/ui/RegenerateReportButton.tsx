@@ -35,6 +35,7 @@ export const RegenerateReportButton = ({ reportId }: RegenerateReportButtonProps
                 size="sm"
                 onClick={() => setOpen(true)}
                 disabled={isLoading}
+                className="min-h-[48px] md:min-h-0 px-4"
             >
                 <RefreshCw className="h-4 w-4" />
                 <span className="ml-1.5">{t("dailyReports.actions.regenerate")}</span>

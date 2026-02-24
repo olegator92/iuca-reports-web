@@ -5,8 +5,8 @@ import { Calendar, ChevronLeft, ChevronRight, StickyNote, BarChart2 } from "luci
 import { Button } from "@/shared/ui";
 import { cn } from "@/shared/lib";
 import { ROUTES } from "@/shared/config/routes";
-import { useAppDispatch } from "@/app/stores/mainStore/hooks";
-import { setCurrentDate as setReportCurrentDate, useGetDailyReportByDateQuery } from "@/entities/daily-report";
+import { useAppDispatch, useAppSelector } from "@/app/stores/mainStore/hooks";
+import { setCurrentDate as setReportCurrentDate, setCurrentPosition as setReportCurrentPosition, useGetDailyReportByDateQuery } from "@/entities/daily-report";
 
 interface DateHeaderProps {
     currentDate: string;
@@ -38,10 +38,13 @@ export const DateHeader = ({ currentDate, onDateChange }: DateHeaderProps) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const currentPositionId = useAppSelector((state) => state.dailyNote.currentPositionId);
     const dateInputRef = useRef<HTMLInputElement>(null);
 
-    const { data: report } = useGetDailyReportByDateQuery(currentDate);
-    const reportStatus = report?.status ?? null;
+    const { data: reports = [] } = useGetDailyReportByDateQuery(currentDate);
+    const reportStatus = currentPositionId
+        ? (reports.find((r) => r.positionId === currentPositionId)?.status ?? null)
+        : null;
     const today = getTodayString();
 
     const handlePrev = () => onDateChange(offsetDate(currentDate, -1));
@@ -59,36 +62,6 @@ export const DateHeader = ({ currentDate, onDateChange }: DateHeaderProps) => {
 
     return (
         <div className="flex flex-col bg-brand">
-            {/* Switcher row */}
-            <div className="flex">
-                <button
-                    type="button"
-                    onClick={() => navigate(ROUTES.DAILY_NOTES)}
-                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium bg-white/20 text-white transition-colors"
-                >
-                    <StickyNote className="h-3.5 w-3.5" />
-                    {t("navigation.dailyNotes")}
-                </button>
-                <button
-                    type="button"
-                    onClick={() => { dispatch(setReportCurrentDate(currentDate)); navigate(ROUTES.DAILY_REPORTS); }}
-                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/15 hover:text-white transition-colors"
-                >
-                    <BarChart2 className="h-3.5 w-3.5" />
-                    {t("navigation.dailyReports")}
-                    {reportStatus === "Generated" && (
-                        <span className="rounded-full bg-green-400/30 px-1.5 py-0.5 text-[10px] font-medium text-green-100">
-                            {t("dailyReports.status.generated")}
-                        </span>
-                    )}
-                    {reportStatus === "InProgress" && (
-                        <span className="rounded-full bg-amber-400/30 px-1.5 py-0.5 text-[10px] font-medium text-amber-100">
-                            {t("dailyReports.status.inProgress")}
-                        </span>
-                    )}
-                </button>
-            </div>
-
             {/* Date nav row */}
             <div className="flex items-center justify-between px-3 py-2 sm:px-4">
             <Button
@@ -133,6 +106,36 @@ export const DateHeader = ({ currentDate, onDateChange }: DateHeaderProps) => {
             >
                 <ChevronRight className="h-5 w-5" />
             </Button>
+            </div>
+
+            {/* Switcher row */}
+            <div className="flex">
+                <button
+                    type="button"
+                    onClick={() => navigate(ROUTES.DAILY_NOTES)}
+                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium bg-white/20 text-white transition-colors"
+                >
+                    <StickyNote className="h-3.5 w-3.5" />
+                    {t("navigation.notes")}
+                </button>
+                <button
+                    type="button"
+                    onClick={() => { dispatch(setReportCurrentDate(currentDate)); if (currentPositionId) dispatch(setReportCurrentPosition(currentPositionId)); navigate(ROUTES.DAILY_REPORTS); }}
+                    className="flex flex-1 cursor-pointer items-center justify-center gap-1.5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/15 hover:text-white transition-colors"
+                >
+                    <BarChart2 className="h-3.5 w-3.5" />
+                    {t("navigation.reports")}
+                    {reportStatus === "Generated" && (
+                        <span className="rounded-full bg-green-400/30 px-1.5 py-0.5 text-[10px] font-medium text-green-100">
+                            {t("dailyReports.status.generated")}
+                        </span>
+                    )}
+                    {reportStatus === "InProgress" && (
+                        <span className="rounded-full bg-amber-400/30 px-1.5 py-0.5 text-[10px] font-medium text-amber-100">
+                            {t("dailyReports.status.inProgress")}
+                        </span>
+                    )}
+                </button>
             </div>
         </div>
     );

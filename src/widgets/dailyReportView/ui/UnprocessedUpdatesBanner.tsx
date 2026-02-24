@@ -1,12 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { AlertCircle } from "lucide-react";
-import { RegenerateReportButton } from "@/features/daily-report-regenerate";
 
-interface UnprocessedUpdatesBannerProps {
-    reportId: string;
-}
-
-export const UnprocessedUpdatesBanner = ({ reportId }: UnprocessedUpdatesBannerProps) => {
+export const UnprocessedUpdatesBanner = () => {
     const { t } = useTranslation();
 
     return (
@@ -20,7 +15,6 @@ export const UnprocessedUpdatesBanner = ({ reportId }: UnprocessedUpdatesBannerP
                     {t("dailyReports.unprocessedUpdates.regenerateHint")}
                 </p>
             </div>
-            <RegenerateReportButton reportId={reportId} />
         </div>
     );
 };

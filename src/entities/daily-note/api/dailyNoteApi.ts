@@ -92,7 +92,8 @@ export const dailyNoteApi = rtkApi.injectEndpoints({
                 }
                 const entityTags = result.data.map((note) => ({ type: "DailyNote" as const, id: note.id }));
                 return [...entityTags, { type: "DailyNote" as const, id: "LIST" }];
-            }
+            },
+            refetchOnMountOrArgChange: true
         }),
         getDailyNoteById: builder.query<DailyNote, string>({
             query: (id) => ({
@@ -108,7 +109,7 @@ export const dailyNoteApi = rtkApi.injectEndpoints({
                 body
             }),
             transformResponse: (response: ResultEnvelope<DailyNote>) => ensureSuccess(response),
-            invalidatesTags: [{ type: "DailyNote", id: "LIST" }]
+            invalidatesTags: [{ type: "DailyNote", id: "LIST" }, "DailyReport"]
         }),
         updateDailyNote: builder.mutation<ExtractedResult<DailyNote>, { id: string } & UpdateDailyNoteRequest>({
             query: ({ id, ...body }) => ({
@@ -125,7 +126,8 @@ export const dailyNoteApi = rtkApi.injectEndpoints({
             },
             invalidatesTags: (_result, _error, arg) => [
                 { type: "DailyNote", id: arg.id },
-                { type: "DailyNote", id: "LIST" }
+                { type: "DailyNote", id: "LIST" },
+                "DailyReport"
             ]
         }),
         deleteDailyNote: builder.mutation<ExtractedResult<null>, string>({
@@ -136,7 +138,8 @@ export const dailyNoteApi = rtkApi.injectEndpoints({
             transformResponse: (response: ResultEnvelope<null>) => ensureSuccess(response, { allowNullData: true }),
             invalidatesTags: (_result, _error, id) => [
                 { type: "DailyNote", id },
-                { type: "DailyNote", id: "LIST" }
+                { type: "DailyNote", id: "LIST" },
+                "DailyReport"
             ]
         })
     }),

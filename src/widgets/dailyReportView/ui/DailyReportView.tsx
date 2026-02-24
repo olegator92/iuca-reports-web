@@ -57,46 +57,8 @@ export const DailyReportView = () => {
                 onPositionChange={handlePositionChange}
             />
 
-            {/* Action bar — only shown when a report exists for selected position */}
-            {report && !isLoading && !isError && (
-                <div className="flex flex-shrink-0 items-center justify-end gap-2 border-b px-4 py-2">
-                    {report.status === "InProgress" && (
-                        <GenerateReportButton date={currentDate} positionId={report.positionId} />
-                    )}
-                    {report.status === "Generated" && (
-                        <>
-                            <RegenerateReportButton reportId={report.id} />
-                            <ProtectedContent requiredPermissions={[PERMISSIONS.DAILY_REPORT_EDIT]}>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => openDrawer(report)}
-                                >
-                                    <Pencil className="h-4 w-4" />
-                                    <span className="ml-1.5">{t("dailyReports.actions.edit")}</span>
-                                </Button>
-                            </ProtectedContent>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={handleCopy}
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                {copied
-                                    ? <Check className="h-3.5 w-3.5 text-green-500" />
-                                    : <Copy className="h-3.5 w-3.5" />
-                                }
-                                <span className="ml-1.5">
-                                    {copied ? t("dailyReports.actions.copied") : t("dailyReports.actions.copy")}
-                                </span>
-                            </Button>
-                        </>
-                    )}
-                </div>
-            )}
-
             {/* Scrollable content */}
-            <div className="custom-scrollbar flex flex-col flex-1 gap-4 p-4 overflow-y-auto">
+            <div className="custom-scrollbar flex flex-col flex-1 gap-4 p-4 overflow-y-auto bg-brand/5">
                 {isLoading && (
                     <div className="flex justify-center py-8">
                         <Loader />
@@ -110,7 +72,7 @@ export const DailyReportView = () => {
                 )}
 
                 {report?.status === "Generated" && report.hasUnprocessedUpdates && (
-                    <UnprocessedUpdatesBanner reportId={report.id} />
+                    <UnprocessedUpdatesBanner />
                 )}
 
                 {!isLoading && !isError && (
@@ -121,6 +83,45 @@ export const DailyReportView = () => {
                     />
                 )}
             </div>
+
+            {/* Fixed footer — action bar */}
+            {!isLoading && !isError && currentPositionId && (
+                <div className="flex flex-shrink-0 items-center justify-end gap-3 border-t px-4 pt-3 pb-8">
+                    {(!report || report.status === "InProgress") && (
+                        <GenerateReportButton date={currentDate} positionId={report?.positionId ?? currentPositionId} />
+                    )}
+                    {report?.status === "Generated" && (
+                        <>
+                            <RegenerateReportButton reportId={report.id} />
+                            <ProtectedContent requiredPermissions={[PERMISSIONS.DAILY_REPORT_EDIT]}>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => openDrawer(report)}
+                                    className="min-h-[48px] md:min-h-0 px-4"
+                                >
+                                    <Pencil className="h-4 w-4" />
+                                    <span className="ml-1.5 hidden sm:inline">{t("dailyReports.actions.edit")}</span>
+                                </Button>
+                            </ProtectedContent>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={handleCopy}
+                                className="min-h-[48px] md:min-h-0 px-4 text-muted-foreground hover:text-foreground"
+                            >
+                                {copied
+                                    ? <Check className="h-3.5 w-3.5 text-green-500" />
+                                    : <Copy className="h-3.5 w-3.5" />
+                                }
+                                <span className="ml-1.5 hidden sm:inline">
+                                    {copied ? t("dailyReports.actions.copied") : t("dailyReports.actions.copy")}
+                                </span>
+                            </Button>
+                        </>
+                    )}
+                </div>
+            )}
 
             <ReportEditDrawerForm
                 open={open}

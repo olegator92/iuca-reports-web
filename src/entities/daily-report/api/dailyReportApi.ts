@@ -13,7 +13,8 @@ export const dailyReportApi = rtkApi.injectEndpoints({
             }),
             transformResponse: (response: ResultEnvelope<DailyReport[]>) =>
                 ensureSuccess(response).data ?? [],
-            providesTags: ["DailyReport"]
+            providesTags: ["DailyReport"],
+            refetchOnMountOrArgChange: true
         }),
         getDailyReportById: builder.query<DailyReport, string>({
             query: (id) => ({

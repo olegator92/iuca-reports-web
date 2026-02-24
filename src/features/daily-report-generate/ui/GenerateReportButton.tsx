@@ -20,6 +20,7 @@ export const GenerateReportButton = ({ date, positionId }: GenerateReportButtonP
                 size="sm"
                 onClick={() => handleGenerate({ date, positionId })}
                 disabled={isLoading}
+                className="min-h-[48px] md:min-h-0 px-4"
             >
                 {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

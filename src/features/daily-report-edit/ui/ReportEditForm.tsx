@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useId, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
-import { Textarea, Label, Select } from "@/shared/ui";
+import { Textarea, FormField, Combobox } from "@/shared/ui";
+import type { ComboboxOption } from "@/shared/ui";
 import type { DailyReportStatus } from "@/entities/daily-report";
 import { reportEditSchema, type ReportEditFormData } from "../model/validation";
 
@@ -25,8 +26,10 @@ export const ReportEditForm = ({
 }: ReportEditFormProps) => {
     const { t } = useTranslation();
     const isReadOnly = mode === "view";
+    const statusSelectId = useId();
+    const contentTextareaId = useId();
 
-    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm<ReportEditFormData>({
+    const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm<ReportEditFormData>({
         resolver: zodResolver(reportEditSchema),
         defaultValues: { content: initialContent, status: initialStatus }
     });
@@ -36,7 +39,13 @@ export const ReportEditForm = ({
     }, [initialContent, initialStatus, reset]);
 
     const content = watch("content") ?? "";
+    const status = watch("status");
     const charCount = content.length;
+
+    const statusOptions: ComboboxOption[] = useMemo(() => [
+        { value: "InProgress", label: t("dailyReports.status.inProgress") },
+        { value: "Generated", label: t("dailyReports.status.generated") },
+    ], [t]);
 
     const handleFormSubmit = handleSubmit(async (data) => {
         await onSubmit(reportId, data.content, data.status as DailyReportStatus);
@@ -44,38 +53,37 @@ export const ReportEditForm = ({
 
     return (
         <form id={formId} onSubmit={handleFormSubmit} className="flex flex-col gap-3">
-            <div className="flex flex-col gap-1.5">
-                <Label htmlFor="report-status">
-                    {t("dailyReports.editDrawer.statusLabel")}
-                </Label>
-                <Select
-                    id="report-status"
-                    {...register("status")}
+            <FormField
+                id={statusSelectId}
+                label={t("dailyReports.editDrawer.statusLabel")}
+                error={!isReadOnly ? errors.status?.message : undefined}
+            >
+                <Combobox
+                    value={status}
+                    onChange={(value) => setValue("status", value as DailyReportStatus, { shouldValidate: true })}
+                    options={statusOptions}
                     disabled={isReadOnly}
-                >
-                    <option value="InProgress">{t("dailyReports.status.inProgress")}</option>
-                    <option value="Generated">{t("dailyReports.status.generated")}</option>
-                </Select>
-                {errors.status && (
-                    <p className="text-destructive text-xs">{errors.status.message}</p>
-                )}
-            </div>
-            <div className="flex flex-col gap-1.5">
-                <Label htmlFor="report-content">
-                    {t("dailyReports.editDrawer.contentLabel")}
-                </Label>
+                    aria-label={t("dailyReports.editDrawer.statusLabel")}
+                    aria-invalid={!isReadOnly && Boolean(errors.status)}
+                    aria-describedby={!isReadOnly && errors.status ? `${statusSelectId}-error` : undefined}
+                />
+            </FormField>
+            <FormField
+                id={contentTextareaId}
+                label={t("dailyReports.editDrawer.contentLabel")}
+                error={!isReadOnly ? errors.content?.message : undefined}
+            >
                 <Textarea
-                    id="report-content"
+                    id={contentTextareaId}
                     {...register("content")}
                     readOnly={isReadOnly}
                     rows={14}
                     className="resize-none font-mono text-sm"
                     placeholder={isReadOnly ? undefined : t("dailyReports.editDrawer.contentLabel")}
+                    aria-invalid={!isReadOnly && Boolean(errors.content)}
+                    aria-describedby={!isReadOnly && errors.content ? `${contentTextareaId}-error` : undefined}
                 />
-                {errors.content && (
-                    <p className="text-destructive text-xs">{errors.content.message}</p>
-                )}
-            </div>
+            </FormField>
             <p className="text-muted-foreground text-xs text-right">
                 {charCount} / 20000
             </p>

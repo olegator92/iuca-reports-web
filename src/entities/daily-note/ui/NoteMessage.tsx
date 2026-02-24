@@ -27,14 +27,14 @@ export const NoteMessage = ({ note, onEdit, onDelete, className }: NoteMessagePr
                         {note.positionName}
                     </p>
                 )}
-                <div className="relative rounded-2xl rounded-tr-sm bg-brand py-3 pl-4 pr-9 text-white shadow-sm">
+                <div className="relative rounded-2xl rounded-tr-sm bg-gray-100 py-3 pl-4 pr-9 text-foreground shadow-sm dark:bg-brand dark:text-white">
                     <div className="absolute right-1 top-1">
                         <DropdownMenu
                             trigger={
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="h-6 w-6 rounded-full text-white/70 hover:bg-white/15 hover:text-white"
+                                    className="h-6 w-6 rounded-full text-muted-foreground hover:bg-black/8 hover:text-foreground dark:text-white/70 dark:hover:bg-white/15 dark:hover:text-white"
                                     aria-label={t("dailyNotes.actions.openMenu")}
                                 >
                                     <MoreVertical className="h-3 w-3" />
@@ -63,11 +63,11 @@ export const NoteMessage = ({ note, onEdit, onDelete, className }: NoteMessagePr
                     </p>
                     <div className="mt-1 flex items-center justify-end gap-1.5">
                         {note.updatedAt && (
-                            <span className="text-xs text-white/60">
+                            <span className="text-xs text-muted-foreground/80 dark:text-white/60">
                                 {t("dailyNotes.edited")}
                             </span>
                         )}
-                        <span className="text-xs text-white/70">
+                        <span className="text-xs text-muted-foreground dark:text-white/70">
                             {formatTime(note.createdAt)}
                         </span>
                     </div>
