@@ -68,7 +68,7 @@ export const accountApi = rtkApi.injectEndpoints({
             transformResponse: (response: ResultEnvelope<Record<string, unknown>>) => {
                 const data = ensureSuccess(response).data;
                 return {
-                    photoUrl: data.PhotoUrl || data.photoUrl
+                    photoUrl: (data.PhotoUrl || data.photoUrl) as string
                 };
             },
             invalidatesTags: ["CurrentUser"],

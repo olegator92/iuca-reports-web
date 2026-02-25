@@ -86,10 +86,10 @@ const refreshAuthToken = async (
 
                 if (envelope.data && !envelope.errorCode) {
                     const tokens: LoginResponse = {
-                        accessToken: envelope.data.AccessToken || envelope.data.accessToken,
-                        refreshToken: envelope.data.RefreshToken || envelope.data.refreshToken,
-                        expiresIn: envelope.data.ExpiresIn || envelope.data.expiresIn,
-                        tokenType: envelope.data.TokenType || envelope.data.tokenType
+                        accessToken: (envelope.data.AccessToken || envelope.data.accessToken) as string,
+                        refreshToken: (envelope.data.RefreshToken || envelope.data.refreshToken) as string,
+                        expiresIn: (envelope.data.ExpiresIn || envelope.data.expiresIn) as number,
+                        tokenType: (envelope.data.TokenType || envelope.data.tokenType) as string
                     };
 
                     // Store new tokens
