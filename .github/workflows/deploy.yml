@@ -94,10 +94,7 @@ jobs:
             fi
 
             echo "== Writing .env file with API_URL=$API_URL"
-            cat > .env <<EOL
-            VITE_API_URL=$API_URL
-            VITE_GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
-            EOL
+            printf 'VITE_API_URL=%s\nVITE_GOOGLE_CLIENT_ID=%s\n' "$API_URL" "$GOOGLE_CLIENT_ID" > .env
 
             # Stop old containers before rebuild
             echo "== Stopping old containers..."
