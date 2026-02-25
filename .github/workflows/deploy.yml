@@ -106,7 +106,7 @@ jobs:
             echo "== Starting containers..."
             docker compose -p $PROJECT_NAME \
               -f docker-compose.yml \
-              -f docker-compose.override.${{ github.ref_name }}.yml up -d --build --pull always
+              -f docker-compose.override.${{ github.ref_name }}.yml up -d --pull always
 
             # Cleanup old unused Docker layers
             echo "== Cleaning up unused Docker images..."
