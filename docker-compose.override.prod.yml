@@ -2,8 +2,11 @@ version: "3.9"
 
 services:
   web:
-    image: ghcr.io/olegator92/iuca-reports-web/web:latest
+    image: ghcr.io/olegator92/iuca-reports-web/web:prod
+    container_name: iuca-reports-web-prod
     ports:
-      - "80:80"
+      - "1100:80"
     environment:
-      - NODE_ENV=production
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID}
+    restart: unless-stopped
