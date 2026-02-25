@@ -1,4 +1,4 @@
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { BaseQueryFn, FetchArgs, FetchBaseQueryError, BaseQueryApi } from "@reduxjs/toolkit/query";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiError } from "@/shared/api/errors";
 import type { ResultEnvelope } from "./types";
@@ -60,8 +60,8 @@ let refreshPromise: Promise<LoginResponse | null> | null = null;
 
 const refreshAuthToken = async (
     refreshToken: string,
-    api: any,
-    extraOptions: any
+    api: BaseQueryApi,
+    extraOptions: BaseQueryExtraOptions
 ): Promise<LoginResponse | null> => {
     // If there's already a refresh in progress, wait for it
     if (refreshPromise) {
@@ -82,7 +82,7 @@ const refreshAuthToken = async (
             );
 
             if (refreshResult.data) {
-                const envelope = refreshResult.data as ResultEnvelope<any>;
+                const envelope = refreshResult.data as ResultEnvelope<Record<string, unknown>>;
 
                 if (envelope.data && !envelope.errorCode) {
                     const tokens: LoginResponse = {

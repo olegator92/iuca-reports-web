@@ -13,7 +13,7 @@ type UserFormMode = "create" | "edit" | "view";
 
 interface UserFormProps {
     mode: UserFormMode;
-    form: UseFormReturn<UserFormData, any>;
+    form: UseFormReturn<UserFormData>;
     isSubmitting: boolean;
     disableSubmit?: boolean;
     submitLabel?: string;
