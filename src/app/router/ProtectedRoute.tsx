@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth, useHasAnyPermission, type Permission } from "@/shared/lib";
 import { ROUTES } from "@/shared/config";

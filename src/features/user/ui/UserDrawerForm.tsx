@@ -95,6 +95,7 @@ const ExistingUserDrawerForm = ({
             onModeChange={onModeChange}
             submitLabel={submitLabel}
             hideFooter={hideFooter}
+            user={user}
         />
     );
 };

@@ -102,7 +102,6 @@ export const UsersPage = () => {
         skip: !currentUserId
     });
 
-    const isDrawerOpen = drawerState.type !== "closed";
     const currentDrawerTitleKey = resolveDrawerTitleKey(drawerState);
     const currentDrawerTitle = currentDrawerTitleKey
         ? t(currentDrawerTitleKey)
@@ -271,7 +270,7 @@ export const UsersPage = () => {
                 {renderState?.type === "user" && (
                     <UserDrawerForm
                         mode={renderState.mode}
-                        user={renderState.user}
+                        user={activeUser || renderState.user}
                         onModeChange={handleModeChange}
                         onSuccess={(user) => {
                             handleUserUpdated(user);

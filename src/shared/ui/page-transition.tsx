@@ -26,7 +26,7 @@ export const PageTransition = () => {
 
     return (
         <div
-            className={`page-transition ${transitionStage}`}
+            className={`page-transition ${transitionStage} h-full`}
             onAnimationEnd={handleAnimationEnd}
         >
             {displayOutlet}

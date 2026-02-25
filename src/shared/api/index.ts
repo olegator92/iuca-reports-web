@@ -5,4 +5,5 @@ export type { ExtractedResult, EnsureSuccessOptions } from "./resultEnvelope";
 export type { ResultEnvelope, PaginatedResponse } from "./types";
 export { localizationApi, useGetCulturesQuery } from "./localizationApi";
 export type { CultureDto } from "./localizationApi";
+export type { BaseQueryExtraOptions } from "./baseQueryWithReauth";
 

@@ -1,3 +1,5 @@
+import type { Position } from "@/entities/position";
+
 export interface User {
     id: string;
     email: string;
@@ -5,6 +7,7 @@ export interface User {
     isActive: boolean;
     profilePhotoUrl: string | null;
     roles: string[];
+    positions: Position[];
     createdAt: string;
 }
 
@@ -38,6 +41,11 @@ export interface AssignRoleRequest {
     roleId: string;
 }
 
+export interface AssignPositionRequest {
+    userId: string;
+    positionId: string;
+}
+
 // Response types (API returns ResultEnvelope wrapper)
 export interface UserResponse {
     id: string;
@@ -46,5 +54,6 @@ export interface UserResponse {
     isActive: boolean;
     profilePhotoUrl: string | null;
     roles: string[];
+    positions: Position[];
     createdAt: string;
 }

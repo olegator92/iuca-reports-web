@@ -78,7 +78,6 @@ export const TemplatesPage = () => {
         hasChanges: false,
     });
 
-    const isDrawerOpen = drawerState.type !== "closed";
     const currentDrawerTitleKey = resolveDrawerTitleKey(drawerState);
     const currentDrawerTitle = currentDrawerTitleKey
         ? t(currentDrawerTitleKey)

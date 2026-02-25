@@ -49,7 +49,7 @@ export const RegisterPage = () => {
             await resendEmailConfirmation({ email: registrationSuccess.email }).unwrap();
             setResendSuccess(true);
             setTimeout(() => setResendSuccess(false), 5000); // Hide after 5 seconds
-        } catch (error) {
+        } catch {
             // Error handled by global error handler
         }
     };

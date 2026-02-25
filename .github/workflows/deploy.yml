@@ -1,0 +1,118 @@
+name: Build & Deploy Frontend
+
+on:
+  push:
+    branches:
+      - dev
+      - prod
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set version variables
+        run: |
+          GIT_HASH=$(git rev-parse --short HEAD)
+          BRANCH_NAME=${GITHUB_REF_NAME}
+          REPO_NAME=$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME=ghcr.io/$REPO_NAME/web:${BRANCH_NAME}-${GIT_HASH}
+          LATEST_TAG=ghcr.io/$REPO_NAME/web:${BRANCH_NAME}
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "== Building branch: $BRANCH_NAME"
+          echo "== Image: $IMAGE_NAME"
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build & Push Docker image (no cache)
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "prod" ]; then
+            API_URL=${{ secrets.VITE_API_URL_PROD }}
+            GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID_PROD }}
+          else
+            API_URL=${{ secrets.VITE_API_URL_DEV }}
+            GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID_DEV }}
+          fi
+
+          echo "== Using API URL: $API_URL"
+          echo "== Google Client ID configured"
+
+          docker build \
+            --no-cache \
+            --target prod \
+            --build-arg VITE_API_URL=$API_URL \
+            --build-arg VITE_GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID \
+            -t $IMAGE_NAME -t $LATEST_TAG .
+
+          docker push $IMAGE_NAME
+          docker push $LATEST_TAG
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            FRONT_DIR=/srv/iuca-reports/${{ github.ref_name }}/front
+            PROJECT_NAME=iuca_reports_${{ github.ref_name }}
+
+            echo "== Deploying frontend for branch: ${{ github.ref_name }}"
+
+            # Ensure correct ownership and directory exists
+            sudo mkdir -p $FRONT_DIR
+            sudo chown -R deploy:deploy $FRONT_DIR
+            cd $FRONT_DIR
+
+            # Clone or update repository
+            if [ -d .git ]; then
+              echo "== Updating existing repository..."
+              git reset --hard
+              git clean -fd
+              git pull origin ${{ github.ref_name }}
+            else
+              echo "== Cloning repository..."
+              git clone --branch ${{ github.ref_name }} https://${{ secrets.GH_PAT }}@github.com/${{ github.repository }} .
+            fi
+
+            # Docker login
+            echo "== Logging into GHCR..."
+            echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            # Write .env file for visibility/debugging
+            if [ "${{ github.ref_name }}" = "prod" ]; then
+              API_URL=${{ secrets.VITE_API_URL_PROD }}
+              GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID_PROD }}
+            else
+              API_URL=${{ secrets.VITE_API_URL_DEV }}
+              GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID_DEV }}
+            fi
+
+            echo "== Writing .env file with API_URL=$API_URL"
+            cat > .env <<EOL
+            VITE_API_URL=$API_URL
+            VITE_GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+            EOL
+
+            # Stop old containers before rebuild
+            echo "== Stopping old containers..."
+            docker compose -p $PROJECT_NAME \
+              -f docker-compose.yml \
+              -f docker-compose.override.${{ github.ref_name }}.yml down || true
+
+            # Pull latest image and restart
+            echo "== Starting containers..."
+            docker compose -p $PROJECT_NAME \
+              -f docker-compose.yml \
+              -f docker-compose.override.${{ github.ref_name }}.yml up -d --build --pull always
+
+            # Cleanup old unused Docker layers
+            echo "== Cleaning up unused Docker images..."
+            docker image prune -f
+
+            echo "== Deployment completed for branch: ${{ github.ref_name }}"

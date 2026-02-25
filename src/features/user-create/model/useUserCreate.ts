@@ -16,7 +16,6 @@ export const useUserCreate = (options?: UseUserCreateOptions) => {
         defaultValues: {
             email: "",
             fullName: "",
-            password: "",
         },
         mode: "onSubmit",
     });
@@ -26,7 +25,6 @@ export const useUserCreate = (options?: UseUserCreateOptions) => {
             const result = await addUser({
                 email: data.email,
                 fullName: data.fullName,
-                password: data.password && data.password.length > 0 ? data.password : undefined,
             }).unwrap();
             if (result?.data) {
                 options?.onSuccess?.(result.data);

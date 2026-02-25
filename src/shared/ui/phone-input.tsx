@@ -5,7 +5,7 @@ import type { ComboboxOption } from "./combobox";
 import { Input } from "./input";
 
 // Country codes with their dial codes and masks
-export const COUNTRY_CODES = [
+const COUNTRY_CODES = [
     { code: "KG", dialCode: "+996", name: "Kyrgyzstan", mask: "XXX XXX XXX" }, // 9 digits
     { code: "RU", dialCode: "+7", name: "Russia", mask: "XXX XXX XX XX" }, // 10 digits
     { code: "US", dialCode: "+1", name: "United States", mask: "XXX XXX XXXX" }, // 10 digits

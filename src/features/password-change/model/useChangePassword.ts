@@ -27,8 +27,7 @@ export const useChangePassword = (options?: UseChangePasswordOptions) => {
         try {
             await changePassword({
                 currentPassword: data.currentPassword,
-                newPassword: data.newPassword,
-                confirmPassword: data.confirmPassword
+                newPassword: data.newPassword
             }).unwrap();
 
             toast.success(t("password.changeSuccess"));

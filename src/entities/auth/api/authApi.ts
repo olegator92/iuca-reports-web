@@ -29,7 +29,7 @@ export const authApi = rtkApi.injectEndpoints({
                 method: "POST",
                 body: credentials
             }),
-            transformResponse: (response: ResultEnvelope<any>) => {
+            transformResponse: (response: ResultEnvelope<Record<string, unknown>>) => {
                 const data = ensureSuccess(response).data;
                 // Transform Pascal Case to camel case
                 return {
@@ -48,7 +48,7 @@ export const authApi = rtkApi.injectEndpoints({
                 method: "POST",
                 body: userData
             }),
-            transformResponse: (response: ResultEnvelope<any>) => {
+            transformResponse: (response: ResultEnvelope<Record<string, unknown>>) => {
                 const data = ensureSuccess(response).data;
                 // Transform Pascal Case to camel case
                 return {
@@ -65,7 +65,7 @@ export const authApi = rtkApi.injectEndpoints({
                 method: "POST",
                 body
             }),
-            transformResponse: (response: ResultEnvelope<any>) => {
+            transformResponse: (response: ResultEnvelope<Record<string, unknown>>) => {
                 const data = ensureSuccess(response).data;
                 // Transform Pascal Case to camel case
                 return {
@@ -195,7 +195,7 @@ export const authApi = rtkApi.injectEndpoints({
                 method: "POST",
                 body
             }),
-            transformResponse: (response: ResultEnvelope<any>) => {
+            transformResponse: (response: ResultEnvelope<Record<string, unknown>>) => {
                 const data = ensureSuccess(response).data;
                 // Transform Pascal Case to camel case
                 return {

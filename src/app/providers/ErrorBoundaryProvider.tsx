@@ -1,22 +1,22 @@
 import {
     Component,
+    type ComponentType,
     type ErrorInfo,
     type ReactNode,
-    type ReactElement,
     useCallback,
 } from "react";
 import { ServerErrorPage } from "@/pages/errors";
 import { ROUTES } from "@/shared/config";
 import { useNavigateWithLoading } from "@/shared/lib";
 
-type FallbackRenderArgs = {
+type FallbackProps = {
     error: Error;
     resetError: () => void;
 };
 
 type ErrorBoundaryProps = {
     children: ReactNode;
-    fallbackRender: (args: FallbackRenderArgs) => ReactNode;
+    FallbackComponent: ComponentType<FallbackProps>;
 };
 
 type ErrorBoundaryState = {
@@ -44,17 +44,20 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
     public render(): ReactNode {
         if (this.state.hasError && this.state.error) {
-            return this.props.fallbackRender({
-                error: this.state.error,
-                resetError: this.resetErrorBoundary,
-            }) as ReactElement;
+            const { FallbackComponent } = this.props;
+            return (
+                <FallbackComponent
+                    error={this.state.error}
+                    resetError={this.resetErrorBoundary}
+                />
+            );
         }
 
         return this.props.children;
     }
 }
 
-const ServerErrorFallback = ({ resetError }: FallbackRenderArgs) => {
+const ServerErrorFallback = ({ resetError }: FallbackProps) => {
     const navigate = useNavigateWithLoading();
 
     const handleGoHome = useCallback(() => {
@@ -77,7 +80,7 @@ const ServerErrorFallback = ({ resetError }: FallbackRenderArgs) => {
 
 export const ErrorBoundaryProvider = ({ children }: { children: ReactNode }) => {
     return (
-        <ErrorBoundary fallbackRender={ServerErrorFallback}>
+        <ErrorBoundary FallbackComponent={ServerErrorFallback}>
             {children}
         </ErrorBoundary>
     );

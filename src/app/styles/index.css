@@ -170,6 +170,17 @@
   }
 }
 
+/* Hide scrollbar utility */
+@layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Custom Scrollbar Styles */
 @layer components {
   .custom-scrollbar {

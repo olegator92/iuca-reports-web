@@ -5,7 +5,7 @@ import { Button, FormField, Input } from "@/shared/ui";
 import type { ForgotPasswordFormData } from "../model/validation";
 
 interface ForgotPasswordFormProps {
-    form: UseFormReturn<ForgotPasswordFormData, any>;
+    form: UseFormReturn<ForgotPasswordFormData, unknown>;
     isSubmitting: boolean;
     onSubmit: (e: React.FormEvent) => void;
 }

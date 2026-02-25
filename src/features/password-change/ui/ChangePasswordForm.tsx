@@ -1,11 +1,11 @@
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { UseFormReturn } from "react-hook-form";
-import { Button, FormField, Input, PasswordInput } from "@/shared/ui";
+import { Button, FormField, PasswordInput } from "@/shared/ui";
 import type { ChangePasswordFormData } from "../model/validation";
 
 interface ChangePasswordFormProps {
-    form: UseFormReturn<ChangePasswordFormData, any>;
+    form: UseFormReturn<ChangePasswordFormData, unknown>;
     isSubmitting: boolean;
     onSubmit: (e: React.FormEvent) => void;
     onCancel?: () => void;

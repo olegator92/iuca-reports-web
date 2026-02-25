@@ -26,7 +26,6 @@ export const useUserEditor = ({
         defaultValues: {
             email: user.email,
             fullName: user.fullName,
-            password: "",
         },
         mode: "onSubmit",
     });
@@ -35,7 +34,6 @@ export const useUserEditor = ({
         form.reset({
             email: user.email,
             fullName: user.fullName,
-            password: "",
         });
     }, [user.email, user.fullName, form]);
 
@@ -49,8 +47,7 @@ export const useUserEditor = ({
 
         return (
             trimmedEmail !== userEmail ||
-            trimmedFullName !== userFullName ||
-            (formValues.password && formValues.password.length > 0)
+            trimmedFullName !== userFullName
         );
     }, [formValues, user.email, user.fullName]);
 
@@ -58,7 +55,6 @@ export const useUserEditor = ({
         form.reset({
             email: user.email,
             fullName: user.fullName,
-            password: "",
         });
     }, [user.email, user.fullName, form]);
 
@@ -73,7 +69,6 @@ export const useUserEditor = ({
                 id: user.id,
                 email: data.email,
                 fullName: data.fullName,
-                password: data.password && data.password.length > 0 ? data.password : undefined,
             }).unwrap();
             const updated = result?.data ?? {
                 ...user,
@@ -81,8 +76,6 @@ export const useUserEditor = ({
                 fullName: data.fullName,
             };
             onSuccess?.(updated);
-            // Clear password field after successful update
-            form.setValue("password", "");
         } catch {
             // handled by mutation toast
         }

@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { ensureSuccess, rtkApi } from "@/shared/api";
 import type { ExtractedResult, PaginatedResponse, ResultEnvelope } from "@/shared/api";
-import type { User, CreateUserRequest, UpdateUserRequest, AssignRoleRequest } from "../model";
+import type { User, CreateUserRequest, UpdateUserRequest, AssignRoleRequest, AssignPositionRequest } from "../model";
 
 interface GetUsersParams {
     page?: number;
@@ -181,7 +181,7 @@ export const userApi = rtkApi.injectEndpoints({
             }),
             transformResponse: (response: ResultEnvelope<User>, _meta, args) => {
                 const result = ensureSuccess(response, { allowNullData: true });
-                const resolvedData = result.data ?? { id: args.id, ...args };
+                const resolvedData = result.data ?? { ...args };
                 return {
                     ...result,
                     data: resolvedData as User
@@ -302,12 +302,67 @@ export const userApi = rtkApi.injectEndpoints({
                 }
             }
         }),
+        assignPositionToUser: builder.mutation<ExtractedResult<User>, AssignPositionRequest>({
+            query: ({ userId, positionId }) => ({
+                url: `${USER_ENDPOINT}/${userId}/positions`,
+                method: "POST",
+                body: { userId, positionId }
+            }),
+            transformResponse: (response: ResultEnvelope<User>) => ensureSuccess(response),
+            async onQueryStarted({ userId }, { dispatch, queryFulfilled }) {
+                try {
+                    const { data: result } = await queryFulfilled;
+                    showSuccessToast(result.message);
+
+                    // Update the user in cached queries instead of invalidating
+                    if (result.data) {
+                        dispatch(
+                            userApi.util.updateQueryData("getUserById", userId, () => result.data)
+                        );
+                    }
+                } catch {
+                    // Errors handled globally
+                }
+            }
+        }),
+        removePositionFromUser: builder.mutation<ExtractedResult<User>, { userId: string; positionId: string }>({
+            query: ({ userId, positionId }) => ({
+                url: `${USER_ENDPOINT}/${userId}/positions/${positionId}`,
+                method: "DELETE"
+            }),
+            transformResponse: (response: ResultEnvelope<User>) => ensureSuccess(response),
+            async onQueryStarted({ userId }, { dispatch, queryFulfilled }) {
+                try {
+                    const { data: result } = await queryFulfilled;
+                    showSuccessToast(result.message);
+
+                    // Update the user in cached queries instead of invalidating
+                    if (result.data) {
+                        dispatch(
+                            userApi.util.updateQueryData("getUserById", userId, () => result.data)
+                        );
+                    }
+                } catch {
+                    // Errors handled globally
+                }
+            }
+        }),
         getUserPermissions: builder.query<string[], string>({
             query: (userId) => ({
                 url: `/permissions/users/${userId}`
             }),
             transformResponse: (response: ResultEnvelope<string[]>) => ensureSuccess(response).data,
             providesTags: (_result, _error, userId) => [{ type: "User", id: `${userId}-permissions` }]
+        }),
+        getAllUsers: builder.query<User[], void>({
+            query: () => ({
+                url: `${USER_ENDPOINT}/all`
+            }),
+            transformResponse: (response: ResultEnvelope<User[]>) => {
+                const { data } = ensureSuccess(response);
+                return data ?? [];
+            },
+            providesTags: [{ type: "User" as const, id: "LIST" }]
         })
     }),
     overrideExisting: false
@@ -324,7 +379,10 @@ export const {
     useDisableUserMutation,
     useAssignRoleToUserMutation,
     useRemoveRoleFromUserMutation,
-    useGetUserPermissionsQuery
+    useAssignPositionToUserMutation,
+    useRemovePositionFromUserMutation,
+    useGetUserPermissionsQuery,
+    useGetAllUsersQuery
 } = userApi;
 
 export type { GetUsersParams, GetUsersResult };

@@ -85,11 +85,19 @@ export interface CurrentUser {
     isActive: boolean;
     roles: string[];
     permissions?: string[]; // Optional: Actual permissions from backend (includes wildcard support)
+    positions?: CurrentUserPosition[];
     createdAt: string;
     updatedAt: string;
     profilePhotoUrl?: string;
     hasPassword: boolean;
     accountDeletionScheduledAt?: string;
+}
+
+export interface CurrentUserPosition {
+    id: string;
+    name: string;
+    departmentId: string;
+    departmentName: string;
 }
 
 // Auth state for Redux

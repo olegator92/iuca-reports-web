@@ -16,9 +16,10 @@ export const accountApi = rtkApi.injectEndpoints({
             query: () => ({
                 url: `${ACCOUNT_ENDPOINT}/me`
             }),
-            transformResponse: (response: ResultEnvelope<any>) => {
+            transformResponse: (response: ResultEnvelope<Record<string, unknown>>) => {
                 const data = ensureSuccess(response).data;
                 // Transform Pascal Case to camel case
+                const rawPositions = data.Positions || data.positions;
                 return {
                     id: data.Id || data.id,
                     email: data.Email || data.email,
@@ -26,6 +27,14 @@ export const accountApi = rtkApi.injectEndpoints({
                     isActive: data.IsActive ?? data.isActive,
                     roles: data.Roles || data.roles,
                     permissions: data.Permissions || data.permissions,
+                    positions: Array.isArray(rawPositions)
+                        ? rawPositions.map((p: Record<string, unknown>) => ({
+                            id: p.Id || p.id,
+                            name: p.Name || p.name,
+                            departmentId: p.DepartmentId || p.departmentId,
+                            departmentName: p.DepartmentName || p.departmentName
+                        }))
+                        : [],
                     createdAt: data.CreatedAt || data.createdAt,
                     updatedAt: data.UpdatedAt || data.updatedAt,
                     profilePhotoUrl: data.ProfilePhotoUrl || data.profilePhotoUrl,
@@ -56,10 +65,10 @@ export const accountApi = rtkApi.injectEndpoints({
                 method: "POST",
                 body: formData
             }),
-            transformResponse: (response: ResultEnvelope<any>) => {
+            transformResponse: (response: ResultEnvelope<Record<string, unknown>>) => {
                 const data = ensureSuccess(response).data;
                 return {
-                    photoUrl: data.PhotoUrl || data.photoUrl
+                    photoUrl: (data.PhotoUrl || data.photoUrl) as string
                 };
             },
             invalidatesTags: ["CurrentUser"],

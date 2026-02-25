@@ -51,7 +51,7 @@ export const MultiSelectCombobox = ({
     );
 
     const handleRemove = useCallback(
-        (e: React.MouseEvent, removedValue: string) => {
+        (e: React.MouseEvent | React.KeyboardEvent, removedValue: string) => {
             e.stopPropagation();
             onChange(value.filter((v) => v !== removedValue));
         },
@@ -165,7 +165,7 @@ export const MultiSelectCombobox = ({
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter" || e.key === " ") {
                                             e.preventDefault();
-                                            handleRemove(e as any, option.value);
+                                            handleRemove(e, option.value);
                                         }
                                     }}
                                     aria-label={`Remove ${option.label}`}

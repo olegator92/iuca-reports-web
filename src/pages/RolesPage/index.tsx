@@ -64,7 +64,6 @@ export const RolesPage = () => {
         hasChanges: false,
     });
 
-    const isDrawerOpen = drawerState.type !== "closed";
     const currentDrawerTitleKey = resolveDrawerTitleKey(drawerState);
     const currentDrawerTitle = currentDrawerTitleKey
         ? t(currentDrawerTitleKey)

@@ -43,10 +43,10 @@ export const VerifyEmailPage = () => {
             .then(() => {
                 setVerificationState("success");
             })
-            .catch((error: any) => {
+            .catch((error: unknown) => {
                 setVerificationState("error");
                 setErrorMessage(
-                    error?.data?.message ||
+                    (error as { data?: { message?: string } })?.data?.message ||
                     t("auth.verifyEmailFailed")
                 );
             });

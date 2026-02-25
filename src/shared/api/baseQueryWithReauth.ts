@@ -1,4 +1,4 @@
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { BaseQueryFn, FetchArgs, FetchBaseQueryError, BaseQueryApi } from "@reduxjs/toolkit/query";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiError } from "@/shared/api/errors";
 import type { ResultEnvelope } from "./types";
@@ -45,6 +45,11 @@ type BaseQueryArgs = string | FetchArgs;
 type BaseQueryResult = unknown;
 type BaseQueryError = FetchBaseQueryError | ApiError;
 
+export interface BaseQueryExtraOptions {
+    /** When true, 404 responses are silently returned without displaying a global error */
+    suppress404?: boolean;
+}
+
 const isEnvelope = (value: unknown): value is ResultEnvelope<unknown> =>
     typeof value === "object" && value !== null && ("data" in value || "errorCode" in value || "message" in value);
 
@@ -55,8 +60,8 @@ let refreshPromise: Promise<LoginResponse | null> | null = null;
 
 const refreshAuthToken = async (
     refreshToken: string,
-    api: any,
-    extraOptions: any
+    api: BaseQueryApi,
+    extraOptions: BaseQueryExtraOptions
 ): Promise<LoginResponse | null> => {
     // If there's already a refresh in progress, wait for it
     if (refreshPromise) {
@@ -77,14 +82,14 @@ const refreshAuthToken = async (
             );
 
             if (refreshResult.data) {
-                const envelope = refreshResult.data as ResultEnvelope<any>;
+                const envelope = refreshResult.data as ResultEnvelope<Record<string, unknown>>;
 
                 if (envelope.data && !envelope.errorCode) {
                     const tokens: LoginResponse = {
-                        accessToken: envelope.data.AccessToken || envelope.data.accessToken,
-                        refreshToken: envelope.data.RefreshToken || envelope.data.refreshToken,
-                        expiresIn: envelope.data.ExpiresIn || envelope.data.expiresIn,
-                        tokenType: envelope.data.TokenType || envelope.data.tokenType
+                        accessToken: (envelope.data.AccessToken || envelope.data.accessToken) as string,
+                        refreshToken: (envelope.data.RefreshToken || envelope.data.refreshToken) as string,
+                        expiresIn: (envelope.data.ExpiresIn || envelope.data.expiresIn) as number,
+                        tokenType: (envelope.data.TokenType || envelope.data.tokenType) as string
                     };
 
                     // Store new tokens
@@ -108,7 +113,7 @@ const refreshAuthToken = async (
 /**
  * Base query with automatic token refresh on 401 errors
  */
-export const baseQueryWithReauth: BaseQueryFn<BaseQueryArgs, BaseQueryResult, BaseQueryError> = async (
+export const baseQueryWithReauth: BaseQueryFn<BaseQueryArgs, BaseQueryResult, BaseQueryError, BaseQueryExtraOptions> = async (
     args,
     api,
     extraOptions
@@ -151,9 +156,11 @@ export const baseQueryWithReauth: BaseQueryFn<BaseQueryArgs, BaseQueryResult, Ba
         }
     }
 
-    // Handle errors (suppress for logout/revoke endpoints)
+    // Handle errors (suppress for logout/revoke endpoints, or when caller opts out of 404 display)
     if (result.error) {
-        if (!isLogoutEndpoint) {
+        const status = "status" in result.error ? result.error.status : undefined;
+        const is404Suppressed = status === 404 && extraOptions?.suppress404;
+        if (!isLogoutEndpoint && !is404Suppressed) {
             useGlobalErrorStore.getState().showError(resolveApiError(result.error));
         }
         return result;

@@ -1,18 +1,9 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import type { CultureDto } from "@/shared/api";
 import { useGetCulturesQuery } from "@/shared/api";
+import type { CultureDto } from "@/shared/api";
 import i18n, { DEFAULT_LANGUAGE } from "@/shared/config/i18n";
-
-type LocalizationContextValue = {
-    languages: CultureDto[];
-    isLoading: boolean;
-    error: unknown;
-    currentLanguage: string;
-    setLanguage: (language: string) => Promise<void>;
-};
-
-const LocalizationContext = createContext<LocalizationContextValue | undefined>(undefined);
+import { LocalizationContext, type LocalizationContextValue } from "./useLocalization";
 
 const FALLBACK_LANGUAGES: CultureDto[] = [
     {
@@ -94,12 +85,3 @@ export const LocalizationProvider = ({ children }: LocalizationProviderProps) =>
     );
 };
 
-export const useLocalization = () => {
-    const context = useContext(LocalizationContext);
-
-    if (!context) {
-        throw new Error("useLocalization must be used within a LocalizationProvider");
-    }
-
-    return context;
-};

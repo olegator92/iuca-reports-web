@@ -5,7 +5,7 @@ import { Button, FormField, Input, PasswordInput, Checkbox } from "@/shared/ui";
 import type { LoginFormData } from "../model/validation";
 
 interface LoginFormProps {
-    form: UseFormReturn<LoginFormData, any>;
+    form: UseFormReturn<LoginFormData, unknown>;
     isSubmitting: boolean;
     onSubmit: (e: React.FormEvent) => void;
 }

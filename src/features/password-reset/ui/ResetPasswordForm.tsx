@@ -5,7 +5,7 @@ import { Button, FormField, Input, PasswordInput } from "@/shared/ui";
 import type { ResetPasswordFormData } from "../model/validation";
 
 interface ResetPasswordFormProps {
-    form: UseFormReturn<ResetPasswordFormData, any>;
+    form: UseFormReturn<ResetPasswordFormData, unknown>;
     isSubmitting: boolean;
     onSubmit: (e: React.FormEvent) => void;
 }

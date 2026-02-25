@@ -8,7 +8,7 @@ const baseStyle = {
     "--normal-border": "var(--border)",
 } as const;
 
-const Toaster = ({ position = "top-right", style, richColors = true, ...props }: ToasterProps) => {
+const Toaster = ({ position = "bottom-right", style, richColors = true, ...props }: ToasterProps) => {
     const { theme } = useTheme();
 
     return (

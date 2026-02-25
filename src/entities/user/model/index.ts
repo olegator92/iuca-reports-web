@@ -5,6 +5,7 @@ export type {
     CreateUserRequest,
     UpdateUserRequest,
     AssignRoleRequest,
+    AssignPositionRequest,
     UserResponse
 } from "./types";
 

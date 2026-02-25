@@ -20,14 +20,23 @@
     "filters": "Filters",
     "showing": "Showing",
     "showingCount": "{{label}} {{loaded}} of {{total}}",
-    "reload": "Reload"
+    "reload": "Reload",
+    "createdAt": "Created",
+    "updatedAt": "Updated"
   },
   "navigation": {
     "title": "Navigation",
     "home": "Home",
+    "dailyNotes": "Daily Notes",
+    "dailyReports": "Daily Reports",
+    "notes": "Notes",
+    "reports": "Reports",
+    "weeklyReports": "Weekly Reports",
     "templates": "Templates",
     "roles": "Roles",
     "users": "Users",
+    "departments": "Departments",
+    "positions": "Positions",
     "toggleMenu": "Toggle navigation menu",
     "termsAndPolicies": "Terms & Policies",
     "privacyPolicy": "Privacy Policy",
@@ -277,6 +286,44 @@
     "serverUnavailable": "Server unavailable. Please try again later.",
     "noData": "No data returned from server"
   },
+  "dailyNotes": {
+    "pageTitle": "Daily Notes",
+    "dateHeader": {
+      "today": "Today",
+      "previousDay": "Previous day",
+      "nextDay": "Next day",
+      "selectDate": "Select date"
+    },
+    "messages": {
+      "empty": "No notes for this day. Start writing below.",
+      "noMoreOlder": "Beginning of notes for this day",
+      "loadingOlder": "Loading earlier notes...",
+      "loadMore": "Load earlier notes"
+    },
+    "input": {
+      "placeholder": "Write a note...",
+      "send": "Send",
+      "editing": "Editing message",
+      "characterCount": "{{count}}/5000"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "openMenu": "Open message actions"
+    },
+    "edited": "edited",
+    "position": {
+      "noPositions": "No positions assigned"
+    }
+  },
+  "deleteNote": {
+    "title": "Delete note",
+    "description": "This note will be removed. This action cannot be undone.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
   "deleteTemplate": {
     "title": "Delete template",
     "description": "This action cannot be undone. This will permanently delete the template.",
@@ -408,6 +455,88 @@
     "noAvailableRoles": "All available roles have been assigned to this user",
     "systemRole": "System Role"
   },
+  "positions": {
+    "pageTitle": "Positions",
+    "pageSubtitle": "Manage positions across departments and assign roles to users.",
+    "title": "Positions",
+    "assignPosition": "Assign position",
+    "assignPositionTitle": "Assign position to user",
+    "assignPositionDescription": "Select a position to assign to this user:",
+    "assign": "Assign",
+    "removePosition": "Remove {{position}} position",
+    "removePositionDescription": "Are you sure you want to remove the position \"{{position}}\" from this user?",
+    "noPositions": "No positions assigned",
+    "noAvailablePositions": "All available positions have been assigned to this user",
+    "sectionTitle": "Positions",
+    "deletedBadge": "Deleted",
+    "edit": "Edit",
+    "delete": "Delete",
+    "restore": "Restore",
+    "nameLabel": "Position Name",
+    "namePlaceholder": "Enter position name",
+    "departmentLabel": "Department",
+    "departmentPlaceholder": "Select department",
+    "createSubmit": "Create position",
+    "updateSubmit": "Save changes",
+    "cancel": "Cancel",
+    "editMode": "Edit",
+    "drawer": {
+      "createTitle": "Create position",
+      "viewTitle": "Position details",
+      "editTitle": "Edit position",
+      "savePosition": "Save position",
+      "saveChanges": "Save changes"
+    },
+    "deleteDialog": {
+      "title": "Delete position",
+      "description": "This will soft delete the position. It can be restored later.",
+      "warningAssignedUsers": "Users assigned to this position will remain assigned, but the position will be hidden from active listings.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "restoreDialog": {
+      "title": "Restore position",
+      "description": "This will restore the position and make it visible in active listings.",
+      "confirm": "Restore",
+      "cancel": "Cancel"
+    },
+    "list": {
+      "quickAction": "Quick Action",
+      "addNew": "Add new position",
+      "addNewDescription": "Create a new position for your department structure.",
+      "createPosition": "Create position",
+      "actionsAlt": "Open position actions",
+      "loadingMore": "Loading more positions"
+    },
+    "filters": {
+      "title": "Filters",
+      "resetFilters": "Clear",
+      "deletedPositions": "Deleted Positions",
+      "excludeDeleted": "Exclude",
+      "includeDeleted": "Include",
+      "activeFilters": "Active filters",
+      "tabFilters": "Filters",
+      "tabSorting": "Sorting",
+      "sortField": "Sort by",
+      "sortDirection": "Direction",
+      "sortFieldNone": "None",
+      "sortFieldName": "Name",
+      "sortFieldCreated": "Created date",
+      "sortFieldUpdated": "Updated date",
+      "ascending": "Ascending",
+      "descending": "Descending"
+    }
+  },
+  "positionForm": {
+    "errorNameRequired": "Position name is required",
+    "errorNameTooLong": "Position name must be 256 characters or less",
+    "errorDepartmentRequired": "Department is required",
+    "positionCreated": "Position created successfully",
+    "positionUpdated": "Position updated successfully",
+    "positionDeleted": "Position deleted successfully",
+    "positionRestored": "Position restored successfully",
+    "noChanges": "No changes to save"
+  },
   "deleteUser": {
     "title": "Delete user",
     "description": "This action will permanently delete the user. This cannot be undone.",
@@ -458,6 +587,51 @@
     "sortFieldUpdated": "Updated date",
     "ascending": "Ascending",
     "descending": "Descending"
+  },
+  "departments": {
+    "pageTitle": "Departments",
+    "addButton": "Add Department",
+    "listView": "List",
+    "treeView": "Hierarchy",
+    "createTitle": "Create Department",
+    "editTitle": "Edit Department",
+    "viewTitle": "Department Details",
+    "nameLabel": "Name",
+    "namePlaceholder": "Department name",
+    "parentLabel": "Parent Department",
+    "parentPlaceholder": "Search departments...",
+    "noParent": "No parent (root)",
+    "nameRequired": "Name is required",
+    "nameTooLong": "Name must be at most 200 characters",
+    "deleteTitle": "Delete Department",
+    "deleteConfirm": "Are you sure you want to delete «{{name}}»?",
+    "restoreTitle": "Restore Department",
+    "restoreConfirm": "Restore «{{name}}»?",
+    "sortByName": "Name",
+    "sortByCreatedAt": "Created At",
+    "sortByUpdatedAt": "Updated At",
+    "includeDeleted": "Show deleted",
+    "empty": "No departments found",
+    "noMore": "No more departments",
+    "createSuccess": "Department created",
+    "updateSuccess": "Department updated",
+    "deleteSuccess": "Department deleted",
+    "restoreSuccess": "Department restored",
+    "hierarchyEmpty": "No departments in hierarchy",
+    "rootDepartment": "Root",
+    "subDepartmentsCount": "{{count}} sub-departments",
+    "addChild": "Add sub-department",
+    "supervisorsSection": "Supervisors",
+    "supervisorsLabel": "Supervisors",
+    "supervisorsCount": "{{count}} supervisors",
+    "noSupervisors": "No supervisors assigned",
+    "assignSupervisor": "Assign Supervisor",
+    "assignSupervisorTitle": "Assign Supervisor",
+    "assignSupervisorDescription": "Select a user to assign as supervisor of this department.",
+    "noAvailableSupervisors": "No available users to assign",
+    "assign": "Assign",
+    "removeSupervisor": "Remove {{name}} as supervisor?",
+    "removeSupervisorDescription": "This will remove the user as a supervisor of this department."
   },
   "privacy": {
     "title": "Privacy Policy",
@@ -659,5 +833,107 @@
       "title": "Contact Information",
       "content": "If you have any questions about these Terms, please contact us at helpdesk@iuca.kg or Kyrgyz Republic, Tokmok city, Shamsinskaya 2."
     }
+  },
+  "dailyReports": {
+    "title": "Daily Report",
+    "position": {
+      "noPositions": "No positions assigned"
+    },
+    "dateHeader": {
+      "today": "Today",
+      "prev": "Previous day",
+      "next": "Next day"
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "generated": "Generated"
+    },
+    "actions": {
+      "generate": "Generate",
+      "edit": "Edit",
+      "regenerate": "Regenerate",
+      "copy": "Copy",
+      "copied": "Copied!"
+    },
+    "noReport": "No notes exist for this date — report has not been created yet.",
+    "notGenerated": "Notes exist for this date but the report has not been generated yet.",
+    "unprocessedUpdates": {
+      "banner": "New notes have been added since the last report generation.",
+      "regenerateHint": "Regenerate the report to include the latest notes."
+    },
+    "editDrawer": {
+      "title": "Edit Report",
+      "statusLabel": "Status",
+      "contentLabel": "Report Content",
+      "save": "Save",
+      "close": "Close",
+      "validation": {
+        "required": "Content is required.",
+        "tooLong": "Content must be 20,000 characters or fewer."
+      }
+    },
+    "generate": {
+      "success": "Report generated successfully."
+    },
+    "regenerate": {
+      "success": "Report regenerated successfully.",
+      "confirmTitle": "Regenerate Report?",
+      "confirmDescription": "This will overwrite any manual edits you have made. The AI will re-generate the report content based on the latest daily notes. This action cannot be undone.",
+      "confirmButton": "Regenerate"
+    },
+    "edit": {
+      "success": "Report updated successfully."
+    }
+  },
+  "weeklyReports": {
+    "tabs": {
+      "dailyReports": "Daily Reports",
+      "weeklyReport": "Weekly Report"
+    },
+    "dateHeader": {
+      "prev": "Previous week",
+      "next": "Next week",
+      "selectDate": "Select date"
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "generated": "Generated"
+    },
+    "position": {
+      "noPositions": "No positions assigned"
+    },
+    "actions": {
+      "generate": "Generate",
+      "regenerate": "Regenerate",
+      "edit": "Edit",
+      "copy": "Copy",
+      "copied": "Copied!"
+    },
+    "generate": {
+      "success": "Weekly report generated successfully."
+    },
+    "regenerate": {
+      "confirmTitle": "Regenerate Weekly Report?",
+      "confirmDescription": "This will overwrite any manual edits with a fresh AI-generated summary based on daily reports for this week. This action cannot be undone.",
+      "confirmButton": "Regenerate",
+      "success": "Weekly report regenerated successfully."
+    },
+    "editDrawer": {
+      "title": "Edit Weekly Report",
+      "statusLabel": "Status",
+      "contentLabel": "Report Content",
+      "save": "Save",
+      "close": "Close",
+      "validation": {
+        "required": "Content is required.",
+        "tooLong": "Content must be 50,000 characters or fewer."
+      }
+    },
+    "edit": {
+      "success": "Weekly report updated successfully."
+    },
+    "noReport": "No daily reports with generated status for this week — a weekly report cannot be generated yet.",
+    "noDailyReports": "No daily reports with generated status found for this week.",
+    "unprocessedUpdates": "New daily reports have been added since this weekly report was generated. Consider regenerating."
   }
 }

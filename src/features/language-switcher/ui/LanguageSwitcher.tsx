@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useId } from "react";
-import { useLocalization } from "@/app/providers/LocalizationProvider";
+import { useLocalization } from "@/app/providers/useLocalization";
 import { Button } from "@/shared/ui";
 import { useTranslation } from "react-i18next";
 import { Check, ChevronDown, Globe } from "lucide-react";

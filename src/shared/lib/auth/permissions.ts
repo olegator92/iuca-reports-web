@@ -15,10 +15,30 @@ export const PERMISSIONS = {
     // User permissions
     USER_VIEW: "User.View",
     USER_EDIT: "User.Edit",
+    USER_ROLE_EDIT: "User.RoleEdit",
+
+    // Department permissions
+    DEPARTMENT_VIEW: "Department.View",
+    DEPARTMENT_EDIT: "Department.Edit",
+
+    // Position permissions
+    POSITION_VIEW: "Position.View",
+    POSITION_EDIT: "Position.Edit",
 
     // Role permissions
     ROLE_VIEW: "Role.View",
     ROLE_EDIT: "Role.Edit",
+
+    // Daily Note permissions
+    DAILY_NOTE_VIEW: "DailyNote.View",
+
+    // Daily Report permissions
+    DAILY_REPORT_VIEW: "DailyReport.View",
+    DAILY_REPORT_EDIT: "DailyReport.Edit",
+
+    // Weekly Report permissions
+    WEEKLY_REPORT_VIEW: "WeeklyReport.View",
+    WEEKLY_REPORT_EDIT: "WeeklyReport.Edit",
 
     // Menu group permissions
     MENU_ADMINISTRATION: "Menu.Administration",
@@ -94,7 +114,7 @@ export const hasActualPermission = (user: CurrentUser & { permissions?: string[]
  * Note: Permission checking is role-based on the backend.
  * Frontend role checks should match backend permission structure:
  * - Admin role has * (wildcard - all permissions)
- * - Manager role has Template.Edit, User.View, Role.View
+ * - Manager role has Template.Edit, User.View, User.Edit, Role.View, Menu.Management
  * - User role has Template.View
  *
  * For accurate permission checking, fetch actual permissions from backend
@@ -128,14 +148,31 @@ export const hasPermission = (user: CurrentUser | null, permission: Permission):
             PERMISSIONS.TEMPLATE_VIEW,
             PERMISSIONS.TEMPLATE_EDIT,
             PERMISSIONS.USER_VIEW,
-            PERMISSIONS.ROLE_VIEW
+            PERMISSIONS.USER_EDIT,
+            PERMISSIONS.ROLE_VIEW,
+            PERMISSIONS.DEPARTMENT_VIEW,
+            PERMISSIONS.DEPARTMENT_EDIT,
+            PERMISSIONS.POSITION_VIEW,
+            PERMISSIONS.POSITION_EDIT,
+            PERMISSIONS.DAILY_NOTE_VIEW,
+            PERMISSIONS.DAILY_REPORT_VIEW,
+            PERMISSIONS.DAILY_REPORT_EDIT,
+            PERMISSIONS.WEEKLY_REPORT_VIEW,
+            PERMISSIONS.WEEKLY_REPORT_EDIT,
+            PERMISSIONS.MENU_MANAGEMENT,
         ];
         return (managerPermissions as Permission[]).includes(permission);
     }
 
     // Regular user permissions
     if (hasRole(user, SYSTEM_ROLES.USER)) {
-        return permission === PERMISSIONS.TEMPLATE_VIEW;
+        return (
+            permission === PERMISSIONS.TEMPLATE_VIEW ||
+            permission === PERMISSIONS.DAILY_NOTE_VIEW ||
+            permission === PERMISSIONS.DAILY_REPORT_VIEW ||
+            permission === PERMISSIONS.WEEKLY_REPORT_VIEW ||
+            permission === PERMISSIONS.WEEKLY_REPORT_EDIT
+        );
     }
 
     return false;

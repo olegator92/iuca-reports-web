@@ -8,11 +8,13 @@ export type {
     LogoutRequest,
     RevokeTokenRequest,
     ChangePasswordRequest,
+    SetPasswordRequest,
     ForgotPasswordRequest,
     ResetPasswordRequest,
     GoogleLoginRequest,
     UpdateProfileRequest,
     DeleteAccountRequest,
     CurrentUser,
+    CurrentUserPosition,
     AuthState
 } from "./types";

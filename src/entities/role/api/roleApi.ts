@@ -1,5 +1,5 @@
 import { rtkApi, ensureSuccess } from "@/shared/api";
-import type { ResultEnvelope, PaginatedResponse } from "@/shared/api";
+import type { ResultEnvelope } from "@/shared/api";
 import type {
     Role,
     CreateRoleRequest,
