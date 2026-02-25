@@ -1,45 +1,66 @@
-name: Rollback
+name: Rollback Frontend Deploy
 
 on:
   workflow_dispatch:
     inputs:
+      branch:
+        description: "Which environment to rollback (dev or prod)"
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - prod
       tag:
-        description: 'Docker image tag to rollback to (e.g. prod-abc1234)'
+        description: "Image tag to rollback to (e.g., dev-61cbef4)"
         required: true
         type: string
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/web
-
 jobs:
   rollback:
-    name: Rollback to ${{ inputs.tag }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+      - name: Deploy frontend rollback on server
+        uses: appleboy/ssh-action@v0.1.10
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            DEPLOY_DIR=/srv/iuca-reports/${{ github.event.inputs.branch }}/front
+            REPO_NAME="${{ github.repository }}"
+            REPO_NAME=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')
+            PROJECT_NAME=iuca_reports_${{ github.event.inputs.branch }}
 
-      - name: Pull specified image
-        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }}
+            echo "== Rolling back frontend for branch: ${{ github.event.inputs.branch }}"
+            echo "== Target image: ghcr.io/$REPO_NAME/web:${{ github.event.inputs.tag }}"
+            echo "== Deploy directory: $DEPLOY_DIR"
+            echo "--------------------------------------"
 
-      - name: Tag as latest
-        run: |
-          docker tag \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }} \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            cd $DEPLOY_DIR || { echo "ERROR: Deploy directory not found: $DEPLOY_DIR"; exit 1; }
 
-      - name: Push latest tag
-        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            # Ensure override file exists
+            if [ ! -f docker-compose.override.${{ github.event.inputs.branch }}.yml ]; then
+              echo "ERROR: Missing docker-compose.override.${{ github.event.inputs.branch }}.yml file!"
+              exit 1
+            fi
 
-      - name: Rollback complete
-        run: |
-          echo "Rolled back to tag: ${{ inputs.tag }}"
+            # Update image tag inside override file
+            echo "== Updating image tag in override file..."
+            sed -i "s|image: ghcr.io.*/web:.*|image: ghcr.io/$REPO_NAME/web:${{ github.event.inputs.tag }}|" docker-compose.override.${{ github.event.inputs.branch }}.yml
+
+            # Pull the rollback image
+            echo "== Pulling rollback image..."
+            docker pull ghcr.io/$REPO_NAME/web:${{ github.event.inputs.tag }}
+
+            # Restart container with the rollback image
+            echo "== Restarting frontend container..."
+            docker compose -p $PROJECT_NAME \
+              -f docker-compose.yml \
+              -f docker-compose.override.${{ github.event.inputs.branch }}.yml up -d web
+
+            echo "== Cleaning up old Docker layers..."
+            docker image prune -f
+
+            echo "== Frontend rolled back successfully to tag: ${{ github.event.inputs.tag }}"
