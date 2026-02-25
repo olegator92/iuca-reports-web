@@ -12,7 +12,7 @@ type DepartmentFormMode = "create" | "edit" | "view";
 
 interface DepartmentFormProps {
     mode: DepartmentFormMode;
-    form: UseFormReturn<DepartmentFormData>;
+    form: UseFormReturn<DepartmentFormData, unknown>;
     isSubmitting: boolean;
     disableSubmit?: boolean;
     submitLabel?: string;

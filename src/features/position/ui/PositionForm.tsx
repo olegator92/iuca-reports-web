@@ -10,7 +10,7 @@ type PositionFormMode = "create" | "edit" | "view";
 
 interface PositionFormProps {
     mode: PositionFormMode;
-    form: UseFormReturn<PositionFormData>;
+    form: UseFormReturn<PositionFormData, unknown>;
     isSubmitting: boolean;
     disableSubmit?: boolean;
     submitLabel?: string;

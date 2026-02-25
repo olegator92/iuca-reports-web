@@ -9,7 +9,7 @@ type TemplateFormMode = "create" | "edit" | "view";
 
 interface TemplateFormProps {
     mode: TemplateFormMode;
-    form: UseFormReturn<TemplateFormData>;
+    form: UseFormReturn<TemplateFormData, unknown>;
     isSubmitting: boolean;
     disableSubmit?: boolean;
     submitLabel?: string;

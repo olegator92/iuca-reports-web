@@ -6,7 +6,7 @@ import type { UseFormReturn } from "react-hook-form";
 import type { SetPasswordFormData } from "../model";
 
 interface SetPasswordFormProps {
-    form: UseFormReturn<SetPasswordFormData>;
+    form: UseFormReturn<SetPasswordFormData, unknown>;
     isSubmitting: boolean;
     onSubmit: () => void;
 }

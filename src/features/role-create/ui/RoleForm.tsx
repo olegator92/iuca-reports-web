@@ -9,7 +9,7 @@ type RoleFormMode = "create" | "edit" | "view";
 
 interface RoleFormProps {
     mode: RoleFormMode;
-    form: UseFormReturn<RoleFormData>;
+    form: UseFormReturn<RoleFormData, unknown>;
     isSubmitting: boolean;
     disableSubmit?: boolean;
     submitLabel?: string;
