@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                         dispatch(setUser(user));
                     }
                 }
-            } catch (error) {
+            } catch {
                 // If initialization fails, clear tokens
                 tokenStorage.removeRefreshToken();
             } finally {

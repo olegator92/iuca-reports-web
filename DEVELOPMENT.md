@@ -18,6 +18,7 @@ This document defines mandatory development rules and patterns for this project.
 - [Git Rules](#git-rules)
 - [Documentation Update Requirements](#documentation-update-requirements)
 - [TypeScript Strict Mode Rules](#typescript-strict-mode-rules)
+- [ESLint Rules](#eslint-rules)
 
 ---
 
@@ -1059,6 +1060,93 @@ npm run build
 ```
 
 This runs `tsc -b` followed by the Vite build. Fix all TypeScript errors before committing. If CI or Docker fails with TypeScript errors, they will never appear during local `vite dev`.
+
+---
+
+## ESLint Rules
+
+The rules below address recurring ESLint errors that fail `npm run lint` and therefore block CI. Unlike TypeScript errors, these **do** surface during `vite dev` in the browser console, but `npm run lint` must pass cleanly before pushing.
+
+### No `any` — Use Specific Types
+
+`@typescript-eslint/no-explicit-any` is enabled. Never use `any` as a type annotation.
+
+**API `transformResponse` callbacks** — The server may return PascalCase or camelCase fields. Use `ResultEnvelope<Record<string, unknown>>` instead of `ResultEnvelope<any>`. The final `as TargetType` cast remains valid.
+
+```typescript
+// ❌ WRONG
+transformResponse: (response: ResultEnvelope<any>) => { ... }
+
+// ✅ CORRECT
+transformResponse: (response: ResultEnvelope<Record<string, unknown>>) => {
+    const data = ensureSuccess(response).data;
+    return { name: data.Name || data.name } as MyType;
+}
+```
+
+**Array `.map()` callbacks** — Type the item parameter with `Record<string, unknown>` when iterating over unknown API response arrays.
+
+```typescript
+// ❌ WRONG
+rawItems.map((item: any) => ({ id: item.Id || item.id }))
+
+// ✅ CORRECT
+rawItems.map((item: Record<string, unknown>) => ({ id: item.Id || item.id }))
+```
+
+**Third-party library callbacks** — Import the callback parameter type from the library instead of using `any`.
+
+```typescript
+// ❌ WRONG — @react-oauth/google callback
+const handleSuccess = (credentialResponse: any) => { ... }
+
+// ✅ CORRECT — import the type the library exports
+import { type CredentialResponse } from "@react-oauth/google";
+const handleSuccess = (credentialResponse: CredentialResponse) => { ... }
+```
+
+---
+
+### React Fast Refresh — One File Per Export Type
+
+Vite's React Fast Refresh only works when a file exports **only components** or **only non-components** (hooks, constants, functions). Mixing both in one file produces a lint warning and breaks HMR.
+
+**Rule:** Never export a hook or utility function from the same file as a React component.
+
+```typescript
+// ❌ WRONG — MyProvider.tsx exports both a component and a hook
+export const MyProvider = ({ children }) => { ... };
+export const useMyContext = () => { ... };    // ← breaks Fast Refresh
+
+// ✅ CORRECT — split into two files
+// MyProvider.tsx  → exports only MyProvider (component)
+// useMyContext.ts → exports only useMyContext (hook)
+```
+
+**When splitting**, follow this pattern:
+- Put the `createContext()` call and the hook in `useFeatureName.ts`
+- The provider component imports `FeatureContext` from that file
+- Consumers import the hook from `useFeatureName.ts` directly
+
+---
+
+### Unused Variables and Catch Bindings
+
+**Unused catch bindings** — When the caught error is not used (e.g., errors handled globally), omit the binding entirely.
+
+```typescript
+// ❌ WRONG — 'error' is declared but never read
+} catch (error) {
+    tokenStorage.removeRefreshToken();
+}
+
+// ✅ CORRECT — no binding needed
+} catch {
+    tokenStorage.removeRefreshToken();
+}
+```
+
+**Unused function parameters** — If you must declare a parameter to satisfy a callback signature but don't use it, prefix with `_` (see TypeScript Strict Mode Rules above).
 
 ---
 

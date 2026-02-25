@@ -1,4 +1,4 @@
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import { useGoogleLogin } from "../model";
 import { useThemeStore } from "@/shared/lib/stores/themeStore";
 
@@ -17,7 +17,7 @@ export const GoogleSignInButton = ({ onSuccess, rememberMe = false }: GoogleSign
     const { handleGoogleLogin } = useGoogleLogin({ onSuccess });
     const resolvedTheme = useThemeStore((state) => state.theme);
 
-    const handleSuccess = (credentialResponse: any) => {
+    const handleSuccess = (credentialResponse: CredentialResponse) => {
         if (credentialResponse.credential) {
             // The credential is the ID token (JWT) that the backend expects
             handleGoogleLogin(credentialResponse.credential, rememberMe);
