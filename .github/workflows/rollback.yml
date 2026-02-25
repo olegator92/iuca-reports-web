@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Docker image tag to rollback to'
+        description: 'Docker image tag to rollback to (e.g. prod-abc1234)'
         required: true
         type: string
 
@@ -14,6 +14,7 @@ env:
 
 jobs:
   rollback:
+    name: Rollback to ${{ inputs.tag }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,18 +29,16 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull specified image
-        run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }}
+        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }}
 
       - name: Tag as latest
         run: |
-          docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }} \
-                     ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          docker tag \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.tag }} \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Push latest tag
-        run: |
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Rollback complete
-        run: |
-          echo "Rolled back to tag: ${{ inputs.tag }}"
+        run: echo "Rolled back to tag: ${{ inputs.tag }}"
