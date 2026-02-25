@@ -37,7 +37,7 @@ export const useRegister = (options?: UseRegisterOptions) => {
             options?.onSuccess?.(response.email, response.message);
 
             form.reset();
-        } catch (error) {
+        } catch {
             // Errors handled by global error handler
         }
     };

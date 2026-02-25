@@ -53,9 +53,9 @@ export const useLogin = (options?: UseLoginOptions) => {
             options?.onSuccess?.();
 
             form.reset();
-        } catch (error: any) {
+        } catch (error) {
             // Check if error is email not confirmed
-            const errorCode = error?.data?.errorCode || "";
+            const errorCode = (error as { data?: { errorCode?: string } })?.data?.errorCode ?? "";
 
             // If email is not confirmed, redirect to verification page
             if (errorCode === "EMAILNOTCONFIRMEDEXCEPTION") {

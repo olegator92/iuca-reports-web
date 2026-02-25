@@ -41,4 +41,5 @@ jobs:
         run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Rollback complete
-        run: echo "Rolled back to tag: ${{ inputs.tag }}"
+        run: |
+          echo "Rolled back to tag: ${{ inputs.tag }}"

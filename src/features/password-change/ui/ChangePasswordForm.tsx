@@ -5,7 +5,7 @@ import { Button, FormField, PasswordInput } from "@/shared/ui";
 import type { ChangePasswordFormData } from "../model/validation";
 
 interface ChangePasswordFormProps {
-    form: UseFormReturn<ChangePasswordFormData, any>;
+    form: UseFormReturn<ChangePasswordFormData>;
     isSubmitting: boolean;
     onSubmit: (e: React.FormEvent) => void;
     onCancel?: () => void;

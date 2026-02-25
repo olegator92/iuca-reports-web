@@ -5,7 +5,7 @@ import { Button, FormField, Input } from "@/shared/ui";
 import type { UpdateProfileFormData } from "../model/validation";
 
 interface UpdateProfileFormProps {
-    form: UseFormReturn<UpdateProfileFormData, any>;
+    form: UseFormReturn<UpdateProfileFormData>;
     isSubmitting: boolean;
     onSubmit: (e: React.FormEvent) => void;
     onCancel?: () => void;

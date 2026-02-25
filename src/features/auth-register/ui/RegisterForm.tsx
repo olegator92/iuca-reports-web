@@ -5,7 +5,7 @@ import { Button, FormField, Input, PasswordInput } from "@/shared/ui";
 import type { RegisterFormData } from "../model/validation";
 
 interface RegisterFormProps {
-    form: UseFormReturn<RegisterFormData, any>;
+    form: UseFormReturn<RegisterFormData>;
     isSubmitting: boolean;
     onSubmit: (e: React.FormEvent) => void;
 }

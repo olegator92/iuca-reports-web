@@ -32,7 +32,7 @@ export const useProfilePhoto = () => {
         try {
             const previewUrl = await createImagePreview(file);
             setPreview(previewUrl);
-        } catch (error) {
+        } catch {
             toast.error(t("profile.previewError"));
         }
     };
@@ -61,7 +61,7 @@ export const useProfilePhoto = () => {
                     profilePhotoUrl: result.photoUrl
                 }));
             }
-        } catch (error) {
+        } catch {
             // Error handling is done by the global error handler
             // but we can add a specific message here if needed
             toast.error(t("profile.photoUploadError"));
@@ -81,7 +81,7 @@ export const useProfilePhoto = () => {
                     profilePhotoUrl: undefined
                 }));
             }
-        } catch (error) {
+        } catch {
             toast.error(t("profile.photoDeleteError"));
         }
     };
