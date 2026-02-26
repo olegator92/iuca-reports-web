@@ -11,11 +11,16 @@ interface GoogleSignInButtonProps {
  * Google Sign-In Button Component with Theme Support
  *
  * Uses GoogleLogin from @react-oauth/google wrapped in a styled container
- * to better integrate with the application's design system
+ * to better integrate with the application's design system.
+ * Returns null when VITE_GOOGLE_CLIENT_ID is not configured.
  */
 export const GoogleSignInButton = ({ onSuccess, rememberMe = false }: GoogleSignInButtonProps) => {
     const { handleGoogleLogin } = useGoogleLogin({ onSuccess });
     const resolvedTheme = useThemeStore((state) => state.theme);
+
+    if (!import.meta.env.VITE_GOOGLE_CLIENT_ID) {
+        return null;
+    }
 
     const handleSuccess = (credentialResponse: CredentialResponse) => {
         if (credentialResponse.credential) {
