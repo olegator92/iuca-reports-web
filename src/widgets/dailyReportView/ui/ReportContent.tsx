@@ -27,7 +27,7 @@ export const ReportContent = ({ content, hasReport, contentRef }: ReportContentP
             <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
                 <FileText className="h-12 w-12 text-muted-foreground/40" />
                 <p className="text-muted-foreground text-sm max-w-xs">
-                    {t("dailyReports.notGenerated")}
+                    {t("dailyReports.noContent")}
                 </p>
             </div>
         );

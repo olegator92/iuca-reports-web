@@ -63,7 +63,7 @@ export const useWeeklyReportView = () => {
 
     // Filter daily reports to the selected position and only "Generated" ones
     const dailyReports = currentPositionId
-        ? allDailyReports.filter((r) => r.positionId === currentPositionId && r.status === "Generated")
+        ? allDailyReports.filter((r) => r.positionId === currentPositionId && r.status === "Submitted")
         : [];
 
     const handleWeekChange = useCallback(

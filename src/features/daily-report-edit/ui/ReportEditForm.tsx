@@ -1,73 +1,47 @@
-import { useEffect, useId, useMemo } from "react";
+import { useEffect, useId } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
-import { Textarea, FormField, Combobox } from "@/shared/ui";
-import type { ComboboxOption } from "@/shared/ui";
-import type { DailyReportStatus } from "@/entities/daily-report";
+import { Textarea, FormField } from "@/shared/ui";
 import { reportEditSchema, type ReportEditFormData } from "../model/validation";
 
 interface ReportEditFormProps {
     reportId: string;
     initialContent: string;
-    initialStatus: DailyReportStatus;
     mode: "edit" | "view";
-    onSubmit: (id: string, content: string, status: DailyReportStatus) => Promise<void>;
+    onSubmit: (id: string, content: string) => Promise<void>;
     formId?: string;
 }
 
 export const ReportEditForm = ({
     reportId,
     initialContent,
-    initialStatus,
     mode,
     onSubmit,
     formId = "report-edit-form"
 }: ReportEditFormProps) => {
     const { t } = useTranslation();
     const isReadOnly = mode === "view";
-    const statusSelectId = useId();
     const contentTextareaId = useId();
 
-    const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm<ReportEditFormData>({
+    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm<ReportEditFormData>({
         resolver: zodResolver(reportEditSchema),
-        defaultValues: { content: initialContent, status: initialStatus }
+        defaultValues: { content: initialContent }
     });
 
     useEffect(() => {
-        reset({ content: initialContent, status: initialStatus });
-    }, [initialContent, initialStatus, reset]);
+        reset({ content: initialContent });
+    }, [initialContent, reset]);
 
     const content = watch("content") ?? "";
-    const status = watch("status");
     const charCount = content.length;
 
-    const statusOptions: ComboboxOption[] = useMemo(() => [
-        { value: "InProgress", label: t("dailyReports.status.inProgress") },
-        { value: "Generated", label: t("dailyReports.status.generated") },
-    ], [t]);
-
     const handleFormSubmit = handleSubmit(async (data) => {
-        await onSubmit(reportId, data.content, data.status as DailyReportStatus);
+        await onSubmit(reportId, data.content);
     });
 
     return (
         <form id={formId} onSubmit={handleFormSubmit} className="flex flex-col gap-3">
-            <FormField
-                id={statusSelectId}
-                label={t("dailyReports.editDrawer.statusLabel")}
-                error={!isReadOnly ? errors.status?.message : undefined}
-            >
-                <Combobox
-                    value={status}
-                    onChange={(value) => setValue("status", value as DailyReportStatus, { shouldValidate: true })}
-                    options={statusOptions}
-                    disabled={isReadOnly}
-                    aria-label={t("dailyReports.editDrawer.statusLabel")}
-                    aria-invalid={!isReadOnly && Boolean(errors.status)}
-                    aria-describedby={!isReadOnly && errors.status ? `${statusSelectId}-error` : undefined}
-                />
-            </FormField>
             <FormField
                 id={contentTextareaId}
                 label={t("dailyReports.editDrawer.contentLabel")}

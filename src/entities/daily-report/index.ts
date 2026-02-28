@@ -1,4 +1,4 @@
-export type { DailyReport, DailyReportStatus, UpdateReportContentDto, GenerateReportDto, GetDailyReportsByRangeDto } from "./model/types";
+export type { DailyReport, DailyReportStatus, UpdateReportContentDto, GenerateReportDto, CreateReportDto, GetDailyReportsByRangeDto } from "./model/types";
 export { dailyReportReducer, setCurrentDate, setCurrentPosition } from "./model/dailyReportSlice";
 export {
     dailyReportApi,
@@ -6,6 +6,9 @@ export {
     useGetDailyReportsByRangeQuery,
     useGetDailyReportByIdQuery,
     useGenerateDailyReportMutation,
+    useCreateDailyReportMutation,
     useUpdateDailyReportContentMutation,
-    useRegenerateDailyReportMutation
+    useRegenerateDailyReportMutation,
+    useSubmitDailyReportMutation,
+    useReturnDailyReportMutation
 } from "./api/dailyReportApi";

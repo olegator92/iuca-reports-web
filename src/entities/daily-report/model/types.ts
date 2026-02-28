@@ -1,4 +1,4 @@
-export type DailyReportStatus = "InProgress" | "Generated";
+export type DailyReportStatus = "InProgress" | "Submitted";
 
 export interface DailyReport {
     id: string;
@@ -15,13 +15,14 @@ export interface DailyReport {
 
 export interface UpdateReportContentDto {
     content: string;              // required, max 20 000 chars
-    status: DailyReportStatus;
 }
 
 export interface GenerateReportDto {
     date: string;
     positionId: string;
 }
+
+export type CreateReportDto = GenerateReportDto;
 
 export interface GetDailyReportsByRangeDto {
     dateFrom: string;   // yyyy-MM-dd

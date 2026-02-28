@@ -4,7 +4,9 @@ import { Pencil, Copy, Check } from "lucide-react";
 import { Loader, ProtectedContent, Button } from "@/shared/ui";
 import { PERMISSIONS } from "@/shared/lib";
 import { GenerateReportButton } from "@/features/daily-report-generate";
-import { RegenerateReportButton } from "@/features/daily-report-regenerate";
+import { CreateReportButton } from "@/features/daily-report-create";
+import { SubmitReportButton } from "@/features/daily-report-submit";
+import { ReturnReportButton } from "@/features/daily-report-return";
 import { ReportEditDrawerForm, useReportEditDrawer } from "@/features/daily-report-edit";
 import { useDailyReportView } from "../model/useDailyReportView";
 import { ReportDateHeader } from "./ReportDateHeader";
@@ -71,7 +73,7 @@ export const DailyReportView = () => {
                     </p>
                 )}
 
-                {report?.status === "Generated" && report.hasUnprocessedUpdates && (
+                {report?.status === "InProgress" && report.hasUnprocessedUpdates && (
                     <UnprocessedUpdatesBanner />
                 )}
 
@@ -87,14 +89,24 @@ export const DailyReportView = () => {
             {/* Fixed footer — action bar */}
             {!isLoading && !isError && currentPositionId && (
                 <div className="flex flex-shrink-0 items-center justify-end gap-3 border-t px-4 pt-3 pb-8">
-                    {(!report || report.status === "InProgress") && (
-                        <GenerateReportButton date={currentDate} positionId={report?.positionId ?? currentPositionId} />
-                    )}
-                    {report?.status === "Generated" && (
-                        <RegenerateReportButton reportId={report.id} />
-                    )}
-                    {report && (
+                    {!report && (
                         <>
+                            <GenerateReportButton
+                                date={currentDate}
+                                positionId={currentPositionId}
+                                hasReport={false}
+                            />
+                            <CreateReportButton date={currentDate} positionId={currentPositionId} />
+                        </>
+                    )}
+                    {report?.status === "InProgress" && (
+                        <>
+                            <GenerateReportButton
+                                date={currentDate}
+                                positionId={report.positionId}
+                                hasReport={true}
+                                reportId={report.id}
+                            />
                             <ProtectedContent requiredPermissions={[PERMISSIONS.DAILY_REPORT_EDIT]}>
                                 <Button
                                     variant="outline"
@@ -106,21 +118,27 @@ export const DailyReportView = () => {
                                     <span className="ml-1.5 hidden sm:inline">{t("dailyReports.actions.edit")}</span>
                                 </Button>
                             </ProtectedContent>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={handleCopy}
-                                className="min-h-[48px] md:min-h-0 px-4 text-muted-foreground hover:text-foreground"
-                            >
-                                {copied
-                                    ? <Check className="h-3.5 w-3.5 text-green-500" />
-                                    : <Copy className="h-3.5 w-3.5" />
-                                }
-                                <span className="ml-1.5 hidden sm:inline">
-                                    {copied ? t("dailyReports.actions.copied") : t("dailyReports.actions.copy")}
-                                </span>
-                            </Button>
+                            <SubmitReportButton reportId={report.id} />
                         </>
+                    )}
+                    {report?.status === "Submitted" && (
+                        <ReturnReportButton reportId={report.id} />
+                    )}
+                    {report?.content !== undefined && report?.content !== null && (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={handleCopy}
+                            className="min-h-[48px] md:min-h-0 px-4 text-muted-foreground hover:text-foreground"
+                        >
+                            {copied
+                                ? <Check className="h-3.5 w-3.5 text-green-500" />
+                                : <Copy className="h-3.5 w-3.5" />
+                            }
+                            <span className="ml-1.5 hidden sm:inline">
+                                {copied ? t("dailyReports.actions.copied") : t("dailyReports.actions.copy")}
+                            </span>
+                        </Button>
                     )}
                 </div>
             )}

@@ -1,6 +1,6 @@
 import { ensureSuccess, rtkApi } from "@/shared/api";
 import type { ExtractedResult, ResultEnvelope } from "@/shared/api";
-import type { DailyReport, GenerateReportDto, UpdateReportContentDto, GetDailyReportsByRangeDto } from "../model/types";
+import type { DailyReport, CreateReportDto, GenerateReportDto, UpdateReportContentDto, GetDailyReportsByRangeDto } from "../model/types";
 
 const DAILY_REPORTS_ENDPOINT = "/daily-reports";
 
@@ -42,11 +42,21 @@ export const dailyReportApi = rtkApi.injectEndpoints({
                 ensureSuccess(response, { allowNullData: true }),
             invalidatesTags: ["DailyReport"]
         }),
+        createDailyReport: builder.mutation<ExtractedResult<DailyReport>, CreateReportDto>({
+            query: ({ date, positionId }) => ({
+                url: `${DAILY_REPORTS_ENDPOINT}/${date}/create`,
+                method: "POST",
+                params: { positionId }
+            }),
+            transformResponse: (response: ResultEnvelope<DailyReport>) =>
+                ensureSuccess(response, { allowNullData: true }),
+            invalidatesTags: ["DailyReport"]
+        }),
         updateDailyReportContent: builder.mutation<ExtractedResult<DailyReport>, { id: string } & UpdateReportContentDto>({
-            query: ({ id, content, status }) => ({
+            query: ({ id, content }) => ({
                 url: `${DAILY_REPORTS_ENDPOINT}/${id}`,
                 method: "PUT",
-                body: { content, status: status === "Generated" ? 1 : 0 }
+                body: { content }
             }),
             transformResponse: (response: ResultEnvelope<DailyReport>) =>
                 ensureSuccess(response, { allowNullData: true }),
@@ -55,6 +65,24 @@ export const dailyReportApi = rtkApi.injectEndpoints({
         regenerateDailyReport: builder.mutation<ExtractedResult<DailyReport>, string>({
             query: (id) => ({
                 url: `${DAILY_REPORTS_ENDPOINT}/${id}/regenerate`,
+                method: "POST"
+            }),
+            transformResponse: (response: ResultEnvelope<DailyReport>) =>
+                ensureSuccess(response, { allowNullData: true }),
+            invalidatesTags: ["DailyReport"]
+        }),
+        submitDailyReport: builder.mutation<ExtractedResult<DailyReport>, string>({
+            query: (id) => ({
+                url: `${DAILY_REPORTS_ENDPOINT}/${id}/submit`,
+                method: "POST"
+            }),
+            transformResponse: (response: ResultEnvelope<DailyReport>) =>
+                ensureSuccess(response, { allowNullData: true }),
+            invalidatesTags: ["DailyReport"]
+        }),
+        returnDailyReport: builder.mutation<ExtractedResult<DailyReport>, string>({
+            query: (id) => ({
+                url: `${DAILY_REPORTS_ENDPOINT}/${id}/return`,
                 method: "POST"
             }),
             transformResponse: (response: ResultEnvelope<DailyReport>) =>
@@ -70,6 +98,9 @@ export const {
     useGetDailyReportsByRangeQuery,
     useGetDailyReportByIdQuery,
     useGenerateDailyReportMutation,
+    useCreateDailyReportMutation,
     useUpdateDailyReportContentMutation,
-    useRegenerateDailyReportMutation
+    useRegenerateDailyReportMutation,
+    useSubmitDailyReportMutation,
+    useReturnDailyReportMutation
 } = dailyReportApi;

@@ -9,10 +9,10 @@ interface ReportStatusBadgeProps {
 export const ReportStatusBadge = ({ status }: ReportStatusBadgeProps) => {
     const { t } = useTranslation();
 
-    if (status === "Generated") {
+    if (status === "Submitted") {
         return (
             <Badge variant="default" className="bg-green-600 text-white hover:bg-green-700">
-                {t("dailyReports.status.generated")}
+                {t("dailyReports.status.submitted")}
             </Badge>
         );
     }
