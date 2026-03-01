@@ -20,9 +20,10 @@ interface GenerateWeeklyReportButtonProps {
     positionId: string;
     hasReport: boolean;
     reportId?: string;
+    detailLevel?: number;
 }
 
-export const GenerateWeeklyReportButton = ({ weekStart, weekEnd, positionId, hasReport }: GenerateWeeklyReportButtonProps) => {
+export const GenerateWeeklyReportButton = ({ weekStart, weekEnd, positionId, hasReport, detailLevel }: GenerateWeeklyReportButtonProps) => {
     const { t } = useTranslation();
     const { handleGenerate, isLoading } = useWeeklyReportGenerate();
     const [open, setOpen] = useState(false);
@@ -31,12 +32,12 @@ export const GenerateWeeklyReportButton = ({ weekStart, weekEnd, positionId, has
         if (hasReport) {
             setOpen(true);
         } else {
-            handleGenerate({ weekStart, weekEnd, positionId });
+            handleGenerate({ weekStart, weekEnd, positionId, detailLevel });
         }
     };
 
     const handleConfirm = async () => {
-        await handleGenerate({ weekStart, weekEnd, positionId });
+        await handleGenerate({ weekStart, weekEnd, positionId, detailLevel });
         setOpen(false);
     };
 

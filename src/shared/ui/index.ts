@@ -58,6 +58,7 @@ import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 import { Switch } from "./switch"
 import { PageTransition } from "./page-transition"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs"
+import { Slider } from "./slider/slider"
 
 export {
   Button,
@@ -122,6 +123,7 @@ export {
   TabsList,
   TabsTrigger,
   TabsContent,
+  Slider,
 }
 
 export type {

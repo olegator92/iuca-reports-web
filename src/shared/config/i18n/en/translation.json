@@ -921,7 +921,15 @@
       "return": "Return",
       "edit": "Edit",
       "copy": "Copy",
-      "copied": "Copied!"
+      "copied": "Copied!",
+      "settings": "Settings"
+    },
+    "settings": {
+      "title": "Generation Settings",
+      "description": "These settings apply when generating or regenerating the weekly report.",
+      "detailLevel": "Detail Level",
+      "detailLevelHint": "1 — highlights only · 5 — balanced · 10 — full detail",
+      "detailLevelValue": "Level {{value}} of 10"
     },
     "generate": {
       "success": "Weekly report generated successfully.",

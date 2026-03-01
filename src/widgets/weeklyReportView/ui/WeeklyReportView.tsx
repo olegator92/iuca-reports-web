@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Pencil, Copy, Check, FilePlus, MoreVertical, Loader2 } from "lucide-react";
+import { Pencil, Copy, Check, FilePlus, MoreVertical, Loader2, SlidersHorizontal } from "lucide-react";
 import { Loader, Button, DropdownMenu, DropdownMenuItem } from "@/shared/ui";
 import { PERMISSIONS, useHasPermission } from "@/shared/lib";
 import { GenerateWeeklyReportButton } from "@/features/weekly-report-generate";
@@ -14,6 +14,7 @@ import { PositionSelector } from "./PositionSelector";
 import { WeeklyDailyReportsList } from "./WeeklyDailyReportsList";
 import { WeeklyReportContent } from "./WeeklyReportContent";
 import { WeeklyUnprocessedUpdatesBanner } from "./WeeklyUnprocessedUpdatesBanner";
+import { WeeklyReportSettingsDrawer } from "./WeeklyReportSettingsDrawer";
 
 type ActiveTab = "dailyReports" | "weeklyReport";
 
@@ -38,6 +39,8 @@ export const WeeklyReportView = () => {
 
     const [activeTab, setActiveTab] = useState<ActiveTab>("weeklyReport");
     const [copied, setCopied] = useState(false);
+    const [detailLevel, setDetailLevel] = useState(5);
+    const [settingsOpen, setSettingsOpen] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
 
     const handleCopy = async () => {
@@ -118,6 +121,7 @@ export const WeeklyReportView = () => {
                             weekEnd={currentWeekEnd}
                             positionId={currentPositionId}
                             hasReport={false}
+                            detailLevel={detailLevel}
                         />
                     )}
                     {weeklyReport?.status === "InProgress" && (
@@ -128,6 +132,7 @@ export const WeeklyReportView = () => {
                                 positionId={weeklyReport.positionId}
                                 hasReport={true}
                                 reportId={weeklyReport.id}
+                                detailLevel={detailLevel}
                             />
                             <SubmitWeeklyReportButton reportId={weeklyReport.id} />
                         </>
@@ -147,6 +152,14 @@ export const WeeklyReportView = () => {
                             align="end"
                             placement="top"
                         >
+                            {canEdit && (
+                                <DropdownMenuItem
+                                    icon={<SlidersHorizontal />}
+                                    onClick={() => setSettingsOpen(true)}
+                                >
+                                    {t("weeklyReports.actions.settings")}
+                                </DropdownMenuItem>
+                            )}
                             {!weeklyReport && canEdit && (
                                 <DropdownMenuItem
                                     icon={isCreating ? <Loader2 className="animate-spin" /> : <FilePlus />}
@@ -186,6 +199,13 @@ export const WeeklyReportView = () => {
                 onClose={closeDrawer}
                 report={selectedReport}
                 mode="edit"
+            />
+
+            <WeeklyReportSettingsDrawer
+                open={settingsOpen}
+                onClose={() => setSettingsOpen(false)}
+                detailLevel={detailLevel}
+                onChange={setDetailLevel}
             />
         </div>
     );

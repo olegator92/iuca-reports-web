@@ -1,6 +1,6 @@
 import { ensureSuccess, rtkApi } from "@/shared/api";
 import type { ResultEnvelope } from "@/shared/api";
-import type { WeeklyReport, GenerateWeeklyReportDto, CreateWeeklyReportDto, UpdateWeeklyReportContentDto } from "../model/types";
+import type { WeeklyReport, GenerateWeeklyReportDto, RegenerateWeeklyReportDto, CreateWeeklyReportDto, UpdateWeeklyReportContentDto } from "../model/types";
 
 const WEEKLY_REPORTS_ENDPOINT = "/weekly-reports";
 
@@ -39,10 +39,10 @@ export const weeklyReportApi = rtkApi.injectEndpoints({
             providesTags: ["WeeklyReport"]
         }),
         generateWeeklyReport: builder.mutation<WeeklyReport | null, GenerateWeeklyReportDto>({
-            query: ({ weekStart, weekEnd, positionId }) => ({
+            query: ({ weekStart, weekEnd, positionId, detailLevel }) => ({
                 url: `${WEEKLY_REPORTS_ENDPOINT}/generate`,
                 method: "POST",
-                params: { weekStart, weekEnd, positionId }
+                params: { weekStart, weekEnd, positionId, ...(detailLevel !== undefined && { detailLevel }) }
             }),
             transformResponse: (response: ResultEnvelope<WeeklyReport>) =>
                 ensureSuccess(response, { allowNullData: true }).data ?? null,
@@ -58,10 +58,11 @@ export const weeklyReportApi = rtkApi.injectEndpoints({
                 ensureSuccess(response, { allowNullData: true }).data ?? null,
             invalidatesTags: ["WeeklyReport"]
         }),
-        regenerateWeeklyReport: builder.mutation<WeeklyReport | null, string>({
-            query: (id) => ({
+        regenerateWeeklyReport: builder.mutation<WeeklyReport | null, RegenerateWeeklyReportDto>({
+            query: ({ id, detailLevel }) => ({
                 url: `${WEEKLY_REPORTS_ENDPOINT}/${id}/regenerate`,
-                method: "POST"
+                method: "POST",
+                params: detailLevel !== undefined ? { detailLevel } : undefined
             }),
             transformResponse: (response: ResultEnvelope<WeeklyReport>) =>
                 ensureSuccess(response, { allowNullData: true }).data ?? null,

@@ -25,6 +25,12 @@ export interface GenerateWeeklyReportDto {
     weekStart: string;               // yyyy-MM-dd
     weekEnd: string;                 // yyyy-MM-dd
     positionId: string;
+    detailLevel?: number;            // 1–10, default 5
+}
+
+export interface RegenerateWeeklyReportDto {
+    id: string;
+    detailLevel?: number;            // 1–10, default 5
 }
 
 export interface CreateWeeklyReportDto {
