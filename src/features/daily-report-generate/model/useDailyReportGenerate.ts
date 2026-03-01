@@ -8,8 +8,12 @@ export const useDailyReportGenerate = () => {
     const [generate, { isLoading }] = useGenerateDailyReportMutation();
 
     const handleGenerate = async (dto: GenerateReportDto) => {
-        await generate(dto).unwrap();
-        toast.success(t("dailyReports.generate.success"));
+        try {
+            await generate(dto).unwrap();
+        } catch (error) {
+            const message = (error as { message?: string })?.message;
+            toast.error(message ?? t("errors.requestFailed"));
+        }
     };
 
     return { handleGenerate, isLoading };

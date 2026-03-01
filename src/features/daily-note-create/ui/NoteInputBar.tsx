@@ -104,7 +104,8 @@ export const NoteInputBar = ({
             onCancelEdit?.();
             return;
         }
-        if (e.key === "Enter" && !e.shiftKey) {
+        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+        if (e.key === "Enter" && !e.shiftKey && !isTouchDevice) {
             e.preventDefault();
             handleSubmit();
         }

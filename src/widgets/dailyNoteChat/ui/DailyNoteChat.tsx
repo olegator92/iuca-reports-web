@@ -8,7 +8,11 @@ import { DateHeader } from "./DateHeader";
 import { MessagesList } from "./MessagesList";
 import { PositionSelector } from "./PositionSelector";
 
-export const DailyNoteChat = () => {
+interface DailyNoteChatProps {
+    externalControls?: boolean;
+}
+
+export const DailyNoteChat = ({ externalControls = false }: DailyNoteChatProps) => {
     const {
         messages,
         currentDate,
@@ -63,13 +67,15 @@ export const DailyNoteChat = () => {
 
     return (
         <div className="flex h-full flex-col overflow-hidden">
-            <DateHeader currentDate={currentDate} onDateChange={changeDate} />
+            {!externalControls && <DateHeader currentDate={currentDate} onDateChange={changeDate} />}
 
-            <PositionSelector
-                positions={positions}
-                currentPositionId={currentPositionId}
-                onPositionChange={changePosition}
-            />
+            {!externalControls && (
+                <PositionSelector
+                    positions={positions}
+                    currentPositionId={currentPositionId}
+                    onPositionChange={changePosition}
+                />
+            )}
 
             <MessagesList
                 messages={messages}

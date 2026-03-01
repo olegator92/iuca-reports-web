@@ -836,34 +836,40 @@
   },
   "dailyReports": {
     "title": "Daily Report",
+    "tabs": {
+      "dailyNotes": "Daily Notes",
+      "dailyReport": "Daily Report"
+    },
     "position": {
       "noPositions": "No positions assigned"
     },
     "dateHeader": {
       "today": "Today",
       "prev": "Previous day",
-      "next": "Next day"
+      "next": "Next day",
+      "selectDate": "Select date"
     },
     "status": {
       "inProgress": "In Progress",
-      "generated": "Generated"
+      "submitted": "Submitted"
     },
     "actions": {
       "generate": "Generate",
       "edit": "Edit",
-      "regenerate": "Regenerate",
+      "create": "Create",
+      "submit": "Submit",
+      "return": "Return",
       "copy": "Copy",
       "copied": "Copied!"
     },
-    "noReport": "No notes exist for this date — report has not been created yet.",
-    "notGenerated": "Notes exist for this date but the report has not been generated yet.",
+    "noReport": "No report for this date yet. Click Generate to create from notes, or Create for a blank report.",
+    "noContent": "Report has no content yet. Click Generate or Edit to add content.",
     "unprocessedUpdates": {
       "banner": "New notes have been added since the last report generation.",
       "regenerateHint": "Regenerate the report to include the latest notes."
     },
     "editDrawer": {
       "title": "Edit Report",
-      "statusLabel": "Status",
       "contentLabel": "Report Content",
       "save": "Save",
       "close": "Close",
@@ -873,13 +879,19 @@
       }
     },
     "generate": {
-      "success": "Report generated successfully."
-    },
-    "regenerate": {
-      "success": "Report regenerated successfully.",
+      "success": "Report generated successfully.",
       "confirmTitle": "Regenerate Report?",
-      "confirmDescription": "This will overwrite any manual edits you have made. The AI will re-generate the report content based on the latest daily notes. This action cannot be undone.",
+      "confirmDescription": "This will overwrite the current content with AI-generated content based on your latest daily notes. This action cannot be undone.",
       "confirmButton": "Regenerate"
+    },
+    "create": {
+      "success": "Report created successfully."
+    },
+    "submit": {
+      "success": "Report submitted successfully."
+    },
+    "return": {
+      "success": "Report returned to In Progress."
     },
     "edit": {
       "success": "Report updated successfully."
@@ -897,26 +909,42 @@
     },
     "status": {
       "inProgress": "In Progress",
-      "generated": "Generated"
+      "submitted": "Submitted"
     },
     "position": {
       "noPositions": "No positions assigned"
     },
     "actions": {
       "generate": "Generate",
-      "regenerate": "Regenerate",
+      "create": "Create",
+      "submit": "Submit",
+      "return": "Return",
       "edit": "Edit",
       "copy": "Copy",
-      "copied": "Copied!"
+      "copied": "Copied!",
+      "settings": "Settings"
+    },
+    "settings": {
+      "title": "Generation Settings",
+      "description": "These settings apply when generating or regenerating the weekly report.",
+      "detailLevel": "Detail Level",
+      "detailLevelHint": "1 — highlights only · 5 — balanced · 10 — full detail",
+      "detailLevelValue": "Level {{value}} of 10"
     },
     "generate": {
-      "success": "Weekly report generated successfully."
-    },
-    "regenerate": {
+      "success": "Weekly report generated successfully.",
       "confirmTitle": "Regenerate Weekly Report?",
-      "confirmDescription": "This will overwrite any manual edits with a fresh AI-generated summary based on daily reports for this week. This action cannot be undone.",
-      "confirmButton": "Regenerate",
-      "success": "Weekly report regenerated successfully."
+      "confirmDescription": "This will overwrite the current content with AI-generated content based on daily reports for this week. This action cannot be undone.",
+      "confirmButton": "Regenerate"
+    },
+    "create": {
+      "success": "Weekly report created successfully."
+    },
+    "submit": {
+      "success": "Weekly report submitted successfully."
+    },
+    "return": {
+      "success": "Weekly report returned to In Progress."
     },
     "editDrawer": {
       "title": "Edit Weekly Report",
@@ -932,8 +960,9 @@
     "edit": {
       "success": "Weekly report updated successfully."
     },
-    "noReport": "No daily reports with generated status for this week — a weekly report cannot be generated yet.",
-    "noDailyReports": "No daily reports with generated status found for this week.",
+    "noReport": "No report for this week yet. Click Generate to create from daily reports, or Create for a blank report.",
+    "noContent": "Report has no content yet. Click Generate or Edit to add content.",
+    "noDailyReports": "No daily reports with submitted status found for this week.",
     "unprocessedUpdates": "New daily reports have been added since this weekly report was generated. Consider regenerating."
   }
 }

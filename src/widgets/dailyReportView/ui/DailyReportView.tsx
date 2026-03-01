@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Pencil, Copy, Check } from "lucide-react";
-import { Loader, ProtectedContent, Button } from "@/shared/ui";
-import { PERMISSIONS } from "@/shared/lib";
+import { Pencil, Copy, Check, FilePlus, MoreVertical, Loader2 } from "lucide-react";
+import { Loader, Button, DropdownMenu, DropdownMenuItem } from "@/shared/ui";
+import { PERMISSIONS, useHasPermission } from "@/shared/lib";
 import { GenerateReportButton } from "@/features/daily-report-generate";
-import { RegenerateReportButton } from "@/features/daily-report-regenerate";
+import { useDailyReportCreate } from "@/features/daily-report-create";
+import { SubmitReportButton } from "@/features/daily-report-submit";
+import { ReturnReportButton } from "@/features/daily-report-return";
 import { ReportEditDrawerForm, useReportEditDrawer } from "@/features/daily-report-edit";
 import { useDailyReportView } from "../model/useDailyReportView";
 import { ReportDateHeader } from "./ReportDateHeader";
@@ -12,7 +14,11 @@ import { PositionSelector } from "./PositionSelector";
 import { UnprocessedUpdatesBanner } from "./UnprocessedUpdatesBanner";
 import { ReportContent } from "./ReportContent";
 
-export const DailyReportView = () => {
+interface DailyReportViewProps {
+    externalControls?: boolean;
+}
+
+export const DailyReportView = ({ externalControls = false }: DailyReportViewProps) => {
     const { t } = useTranslation();
     const {
         currentDate,
@@ -25,6 +31,8 @@ export const DailyReportView = () => {
         handlePositionChange
     } = useDailyReportView();
     const { open, selectedReport, openDrawer, closeDrawer } = useReportEditDrawer();
+    const { handleCreate, isLoading: isCreating } = useDailyReportCreate();
+    const canEdit = useHasPermission(PERMISSIONS.DAILY_REPORT_EDIT);
 
     const [copied, setCopied] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -43,19 +51,28 @@ export const DailyReportView = () => {
         setTimeout(() => setCopied(false), 2000);
     };
 
+    const hasContent = report?.content !== undefined && report?.content !== null;
+
+    // Show actions dropdown when user can edit (Create/Edit items) or content exists (Copy)
+    const showActionsDropdown = canEdit || hasContent;
+
     return (
         <div className="flex flex-col h-full">
-            <ReportDateHeader
-                currentDate={currentDate}
-                onDateChange={handleDateChange}
-                reportStatus={report?.status ?? null}
-            />
+            {!externalControls && (
+                <>
+                    <ReportDateHeader
+                        currentDate={currentDate}
+                        onDateChange={handleDateChange}
+                        reportStatus={report?.status ?? null}
+                    />
 
-            <PositionSelector
-                positions={positions}
-                currentPositionId={currentPositionId}
-                onPositionChange={handlePositionChange}
-            />
+                    <PositionSelector
+                        positions={positions}
+                        currentPositionId={currentPositionId}
+                        onPositionChange={handlePositionChange}
+                    />
+                </>
+            )}
 
             {/* Scrollable content */}
             <div className="custom-scrollbar flex flex-col flex-1 gap-4 p-4 overflow-y-auto bg-brand/5">
@@ -71,7 +88,7 @@ export const DailyReportView = () => {
                     </p>
                 )}
 
-                {report?.status === "Generated" && report.hasUnprocessedUpdates && (
+                {report?.status === "InProgress" && report.hasUnprocessedUpdates && (
                     <UnprocessedUpdatesBanner />
                 )}
 
@@ -86,41 +103,70 @@ export const DailyReportView = () => {
 
             {/* Fixed footer — action bar */}
             {!isLoading && !isError && currentPositionId && (
-                <div className="flex flex-shrink-0 items-center justify-end gap-3 border-t px-4 pt-3 pb-8">
-                    {(!report || report.status === "InProgress") && (
-                        <GenerateReportButton date={currentDate} positionId={report?.positionId ?? currentPositionId} />
+                <div className="flex flex-shrink-0 items-center justify-end gap-3 border-t px-4 pt-3 pb-8 md:py-4">
+                    {/* Primary actions */}
+                    {!report && (
+                        <GenerateReportButton
+                            date={currentDate}
+                            positionId={currentPositionId}
+                            hasReport={false}
+                        />
                     )}
-                    {report?.status === "Generated" && (
-                        <RegenerateReportButton reportId={report.id} />
-                    )}
-                    {report && (
+                    {report?.status === "InProgress" && (
                         <>
-                            <ProtectedContent requiredPermissions={[PERMISSIONS.DAILY_REPORT_EDIT]}>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => openDrawer(report)}
-                                    className="min-h-[48px] md:min-h-0 px-4"
-                                >
-                                    <Pencil className="h-4 w-4" />
-                                    <span className="ml-1.5 hidden sm:inline">{t("dailyReports.actions.edit")}</span>
-                                </Button>
-                            </ProtectedContent>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={handleCopy}
-                                className="min-h-[48px] md:min-h-0 px-4 text-muted-foreground hover:text-foreground"
-                            >
-                                {copied
-                                    ? <Check className="h-3.5 w-3.5 text-green-500" />
-                                    : <Copy className="h-3.5 w-3.5" />
-                                }
-                                <span className="ml-1.5 hidden sm:inline">
-                                    {copied ? t("dailyReports.actions.copied") : t("dailyReports.actions.copy")}
-                                </span>
-                            </Button>
+                            <GenerateReportButton
+                                date={currentDate}
+                                positionId={report.positionId}
+                                hasReport={true}
+                                reportId={report.id}
+                            />
+                            <SubmitReportButton reportId={report.id} />
                         </>
+                    )}
+                    {report?.status === "Submitted" && (
+                        <ReturnReportButton reportId={report.id} />
+                    )}
+
+                    {/* Actions dropdown */}
+                    {showActionsDropdown && (
+                        <DropdownMenu
+                            trigger={
+                                <Button size="icon" variant="outline" className="min-h-[48px] min-w-[48px] md:min-h-0 md:min-w-0">
+                                    <MoreVertical className="h-5 w-5" strokeWidth={2.5} />
+                                </Button>
+                            }
+                            align="end"
+                            placement="top"
+                        >
+                            {!report && canEdit && (
+                                <DropdownMenuItem
+                                    icon={isCreating ? <Loader2 className="animate-spin" /> : <FilePlus />}
+                                    onClick={async () => {
+                                const report = await handleCreate({ date: currentDate, positionId: currentPositionId });
+                                if (report) openDrawer(report);
+                            }}
+                                    disabled={isCreating}
+                                >
+                                    {t("dailyReports.actions.create")}
+                                </DropdownMenuItem>
+                            )}
+                            {report?.status === "InProgress" && canEdit && (
+                                <DropdownMenuItem
+                                    icon={<Pencil />}
+                                    onClick={() => openDrawer(report)}
+                                >
+                                    {t("dailyReports.actions.edit")}
+                                </DropdownMenuItem>
+                            )}
+                            {hasContent && (
+                                <DropdownMenuItem
+                                    icon={copied ? <Check className="text-green-500" /> : <Copy />}
+                                    onClick={handleCopy}
+                                >
+                                    {copied ? t("dailyReports.actions.copied") : t("dailyReports.actions.copy")}
+                                </DropdownMenuItem>
+                            )}
+                        </DropdownMenu>
                     )}
                 </div>
             )}

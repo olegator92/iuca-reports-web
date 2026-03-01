@@ -142,9 +142,9 @@ export const WeekDateHeader = ({
                         <BarChart2 className="h-3.5 w-3.5" />
                         {t("weeklyReports.tabs.weeklyReport")}
                     </span>
-                    {reportStatus === "Generated" && (
+                    {reportStatus === "Submitted" && (
                         <span className="rounded-full bg-green-400/30 px-1.5 py-0.5 text-[10px] font-medium text-green-100">
-                            {t("weeklyReports.status.generated")}
+                            {t("weeklyReports.status.submitted")}
                         </span>
                     )}
                     {reportStatus === "InProgress" && (

@@ -8,8 +8,12 @@ export const useWeeklyReportGenerate = () => {
     const [generate, { isLoading }] = useGenerateWeeklyReportMutation();
 
     const handleGenerate = async (dto: GenerateWeeklyReportDto) => {
-        await generate(dto).unwrap();
-        toast.success(t("weeklyReports.generate.success"));
+        try {
+            await generate(dto).unwrap();
+        } catch (error) {
+            const message = (error as { message?: string })?.message;
+            toast.error(message ?? t("errors.requestFailed"));
+        }
     };
 
     return { handleGenerate, isLoading };

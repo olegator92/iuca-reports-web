@@ -24,12 +24,12 @@ export const WeeklyReportEditDrawerForm = ({
     const { handleSave, isLoading } = useWeeklyReportEdit(onClose);
 
     const footer = (
-        <div className="flex gap-2 justify-end w-full">
-            <Button variant="outline" type="button" onClick={onClose} disabled={isLoading}>
+        <div className="flex flex-col gap-2 w-full sm:flex-row sm:justify-end">
+            <Button variant="outline" type="button" onClick={onClose} disabled={isLoading} className="min-h-[48px] md:min-h-0">
                 {t("weeklyReports.editDrawer.close")}
             </Button>
             {mode === "edit" && (
-                <Button type="submit" form={FORM_ID} disabled={isLoading}>
+                <Button type="submit" form={FORM_ID} disabled={isLoading} className="min-h-[48px] md:min-h-0">
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     {t("weeklyReports.editDrawer.save")}
                 </Button>
@@ -48,7 +48,6 @@ export const WeeklyReportEditDrawerForm = ({
                 <WeeklyReportEditForm
                     reportId={report.id}
                     initialContent={report.content ?? ""}
-                    initialStatus={report.status}
                     mode={mode}
                     onSubmit={handleSave}
                     formId={FORM_ID}

@@ -121,9 +121,9 @@ export const ReportDateHeader = ({ currentDate, onDateChange, reportStatus }: Re
                 >
                     <BarChart2 className="h-3.5 w-3.5" />
                     {t("navigation.reports")}
-                    {reportStatus === "Generated" && (
+                    {reportStatus === "Submitted" && (
                         <span className="rounded-full bg-green-400/30 px-1.5 py-0.5 text-[10px] font-medium text-green-100">
-                            {t("dailyReports.status.generated")}
+                            {t("dailyReports.status.submitted")}
                         </span>
                     )}
                     {reportStatus === "InProgress" && (

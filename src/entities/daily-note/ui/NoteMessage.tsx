@@ -27,7 +27,7 @@ export const NoteMessage = ({ note, onEdit, onDelete, className }: NoteMessagePr
                         {note.positionName}
                     </p>
                 )}
-                <div className="relative rounded-2xl rounded-tr-sm bg-gray-100 py-3 pl-4 pr-9 text-foreground shadow-sm dark:bg-brand dark:text-white">
+                <div className="relative rounded-2xl rounded-tr-sm bg-gray-100 py-3 pl-4 pr-9 text-foreground shadow-sm dark:bg-zinc-800 dark:text-white">
                     <div className="absolute right-1 top-1">
                         <DropdownMenu
                             trigger={

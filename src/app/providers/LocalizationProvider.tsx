@@ -9,12 +9,12 @@ const FALLBACK_LANGUAGES: CultureDto[] = [
     {
         name: "en",
         displayName: "English",
-        englishName: "English",
+        nativeName: "English",
     },
     {
         name: "ru",
         displayName: "Русский",
-        englishName: "Russian",
+        nativeName: "Русский",
     },
 ];
 
