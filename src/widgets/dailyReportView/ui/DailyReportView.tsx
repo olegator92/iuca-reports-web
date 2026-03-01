@@ -14,7 +14,11 @@ import { PositionSelector } from "./PositionSelector";
 import { UnprocessedUpdatesBanner } from "./UnprocessedUpdatesBanner";
 import { ReportContent } from "./ReportContent";
 
-export const DailyReportView = () => {
+interface DailyReportViewProps {
+    externalControls?: boolean;
+}
+
+export const DailyReportView = ({ externalControls = false }: DailyReportViewProps) => {
     const { t } = useTranslation();
     const {
         currentDate,
@@ -54,17 +58,21 @@ export const DailyReportView = () => {
 
     return (
         <div className="flex flex-col h-full">
-            <ReportDateHeader
-                currentDate={currentDate}
-                onDateChange={handleDateChange}
-                reportStatus={report?.status ?? null}
-            />
+            {!externalControls && (
+                <>
+                    <ReportDateHeader
+                        currentDate={currentDate}
+                        onDateChange={handleDateChange}
+                        reportStatus={report?.status ?? null}
+                    />
 
-            <PositionSelector
-                positions={positions}
-                currentPositionId={currentPositionId}
-                onPositionChange={handlePositionChange}
-            />
+                    <PositionSelector
+                        positions={positions}
+                        currentPositionId={currentPositionId}
+                        onPositionChange={handlePositionChange}
+                    />
+                </>
+            )}
 
             {/* Scrollable content */}
             <div className="custom-scrollbar flex flex-col flex-1 gap-4 p-4 overflow-y-auto bg-brand/5">

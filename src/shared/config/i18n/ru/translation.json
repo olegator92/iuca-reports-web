@@ -836,13 +836,18 @@
   },
   "dailyReports": {
     "title": "Ежедневный отчёт",
+    "tabs": {
+      "dailyNotes": "Заметки",
+      "dailyReport": "Отчёт"
+    },
     "position": {
       "noPositions": "Должности не назначены"
     },
     "dateHeader": {
       "today": "Сегодня",
       "prev": "Предыдущий день",
-      "next": "Следующий день"
+      "next": "Следующий день",
+      "selectDate": "Выбрать дату"
     },
     "status": {
       "inProgress": "В процессе",

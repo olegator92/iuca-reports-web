@@ -836,13 +836,18 @@
   },
   "dailyReports": {
     "title": "Daily Report",
+    "tabs": {
+      "dailyNotes": "Daily Notes",
+      "dailyReport": "Daily Report"
+    },
     "position": {
       "noPositions": "No positions assigned"
     },
     "dateHeader": {
       "today": "Today",
       "prev": "Previous day",
-      "next": "Next day"
+      "next": "Next day",
+      "selectDate": "Select date"
     },
     "status": {
       "inProgress": "In Progress",

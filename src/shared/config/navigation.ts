@@ -24,14 +24,7 @@ const HOME_ITEM: NavItem = {
     end: true
 };
 
-// Daily Notes item (available to all authenticated users)
-const DAILY_NOTES_ITEM: NavItem = {
-    to: ROUTES.DAILY_NOTES,
-    labelKey: "navigation.dailyNotes",
-    permission: PERMISSIONS.DAILY_NOTE_VIEW
-};
-
-// Daily Reports item
+// Daily Reports item (combined daily notes + daily report page)
 const DAILY_REPORTS_ITEM: NavItem = {
     to: ROUTES.DAILY_REPORTS,
     labelKey: "navigation.dailyReports",
@@ -70,7 +63,6 @@ const ADMINISTRATION_GROUP: NavGroup = {
 // Main navigation configuration
 export const NAV_CONFIG: NavConfig = [
     HOME_ITEM,
-    DAILY_NOTES_ITEM,
     DAILY_REPORTS_ITEM,
     WEEKLY_REPORTS_ITEM,
     ADMINISTRATION_GROUP,

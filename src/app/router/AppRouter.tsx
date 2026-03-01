@@ -7,7 +7,6 @@ import { RolesPage } from '@/pages/RolesPage';
 import { UsersPage } from '@/pages/UsersPage';
 import { DepartmentsPage } from '@/pages/DepartmentsPage';
 import { PositionsPage } from '@/pages/PositionsPage';
-import { DailyNotesPage } from '@/pages/DailyNotesPage';
 import { DailyReportsPage } from '@/pages/DailyReportsPage';
 import { WeeklyReportsPage } from '@/pages/WeeklyReportsPage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -146,14 +145,6 @@ export const AppRouter = () => {
                         element={
                             <ProtectedRoute requiredPermissions={[PERMISSIONS.POSITION_VIEW]}>
                                 <PositionsPage />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path={ROUTES.DAILY_NOTES}
-                        element={
-                            <ProtectedRoute requiredPermissions={[PERMISSIONS.DAILY_NOTE_VIEW]}>
-                                <DailyNotesPage />
                             </ProtectedRoute>
                         }
                     />
