@@ -5,8 +5,8 @@ import en from "./en/translation.json";
 import ru from "./ru/translation.json";
 
 export const LANGUAGE_STORAGE_KEY = "app.language";
-export const DEFAULT_LANGUAGE = "en";
-export const FALLBACK_LANGUAGE = "en";
+export const DEFAULT_LANGUAGE = "ru";
+export const FALLBACK_LANGUAGE = "ru";
 
 const resources: Resource = {
     en: { translation: en },
@@ -22,6 +22,17 @@ const resolveInitialLanguage = (): string => {
 
     if (storedLanguage && resources[storedLanguage]) {
         return storedLanguage;
+    }
+
+    const browserLanguages = navigator.languages?.length
+        ? navigator.languages
+        : [navigator.language];
+
+    for (const lang of browserLanguages) {
+        const exact = lang.toLowerCase();
+        const base = exact.split("-")[0];
+        if (resources[exact]) return exact;
+        if (resources[base]) return base;
     }
 
     return DEFAULT_LANGUAGE;
