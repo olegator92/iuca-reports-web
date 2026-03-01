@@ -1,20 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { Loader2, SendHorizontal } from "lucide-react";
-import { Button } from "@/shared/ui";
-import { ProtectedContent } from "@/shared/ui";
+import { Button, ProtectedContent } from "@/shared/ui";
 import { PERMISSIONS } from "@/shared/lib";
-import { useDailyReportSubmit } from "../model/useDailyReportSubmit";
+import { useWeeklyReportSubmit } from "../model/useWeeklyReportSubmit";
 
-interface SubmitReportButtonProps {
+interface SubmitWeeklyReportButtonProps {
     reportId: string;
 }
 
-export const SubmitReportButton = ({ reportId }: SubmitReportButtonProps) => {
+export const SubmitWeeklyReportButton = ({ reportId }: SubmitWeeklyReportButtonProps) => {
     const { t } = useTranslation();
-    const { handleSubmit, isLoading } = useDailyReportSubmit();
+    const { handleSubmit, isLoading } = useWeeklyReportSubmit();
 
     return (
-        <ProtectedContent requiredPermissions={[PERMISSIONS.DAILY_REPORT_EDIT]}>
+        <ProtectedContent requiredPermissions={[PERMISSIONS.WEEKLY_REPORT_EDIT]}>
             <Button
                 onClick={() => handleSubmit(reportId)}
                 disabled={isLoading}
@@ -25,7 +24,7 @@ export const SubmitReportButton = ({ reportId }: SubmitReportButtonProps) => {
                 ) : (
                     <SendHorizontal className="h-4 w-4" />
                 )}
-                <span className="ml-1.5">{t("dailyReports.actions.submit")}</span>
+                <span className="ml-1.5">{t("weeklyReports.actions.submit")}</span>
             </Button>
         </ProtectedContent>
     );

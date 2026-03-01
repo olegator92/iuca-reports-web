@@ -48,7 +48,6 @@ export const WeeklyReportEditDrawerForm = ({
                 <WeeklyReportEditForm
                     reportId={report.id}
                     initialContent={report.content ?? ""}
-                    initialStatus={report.status}
                     mode={mode}
                     onSubmit={handleSave}
                     formId={FORM_ID}

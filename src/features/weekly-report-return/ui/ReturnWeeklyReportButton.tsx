@@ -1,20 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { Loader2, Undo2 } from "lucide-react";
-import { Button } from "@/shared/ui";
-import { ProtectedContent } from "@/shared/ui";
+import { Button, ProtectedContent } from "@/shared/ui";
 import { PERMISSIONS } from "@/shared/lib";
-import { useDailyReportReturn } from "../model/useDailyReportReturn";
+import { useWeeklyReportReturn } from "../model/useWeeklyReportReturn";
 
-interface ReturnReportButtonProps {
+interface ReturnWeeklyReportButtonProps {
     reportId: string;
 }
 
-export const ReturnReportButton = ({ reportId }: ReturnReportButtonProps) => {
+export const ReturnWeeklyReportButton = ({ reportId }: ReturnWeeklyReportButtonProps) => {
     const { t } = useTranslation();
-    const { handleReturn, isLoading } = useDailyReportReturn();
+    const { handleReturn, isLoading } = useWeeklyReportReturn();
 
     return (
-        <ProtectedContent requiredPermissions={[PERMISSIONS.DAILY_REPORT_EDIT]}>
+        <ProtectedContent requiredPermissions={[PERMISSIONS.WEEKLY_REPORT_EDIT]}>
             <Button
                 variant="outline"
                 onClick={() => handleReturn(reportId)}
@@ -26,7 +25,7 @@ export const ReturnReportButton = ({ reportId }: ReturnReportButtonProps) => {
                 ) : (
                     <Undo2 className="h-4 w-4" />
                 )}
-                <span className="ml-1.5">{t("dailyReports.actions.return")}</span>
+                <span className="ml-1.5">{t("weeklyReports.actions.return")}</span>
             </Button>
         </ProtectedContent>
     );

@@ -11,12 +11,23 @@ interface WeeklyReportContentProps {
 export const WeeklyReportContent = ({ content, hasReport, contentRef }: WeeklyReportContentProps) => {
     const { t } = useTranslation();
 
-    if (!hasReport || content === null) {
+    if (!hasReport) {
         return (
             <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
                 <FileText className="h-12 w-12 text-muted-foreground/40" />
                 <p className="text-muted-foreground text-sm max-w-xs">
                     {t("weeklyReports.noReport")}
+                </p>
+            </div>
+        );
+    }
+
+    if (content === null) {
+        return (
+            <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
+                <FileText className="h-12 w-12 text-muted-foreground/40" />
+                <p className="text-muted-foreground text-sm max-w-xs">
+                    {t("weeklyReports.noContent")}
                 </p>
             </div>
         );

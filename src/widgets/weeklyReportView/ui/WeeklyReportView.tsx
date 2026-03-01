@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Pencil, Copy, Check } from "lucide-react";
-import { Loader, ProtectedContent, Button } from "@/shared/ui";
-import { PERMISSIONS } from "@/shared/lib";
+import { Pencil, Copy, Check, FilePlus, MoreVertical, Loader2 } from "lucide-react";
+import { Loader, Button, DropdownMenu, DropdownMenuItem } from "@/shared/ui";
+import { PERMISSIONS, useHasPermission } from "@/shared/lib";
 import { GenerateWeeklyReportButton } from "@/features/weekly-report-generate";
-import { RegenerateWeeklyReportButton } from "@/features/weekly-report-regenerate";
+import { useWeeklyReportCreate } from "@/features/weekly-report-create";
+import { SubmitWeeklyReportButton } from "@/features/weekly-report-submit";
+import { ReturnWeeklyReportButton } from "@/features/weekly-report-return";
 import { WeeklyReportEditDrawerForm, useWeeklyReportEditDrawer } from "@/features/weekly-report-edit";
 import { useWeeklyReportView } from "../model/useWeeklyReportView";
 import { WeekDateHeader } from "./WeekDateHeader";
@@ -31,6 +33,9 @@ export const WeeklyReportView = () => {
     } = useWeeklyReportView();
 
     const { open, selectedReport, openDrawer, closeDrawer } = useWeeklyReportEditDrawer();
+    const { handleCreate, isLoading: isCreating } = useWeeklyReportCreate();
+    const canEdit = useHasPermission(PERMISSIONS.WEEKLY_REPORT_EDIT);
+
     const [activeTab, setActiveTab] = useState<ActiveTab>("weeklyReport");
     const [copied, setCopied] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -48,6 +53,11 @@ export const WeeklyReportView = () => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
+
+    const hasContent = !!weeklyReport?.content;
+
+    // Show actions dropdown when user can edit (Create/Edit items) or content exists (Copy)
+    const showActionsDropdown = canEdit || hasContent;
 
     return (
         <div className="flex flex-col h-full">
@@ -86,7 +96,7 @@ export const WeeklyReportView = () => {
 
                 {!isLoading && !isError && activeTab === "weeklyReport" && (
                     <>
-                        {weeklyReport?.status === "Generated" && weeklyReport.hasUnprocessedUpdates && (
+                        {weeklyReport?.status === "InProgress" && weeklyReport.hasUnprocessedUpdates && (
                             <WeeklyUnprocessedUpdatesBanner />
                         )}
                         <WeeklyReportContent
@@ -100,45 +110,73 @@ export const WeeklyReportView = () => {
 
             {/* Fixed footer — action bar (only on weekly report tab) */}
             {!isLoading && !isError && currentPositionId && activeTab === "weeklyReport" && (
-                <div className="flex flex-shrink-0 items-center justify-end gap-3 border-t px-4 pt-3 pb-8">
-                    {(!weeklyReport || weeklyReport.status === "InProgress") && (
+                <div className="flex flex-shrink-0 items-center justify-end gap-3 border-t px-4 pt-3 pb-8 md:py-4">
+                    {/* Primary actions */}
+                    {!weeklyReport && (
                         <GenerateWeeklyReportButton
                             weekStart={currentWeekStart}
                             weekEnd={currentWeekEnd}
-                            positionId={weeklyReport?.positionId ?? currentPositionId}
+                            positionId={currentPositionId}
+                            hasReport={false}
                         />
                     )}
-                    {weeklyReport?.status === "Generated" && (
-                        <RegenerateWeeklyReportButton reportId={weeklyReport.id} />
-                    )}
-                    {weeklyReport && (
+                    {weeklyReport?.status === "InProgress" && (
                         <>
-                            <ProtectedContent requiredPermissions={[PERMISSIONS.WEEKLY_REPORT_EDIT]}>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => openDrawer(weeklyReport)}
-                                    className="min-h-[48px] md:min-h-0 px-4"
-                                >
-                                    <Pencil className="h-4 w-4" />
-                                    <span className="ml-1.5 hidden sm:inline">{t("weeklyReports.actions.edit")}</span>
-                                </Button>
-                            </ProtectedContent>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={handleCopy}
-                                className="min-h-[48px] md:min-h-0 px-4 text-muted-foreground hover:text-foreground"
-                            >
-                                {copied
-                                    ? <Check className="h-3.5 w-3.5 text-green-500" />
-                                    : <Copy className="h-3.5 w-3.5" />
-                                }
-                                <span className="ml-1.5 hidden sm:inline">
-                                    {copied ? t("weeklyReports.actions.copied") : t("weeklyReports.actions.copy")}
-                                </span>
-                            </Button>
+                            <GenerateWeeklyReportButton
+                                weekStart={currentWeekStart}
+                                weekEnd={currentWeekEnd}
+                                positionId={weeklyReport.positionId}
+                                hasReport={true}
+                                reportId={weeklyReport.id}
+                            />
+                            <SubmitWeeklyReportButton reportId={weeklyReport.id} />
                         </>
+                    )}
+                    {weeklyReport?.status === "Submitted" && (
+                        <ReturnWeeklyReportButton reportId={weeklyReport.id} />
+                    )}
+
+                    {/* Actions dropdown */}
+                    {showActionsDropdown && (
+                        <DropdownMenu
+                            trigger={
+                                <Button size="icon" variant="outline" className="min-h-[48px] min-w-[48px] md:min-h-0 md:min-w-0">
+                                    <MoreVertical className="h-5 w-5" strokeWidth={2.5} />
+                                </Button>
+                            }
+                            align="end"
+                            placement="top"
+                        >
+                            {!weeklyReport && canEdit && (
+                                <DropdownMenuItem
+                                    icon={isCreating ? <Loader2 className="animate-spin" /> : <FilePlus />}
+                                    onClick={async () => {
+                                if (!currentPositionId) return;
+                                const report = await handleCreate({ weekStart: currentWeekStart, weekEnd: currentWeekEnd, positionId: currentPositionId });
+                                if (report) openDrawer(report);
+                            }}
+                                    disabled={isCreating}
+                                >
+                                    {t("weeklyReports.actions.create")}
+                                </DropdownMenuItem>
+                            )}
+                            {weeklyReport?.status === "InProgress" && canEdit && (
+                                <DropdownMenuItem
+                                    icon={<Pencil />}
+                                    onClick={() => openDrawer(weeklyReport)}
+                                >
+                                    {t("weeklyReports.actions.edit")}
+                                </DropdownMenuItem>
+                            )}
+                            {hasContent && (
+                                <DropdownMenuItem
+                                    icon={copied ? <Check className="text-green-500" /> : <Copy />}
+                                    onClick={handleCopy}
+                                >
+                                    {copied ? t("weeklyReports.actions.copied") : t("weeklyReports.actions.copy")}
+                                </DropdownMenuItem>
+                            )}
+                        </DropdownMenu>
                     )}
                 </div>
             )}

@@ -10,7 +10,6 @@ export const useDailyReportGenerate = () => {
     const handleGenerate = async (dto: GenerateReportDto) => {
         try {
             await generate(dto).unwrap();
-            toast.success(t("dailyReports.generate.success"));
         } catch (error) {
             const message = (error as { message?: string })?.message;
             toast.error(message ?? t("errors.requestFailed"));

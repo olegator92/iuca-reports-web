@@ -1,6 +1,6 @@
 import { ensureSuccess, rtkApi } from "@/shared/api";
 import type { ResultEnvelope } from "@/shared/api";
-import type { WeeklyReport, GenerateWeeklyReportDto, UpdateWeeklyReportContentDto } from "../model/types";
+import type { WeeklyReport, GenerateWeeklyReportDto, CreateWeeklyReportDto, UpdateWeeklyReportContentDto } from "../model/types";
 
 const WEEKLY_REPORTS_ENDPOINT = "/weekly-reports";
 
@@ -49,10 +49,10 @@ export const weeklyReportApi = rtkApi.injectEndpoints({
             invalidatesTags: ["WeeklyReport"]
         }),
         updateWeeklyReport: builder.mutation<WeeklyReport | null, { id: string } & UpdateWeeklyReportContentDto>({
-            query: ({ id, content, status }) => ({
+            query: ({ id, content }) => ({
                 url: `${WEEKLY_REPORTS_ENDPOINT}/${id}`,
                 method: "PUT",
-                body: { content, status: status === "Generated" ? 1 : 0 }
+                body: { content }
             }),
             transformResponse: (response: ResultEnvelope<WeeklyReport>) =>
                 ensureSuccess(response, { allowNullData: true }).data ?? null,
@@ -61,6 +61,34 @@ export const weeklyReportApi = rtkApi.injectEndpoints({
         regenerateWeeklyReport: builder.mutation<WeeklyReport | null, string>({
             query: (id) => ({
                 url: `${WEEKLY_REPORTS_ENDPOINT}/${id}/regenerate`,
+                method: "POST"
+            }),
+            transformResponse: (response: ResultEnvelope<WeeklyReport>) =>
+                ensureSuccess(response, { allowNullData: true }).data ?? null,
+            invalidatesTags: ["WeeklyReport"]
+        }),
+        createWeeklyReport: builder.mutation<WeeklyReport | null, CreateWeeklyReportDto>({
+            query: ({ weekStart, weekEnd, positionId }) => ({
+                url: `${WEEKLY_REPORTS_ENDPOINT}/create`,
+                method: "POST",
+                params: { weekStart, weekEnd, positionId }
+            }),
+            transformResponse: (response: ResultEnvelope<WeeklyReport>) =>
+                ensureSuccess(response, { allowNullData: true }).data ?? null,
+            invalidatesTags: ["WeeklyReport"]
+        }),
+        submitWeeklyReport: builder.mutation<WeeklyReport | null, string>({
+            query: (id) => ({
+                url: `${WEEKLY_REPORTS_ENDPOINT}/${id}/submit`,
+                method: "POST"
+            }),
+            transformResponse: (response: ResultEnvelope<WeeklyReport>) =>
+                ensureSuccess(response, { allowNullData: true }).data ?? null,
+            invalidatesTags: ["WeeklyReport"]
+        }),
+        returnWeeklyReport: builder.mutation<WeeklyReport | null, string>({
+            query: (id) => ({
+                url: `${WEEKLY_REPORTS_ENDPOINT}/${id}/return`,
                 method: "POST"
             }),
             transformResponse: (response: ResultEnvelope<WeeklyReport>) =>
@@ -76,5 +104,8 @@ export const {
     useGetWeeklyReportByIdQuery,
     useGenerateWeeklyReportMutation,
     useUpdateWeeklyReportMutation,
-    useRegenerateWeeklyReportMutation
+    useRegenerateWeeklyReportMutation,
+    useCreateWeeklyReportMutation,
+    useSubmitWeeklyReportMutation,
+    useReturnWeeklyReportMutation
 } = weeklyReportApi;

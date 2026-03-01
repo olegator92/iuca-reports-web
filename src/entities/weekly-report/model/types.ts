@@ -1,4 +1,4 @@
-export type WeeklyReportStatus = "InProgress" | "Generated";
+export type WeeklyReportStatus = "InProgress" | "Submitted";
 
 export interface WeeklyReport {
     id: string;
@@ -19,10 +19,15 @@ export interface WeeklyReport {
 
 export interface UpdateWeeklyReportContentDto {
     content: string;                 // required; max 50 000 chars
-    status: WeeklyReportStatus;
 }
 
 export interface GenerateWeeklyReportDto {
+    weekStart: string;               // yyyy-MM-dd
+    weekEnd: string;                 // yyyy-MM-dd
+    positionId: string;
+}
+
+export interface CreateWeeklyReportDto {
     weekStart: string;               // yyyy-MM-dd
     weekEnd: string;                 // yyyy-MM-dd
     positionId: string;

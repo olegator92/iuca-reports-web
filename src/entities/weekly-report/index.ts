@@ -1,4 +1,4 @@
-export type { WeeklyReport, WeeklyReportStatus, UpdateWeeklyReportContentDto, GenerateWeeklyReportDto } from "./model/types";
+export type { WeeklyReport, WeeklyReportStatus, UpdateWeeklyReportContentDto, GenerateWeeklyReportDto, CreateWeeklyReportDto } from "./model/types";
 export { weeklyReportReducer, setWeek, setCurrentPosition } from "./model/weeklyReportSlice";
 export {
     weeklyReportApi,
@@ -6,5 +6,8 @@ export {
     useGetWeeklyReportByIdQuery,
     useGenerateWeeklyReportMutation,
     useUpdateWeeklyReportMutation,
-    useRegenerateWeeklyReportMutation
+    useRegenerateWeeklyReportMutation,
+    useCreateWeeklyReportMutation,
+    useSubmitWeeklyReportMutation,
+    useReturnWeeklyReportMutation
 } from "./api/weeklyReportApi";

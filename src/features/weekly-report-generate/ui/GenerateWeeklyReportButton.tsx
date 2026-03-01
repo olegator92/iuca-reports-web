@@ -1,6 +1,16 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Loader2, Sparkles } from "lucide-react";
-import { Button, ProtectedContent } from "@/shared/ui";
+import {
+    Button,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    ProtectedContent
+} from "@/shared/ui";
 import { PERMISSIONS } from "@/shared/lib";
 import { useWeeklyReportGenerate } from "../model/useWeeklyReportGenerate";
 
@@ -8,17 +18,32 @@ interface GenerateWeeklyReportButtonProps {
     weekStart: string;
     weekEnd: string;
     positionId: string;
+    hasReport: boolean;
+    reportId?: string;
 }
 
-export const GenerateWeeklyReportButton = ({ weekStart, weekEnd, positionId }: GenerateWeeklyReportButtonProps) => {
+export const GenerateWeeklyReportButton = ({ weekStart, weekEnd, positionId, hasReport }: GenerateWeeklyReportButtonProps) => {
     const { t } = useTranslation();
     const { handleGenerate, isLoading } = useWeeklyReportGenerate();
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+        if (hasReport) {
+            setOpen(true);
+        } else {
+            handleGenerate({ weekStart, weekEnd, positionId });
+        }
+    };
+
+    const handleConfirm = async () => {
+        await handleGenerate({ weekStart, weekEnd, positionId });
+        setOpen(false);
+    };
 
     return (
         <ProtectedContent requiredPermissions={[PERMISSIONS.WEEKLY_REPORT_EDIT]}>
             <Button
-                size="sm"
-                onClick={() => handleGenerate({ weekStart, weekEnd, positionId })}
+                onClick={handleClick}
                 disabled={isLoading}
                 className="min-h-[48px] md:min-h-0 px-4"
             >
@@ -29,6 +54,26 @@ export const GenerateWeeklyReportButton = ({ weekStart, weekEnd, positionId }: G
                 )}
                 <span className="ml-1.5">{t("weeklyReports.actions.generate")}</span>
             </Button>
+
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{t("weeklyReports.generate.confirmTitle")}</DialogTitle>
+                        <DialogDescription>
+                            {t("weeklyReports.generate.confirmDescription")}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setOpen(false)} disabled={isLoading} className="min-h-[48px] sm:min-h-0">
+                            {t("common.cancel")}
+                        </Button>
+                        <Button variant="destructive" onClick={handleConfirm} disabled={isLoading} className="min-h-[48px] sm:min-h-0">
+                            {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+                            {t("weeklyReports.generate.confirmButton")}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </ProtectedContent>
     );
 };

@@ -112,7 +112,7 @@ export const DropdownMenuItem = React.forwardRef<HTMLButtonElement, DropdownMenu
             <button
                 ref={ref}
                 className={cn(
-                    "flex w-full items-center gap-3 rounded-md px-4 py-4 md:px-3 md:py-2 text-base md:text-sm transition-colors",
+                    "flex w-full items-center gap-3 rounded-md px-4 py-4 md:px-3 md:py-2 text-base md:text-sm transition-colors cursor-pointer",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                     "min-h-[56px] md:min-h-0 border-b border-border/50 last:border-b-0",
                     destructive
@@ -123,7 +123,7 @@ export const DropdownMenuItem = React.forwardRef<HTMLButtonElement, DropdownMenu
                 onClick={handleClick}
                 {...props}
             >
-                {icon && <span className="h-5 w-5 md:h-4 md:w-4">{icon}</span>}
+                {icon && <span className="shrink-0 [&_svg]:size-5 [&_svg]:md:size-4">{icon}</span>}
                 {children}
             </button>
         );

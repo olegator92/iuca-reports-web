@@ -4,7 +4,7 @@ import type { ResultEnvelope } from "./types";
 export interface CultureDto {
     name: string;
     displayName: string;
-    englishName: string;
+    nativeName: string;
 }
 
 export const localizationApi = rtkApi.injectEndpoints({

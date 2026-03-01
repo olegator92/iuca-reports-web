@@ -30,7 +30,7 @@ export const LanguageSwitcher = () => {
         [languages, resolvedLanguage],
     );
     const currentLanguageLabel =
-        currentLanguageOption?.displayName ??
+        currentLanguageOption?.nativeName ??
         resolvedLanguage?.toUpperCase() ??
         t("settings.language");
     const hasLanguages = languages.length > 0;
@@ -140,7 +140,7 @@ export const LanguageSwitcher = () => {
                         aria-label={t("settings.language")}
                         className="absolute left-0 top-full z-50 mt-2 w-full min-w-[200px] rounded-lg border border-border bg-popover p-1 shadow-lg"
                     >
-                        {languages.map(({ name, displayName, englishName }) => {
+                        {languages.map(({ name, displayName, nativeName }) => {
                             const isActive = name === resolvedLanguage;
 
                             return (
@@ -158,10 +158,10 @@ export const LanguageSwitcher = () => {
                                     onClick={() => void handleSelect(name)}
                                 >
                                     <span className="flex flex-col text-left">
-                                        <span>{displayName}</span>
-                                        {englishName && englishName !== displayName ? (
+                                        <span>{nativeName}</span>
+                                        {displayName && displayName !== nativeName ? (
                                             <span className="text-xs text-muted-foreground/80">
-                                                {englishName}
+                                                {displayName}
                                             </span>
                                         ) : null}
                                     </span>

@@ -42,7 +42,6 @@ export const GenerateReportButton = ({ date, positionId, hasReport }: GenerateRe
     return (
         <ProtectedContent requiredPermissions={[PERMISSIONS.DAILY_REPORT_EDIT]}>
             <Button
-                size="sm"
                 onClick={handleClick}
                 disabled={isLoading}
                 className="min-h-[48px] md:min-h-0 px-4"
@@ -64,10 +63,10 @@ export const GenerateReportButton = ({ date, positionId, hasReport }: GenerateRe
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setOpen(false)} disabled={isLoading}>
+                        <Button variant="outline" onClick={() => setOpen(false)} disabled={isLoading} className="min-h-[48px] sm:min-h-0">
                             {t("common.cancel")}
                         </Button>
-                        <Button variant="destructive" onClick={handleConfirm} disabled={isLoading}>
+                        <Button variant="destructive" onClick={handleConfirm} disabled={isLoading} className="min-h-[48px] sm:min-h-0">
                             {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                             {t("dailyReports.generate.confirmButton")}
                         </Button>

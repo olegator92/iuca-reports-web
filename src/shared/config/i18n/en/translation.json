@@ -904,26 +904,34 @@
     },
     "status": {
       "inProgress": "In Progress",
-      "generated": "Generated"
+      "submitted": "Submitted"
     },
     "position": {
       "noPositions": "No positions assigned"
     },
     "actions": {
       "generate": "Generate",
-      "regenerate": "Regenerate",
+      "create": "Create",
+      "submit": "Submit",
+      "return": "Return",
       "edit": "Edit",
       "copy": "Copy",
       "copied": "Copied!"
     },
     "generate": {
-      "success": "Weekly report generated successfully."
-    },
-    "regenerate": {
+      "success": "Weekly report generated successfully.",
       "confirmTitle": "Regenerate Weekly Report?",
-      "confirmDescription": "This will overwrite any manual edits with a fresh AI-generated summary based on daily reports for this week. This action cannot be undone.",
-      "confirmButton": "Regenerate",
-      "success": "Weekly report regenerated successfully."
+      "confirmDescription": "This will overwrite the current content with AI-generated content based on daily reports for this week. This action cannot be undone.",
+      "confirmButton": "Regenerate"
+    },
+    "create": {
+      "success": "Weekly report created successfully."
+    },
+    "submit": {
+      "success": "Weekly report submitted successfully."
+    },
+    "return": {
+      "success": "Weekly report returned to In Progress."
     },
     "editDrawer": {
       "title": "Edit Weekly Report",
@@ -939,8 +947,9 @@
     "edit": {
       "success": "Weekly report updated successfully."
     },
-    "noReport": "No daily reports with generated status for this week — a weekly report cannot be generated yet.",
-    "noDailyReports": "No daily reports with generated status found for this week.",
+    "noReport": "No report for this week yet. Click Generate to create from daily reports, or Create for a blank report.",
+    "noContent": "Report has no content yet. Click Generate or Edit to add content.",
+    "noDailyReports": "No daily reports with submitted status found for this week.",
     "unprocessedUpdates": "New daily reports have been added since this weekly report was generated. Consider regenerating."
   }
 }
