@@ -32,6 +32,7 @@
     "notes": "Notes",
     "reports": "Reports",
     "weeklyReports": "Weekly Reports",
+    "supervisorReports": "Department Reports",
     "templates": "Templates",
     "roles": "Roles",
     "users": "Users",
@@ -964,5 +965,45 @@
     "noContent": "Report has no content yet. Click Generate or Edit to add content.",
     "noDailyReports": "No daily reports with submitted status found for this week.",
     "unprocessedUpdates": "New daily reports have been added since this weekly report was generated. Consider regenerating."
+  },
+  "supervisorReports": {
+    "title": "Supervisor Reports",
+    "noReport": "No report for this period yet. Click Show to load one.",
+    "noContent": "Report has no content yet.",
+    "notSupervisor": "You are not assigned as a supervisor to any department.",
+    "noDepartments": "No departments found for the selected period.",
+    "selectAllDepartments": "Select All",
+    "clearDepartments": "Clear",
+    "departments": "Departments",
+    "filterDepartments": "Filter by Department",
+    "positions": "Employees",
+    "selectAll": "Select All",
+    "clearPositions": "Clear",
+    "filterPositions": "Filter Employees",
+    "noPositions": "No employees available.",
+    "submitted": "Submitted",
+    "noReportBadge": "No report",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "employeeSummary": "{{submitted}} of {{total}} submitted",
+    "filterActive": "{{count}} selected",
+    "actions": {
+      "generate": "Show",
+      "regenerate": "Show",
+      "copy": "Copy",
+      "copied": "Copied!"
+    },
+    "generate": {
+      "success": "Supervisor report loaded successfully.",
+      "confirmTitle": "Show Supervisor Report?",
+      "confirmDescription": "This will reload the report for the selected period and departments. The current content may be overwritten.",
+      "confirmButton": "Show"
+    },
+    "dateHeader": {
+      "prev": "Previous period",
+      "next": "Next period",
+      "selectFrom": "Select start date",
+      "selectTo": "Select end date"
+    }
   }
 }

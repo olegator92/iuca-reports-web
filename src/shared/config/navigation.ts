@@ -38,6 +38,13 @@ const WEEKLY_REPORTS_ITEM: NavItem = {
     permission: PERMISSIONS.WEEKLY_REPORT_VIEW
 };
 
+// Supervisor Reports item
+const SUPERVISOR_REPORTS_ITEM: NavItem = {
+    to: ROUTES.SUPERVISOR_REPORTS,
+    labelKey: "navigation.supervisorReports",
+    permission: PERMISSIONS.SUPERVISOR_REPORT_VIEW
+};
+
 // Navigation groups
 const MANAGEMENT_GROUP: NavGroup = {
     id: "management",
@@ -65,6 +72,7 @@ export const NAV_CONFIG: NavConfig = [
     HOME_ITEM,
     DAILY_REPORTS_ITEM,
     WEEKLY_REPORTS_ITEM,
+    SUPERVISOR_REPORTS_ITEM,
     ADMINISTRATION_GROUP,
     MANAGEMENT_GROUP,
 ];

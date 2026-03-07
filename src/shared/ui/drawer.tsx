@@ -50,7 +50,7 @@ const DrawerContent = React.forwardRef<
         >
             {showCloseButton && (
                 <DrawerPrimitive.Close
-                    className="absolute right-4 top-4 z-10 inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border border-border/60 bg-background/80 text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    className="absolute right-4 top-4 z-10 inline-flex h-12 w-12 md:h-9 md:w-9 cursor-pointer items-center justify-center rounded-md border border-border/60 bg-background/80 text-muted-foreground transition hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                     <XIcon className="h-4 w-4" />
                     <span className="sr-only">{t("common.close")}</span>
