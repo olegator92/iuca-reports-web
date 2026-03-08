@@ -40,6 +40,10 @@ export const PERMISSIONS = {
     WEEKLY_REPORT_VIEW: "WeeklyReport.View",
     WEEKLY_REPORT_EDIT: "WeeklyReport.Edit",
 
+    // Supervisor Report permissions
+    SUPERVISOR_REPORT_VIEW: "SupervisorReport.View",
+    SUPERVISOR_DAILY_REPORT_VIEW: "SupervisorDailyReport.View",
+
     // Menu group permissions
     MENU_ADMINISTRATION: "Menu.Administration",
     MENU_MANAGEMENT: "Menu.Management",

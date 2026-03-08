@@ -48,6 +48,8 @@ type BaseQueryError = FetchBaseQueryError | ApiError;
 export interface BaseQueryExtraOptions {
     /** When true, 404 responses are silently returned without displaying a global error */
     suppress404?: boolean;
+    /** When true, 409 responses are silently returned without displaying a global error */
+    suppress409?: boolean;
 }
 
 const isEnvelope = (value: unknown): value is ResultEnvelope<unknown> =>
@@ -160,7 +162,8 @@ export const baseQueryWithReauth: BaseQueryFn<BaseQueryArgs, BaseQueryResult, Ba
     if (result.error) {
         const status = "status" in result.error ? result.error.status : undefined;
         const is404Suppressed = status === 404 && extraOptions?.suppress404;
-        if (!isLogoutEndpoint && !is404Suppressed) {
+        const is409Suppressed = status === 409 && extraOptions?.suppress409;
+        if (!isLogoutEndpoint && !is404Suppressed && !is409Suppressed) {
             useGlobalErrorStore.getState().showError(resolveApiError(result.error));
         }
         return result;

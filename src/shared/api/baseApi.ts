@@ -4,6 +4,6 @@ import { baseQueryWithReauth } from "./baseQueryWithReauth";
 export const rtkApi = createApi({
     reducerPath: "api",
     baseQuery: baseQueryWithReauth,
-    tagTypes: ["Template", "CurrentUser", "Role", "Permission", "User", "Department", "Position", "UserPositions", "DailyNote", "DailyReport", "WeeklyReport"],
+    tagTypes: ["Template", "CurrentUser", "Role", "Permission", "User", "Department", "Position", "UserPositions", "DailyNote", "DailyReport", "WeeklyReport", "SupervisorReport"],
     endpoints: () => ({})
 });

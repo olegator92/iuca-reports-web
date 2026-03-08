@@ -191,7 +191,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
                         <div className="flex justify-end md:hidden">
                             <button
                                 type="button"
-                                className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                                className="inline-flex h-12 w-12 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                                 aria-label={t("common.close")}
                                 onClick={onClose}
                             >
