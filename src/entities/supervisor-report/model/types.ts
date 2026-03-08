@@ -31,8 +31,8 @@ export interface SupervisorReportFilter {
 }
 
 export interface SupervisorReportParams {
-    weekStart: string;          // yyyy-MM-dd
-    weekEnd: string;            // yyyy-MM-dd
+    dateStart: string;          // yyyy-MM-dd
+    dateEnd: string;            // yyyy-MM-dd
     filters: SupervisorReportFilter[];
 }
 

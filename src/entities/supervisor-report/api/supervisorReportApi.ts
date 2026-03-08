@@ -23,6 +23,23 @@ export const supervisorReportApi = rtkApi.injectEndpoints({
             providesTags: ["SupervisorReport"],
             extraOptions: { suppress404: true, suppress409: true },
         }),
+        getSupervisorDailyReport: build.mutation<string | null, SupervisorReportParams>({
+            query: (params) => ({
+                url: `/supervisor-daily-reports`,
+                method: "POST",
+                body: params,
+            }),
+            transformResponse: (response: { data: string | null }) =>
+                response.data ?? null,
+            extraOptions: { suppress404: true, suppress409: true },
+        }),
+        getSupervisorDailyDepartments: build.query<SupervisorDepartmentNode[], void>({
+            query: () => "/supervisor-daily-reports/departments",
+            transformResponse: (response: { data: SupervisorDepartmentNode[] }) =>
+                response.data ?? [],
+            providesTags: ["SupervisorReport"],
+            extraOptions: { suppress404: true, suppress409: true },
+        }),
     }),
     overrideExisting: false,
 });
@@ -30,4 +47,6 @@ export const supervisorReportApi = rtkApi.injectEndpoints({
 export const {
     useGetSupervisorReportMutation,
     useGetSupervisorDepartmentsQuery,
+    useGetSupervisorDailyReportMutation,
+    useGetSupervisorDailyDepartmentsQuery,
 } = supervisorReportApi;

@@ -980,6 +980,7 @@
     "selectAll": "Выбрать все",
     "clearPositions": "Сбросить",
     "filterPositions": "Фильтр по сотрудникам",
+    "reportSettings": "Настройки отчёта",
     "noPositions": "Сотрудники не найдены.",
     "submitted": "Отправлен",
     "noReportBadge": "Нет отчёта",
@@ -1004,6 +1005,10 @@
       "next": "Следующий период",
       "selectFrom": "Выбрать начальную дату",
       "selectTo": "Выбрать конечную дату"
+    },
+    "reportType": {
+      "weekly": "Еженедельный",
+      "daily": "Ежедневный"
     }
   }
 }

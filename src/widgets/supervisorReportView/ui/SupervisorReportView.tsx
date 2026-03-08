@@ -41,6 +41,7 @@ export const SupervisorReportView = () => {
         confirmOpen,
         copied,
         contentRef,
+        reportType,
         handleDateRangeChange,
         handlePrevPeriod,
         handleNextPeriod,
@@ -51,10 +52,29 @@ export const SupervisorReportView = () => {
         handleCopy,
         toggleFilter,
         closeFilter,
+        handleReportTypeChange,
     } = useSupervisorReport();
 
     const hasContent = !!report;
     const showSidebar = !is409 && !isError && (departments.length > 0 || isLoadingDepartments);
+
+    const reportTypeRadio = (groupName: string) => (
+        <div className="flex flex-col gap-1 px-3 py-2 border-b text-sm">
+            {(['weekly', 'daily'] as const).map((type) => (
+                <label key={type} className="flex items-center gap-2 min-h-[44px] md:min-h-0 cursor-pointer select-none">
+                    <input
+                        type="radio"
+                        name={groupName}
+                        value={type}
+                        checked={reportType === type}
+                        onChange={() => handleReportTypeChange(type)}
+                        className="accent-brand w-4 h-4 shrink-0"
+                    />
+                    {t(`supervisorReports.reportType.${type}`)}
+                </label>
+            ))}
+        </div>
+    );
 
     const renderContent = () => {
         if (isLoading) {
@@ -109,6 +129,7 @@ export const SupervisorReportView = () => {
                 {/* Desktop sidebar — always visible when departments available */}
                 {showSidebar && (
                     <div className="hidden md:flex md:w-56 lg:w-64 shrink-0 flex-col border-r bg-background">
+                        {reportTypeRadio("reportType-desktop")}
                         {isLoadingDepartments ? (
                             <div className="flex justify-center py-8">
                                 <Loader />
@@ -169,9 +190,10 @@ export const SupervisorReportView = () => {
                 <Drawer open={isFilterOpen} onOpenChange={(open) => !open && closeFilter()}>
                     <DrawerContent className="sm:max-w-xs">
                         <DrawerHeader>
-                            <DrawerTitle>{t("supervisorReports.filterPositions")}</DrawerTitle>
+                            <DrawerTitle>{t("supervisorReports.reportSettings")}</DrawerTitle>
                         </DrawerHeader>
                         <div className="flex-1 overflow-hidden min-h-0">
+                            {reportTypeRadio("reportType-mobile")}
                             <DepartmentFilterTree
                                 departments={departments}
                                 selectedFilters={selectedFilters}

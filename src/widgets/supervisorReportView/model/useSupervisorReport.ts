@@ -2,6 +2,8 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import {
     useGetSupervisorReportMutation,
     useGetSupervisorDepartmentsQuery,
+    useGetSupervisorDailyReportMutation,
+    useGetSupervisorDailyDepartmentsQuery,
 } from "@/entities/supervisor-report";
 import type { SupervisorDepartmentNode, SupervisorReportFilter } from "@/entities/supervisor-report";
 
@@ -49,6 +51,7 @@ export const useSupervisorReport = () => {
     const [dateFrom, setDateFrom] = useState(() => defaultRange().dateFrom);
     const [dateTo, setDateTo] = useState(() => defaultRange().dateTo);
     const [selectedFilters, setSelectedFilters] = useState<SupervisorReportFilter[]>([]);
+    const [reportType, setReportType] = useState<'weekly' | 'daily'>('weekly');
 
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
@@ -56,13 +59,24 @@ export const useSupervisorReport = () => {
 
     const contentRef = useRef<HTMLDivElement | null>(null);
 
-    const [generateReport, { data: report, isLoading, isError, error }] =
+    const [generateWeeklyReport, { data: weeklyReport, isLoading: isWeeklyLoading, isError: isWeeklyError, error: weeklyError }] =
         useGetSupervisorReportMutation();
+    const [generateDailyReport, { data: dailyReport, isLoading: isDailyLoading, isError: isDailyError, error: dailyError }] =
+        useGetSupervisorDailyReportMutation();
 
-    const { data: departments = [], isLoading: isLoadingDepartments } =
-        useGetSupervisorDepartmentsQuery();
+    const { data: weeklyDepts = [], isLoading: isLoadingWeeklyDepts } =
+        useGetSupervisorDepartmentsQuery(undefined, { skip: reportType !== 'weekly' });
+    const { data: dailyDepts = [], isLoading: isLoadingDailyDepts } =
+        useGetSupervisorDailyDepartmentsQuery(undefined, { skip: reportType !== 'daily' });
 
-    // Pre-select all user-position pairs on first load
+    const departments        = reportType === 'weekly' ? weeklyDepts          : dailyDepts;
+    const isLoadingDepartments = reportType === 'weekly' ? isLoadingWeeklyDepts : isLoadingDailyDepts;
+    const report             = reportType === 'weekly' ? (weeklyReport ?? null) : (dailyReport ?? null);
+    const isLoading          = reportType === 'weekly' ? isWeeklyLoading      : isDailyLoading;
+    const isError            = reportType === 'weekly' ? isWeeklyError        : isDailyError;
+    const error              = reportType === 'weekly' ? weeklyError          : dailyError;
+
+    // Pre-select all user-position pairs on first load (or after mode switch)
     const didInitDepts = useRef(false);
     useEffect(() => {
         if (!didInitDepts.current && departments.length > 0) {
@@ -76,6 +90,14 @@ export const useSupervisorReport = () => {
         error != null &&
         "status" in error &&
         error.status === 409;
+
+    /* ---- Report type ---------------------------------------------------- */
+
+    const handleReportTypeChange = useCallback((type: 'weekly' | 'daily') => {
+        didInitDepts.current = false;
+        setSelectedFilters([]);
+        setReportType(type);
+    }, []);
 
     /* ---- Date navigation ------------------------------------------------ */
 
@@ -121,20 +143,18 @@ export const useSupervisorReport = () => {
         const filtersToSend = selectedFilters.length > 0
             ? selectedFilters
             : collectAllFilters(departments);
+        const params = { dateStart: dateFrom, dateEnd: dateTo, filters: filtersToSend };
         try {
-            const result = await generateReport({
-                weekStart: dateFrom,
-                weekEnd: dateTo,
-                filters: filtersToSend,
-            });
-            if ("data" in result) {
-                // success is visible from the rendered report
+            if (reportType === 'weekly') {
+                await generateWeeklyReport(params);
+            } else {
+                await generateDailyReport(params);
             }
         } catch {
             // errors handled by global error store or suppress options
         }
         setConfirmOpen(false);
-    }, [generateReport, dateFrom, dateTo, selectedFilters, departments]);
+    }, [generateWeeklyReport, generateDailyReport, reportType, dateFrom, dateTo, selectedFilters, departments]);
 
     const handleGenerateRequest = useCallback(() => {
         if (report) {
@@ -184,6 +204,7 @@ export const useSupervisorReport = () => {
         confirmOpen,
         copied,
         contentRef,
+        reportType,
         handleDateRangeChange,
         handlePrevPeriod,
         handleNextPeriod,
@@ -194,5 +215,6 @@ export const useSupervisorReport = () => {
         handleCopy,
         toggleFilter,
         closeFilter,
+        handleReportTypeChange,
     };
 };

@@ -10,4 +10,6 @@ export {
     supervisorReportApi,
     useGetSupervisorReportMutation,
     useGetSupervisorDepartmentsQuery,
+    useGetSupervisorDailyReportMutation,
+    useGetSupervisorDailyDepartmentsQuery,
 } from "./api/supervisorReportApi";

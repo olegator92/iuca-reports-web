@@ -42,6 +42,7 @@ export const PERMISSIONS = {
 
     // Supervisor Report permissions
     SUPERVISOR_REPORT_VIEW: "SupervisorReport.View",
+    SUPERVISOR_DAILY_REPORT_VIEW: "SupervisorDailyReport.View",
 
     // Menu group permissions
     MENU_ADMINISTRATION: "Menu.Administration",

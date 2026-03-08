@@ -980,6 +980,7 @@
     "selectAll": "Select All",
     "clearPositions": "Clear",
     "filterPositions": "Filter Employees",
+    "reportSettings": "Report Settings",
     "noPositions": "No employees available.",
     "submitted": "Submitted",
     "noReportBadge": "No report",
@@ -1004,6 +1005,10 @@
       "next": "Next period",
       "selectFrom": "Select start date",
       "selectTo": "Select end date"
+    },
+    "reportType": {
+      "weekly": "Weekly",
+      "daily": "Daily"
     }
   }
 }
