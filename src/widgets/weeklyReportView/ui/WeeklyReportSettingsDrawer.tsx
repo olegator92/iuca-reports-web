@@ -18,7 +18,7 @@ export const WeeklyReportSettingsDrawer = ({ open, onClose, detailLevel, onChang
             title={t("weeklyReports.settings.title")}
             description={t("weeklyReports.settings.description")}
             footer={
-                <Button variant="outline" onClick={onClose} className="w-full sm:w-auto">
+                <Button variant="outline" onClick={onClose} className="w-full sm:w-auto min-h-[48px] md:min-h-0">
                     {t("common.close")}
                 </Button>
             }

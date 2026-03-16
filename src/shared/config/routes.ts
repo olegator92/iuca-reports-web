@@ -1,5 +1,6 @@
 export const ROUTES = {
     HOME: '/',
+    DASHBOARD: '/dashboard',
     DEPARTMENTS: '/departments',
     POSITIONS: '/positions',
     TEMPLATES: '/templates',

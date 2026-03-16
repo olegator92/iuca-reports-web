@@ -60,7 +60,7 @@ export const PublicRoute = ({ children, redirectTo }: PublicRouteProps) => {
     }
 
     if (isAuthenticated) {
-        return <Navigate to={redirectTo ?? ROUTES.HOME} replace />;
+        return <Navigate to={redirectTo ?? ROUTES.DASHBOARD} replace />;
     }
 
     return <>{children}</>;

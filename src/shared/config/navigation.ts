@@ -6,6 +6,7 @@ export interface NavItem {
     labelKey: string;
     end?: boolean;
     permission?: Permission;
+    requireAuth?: boolean;
 }
 
 export interface NavGroup {
@@ -16,6 +17,14 @@ export interface NavGroup {
 }
 
 export type NavConfig = (NavItem | NavGroup)[];
+
+// Dashboard item
+const DASHBOARD_ITEM: NavItem = {
+    to: ROUTES.DASHBOARD,
+    labelKey: "navigation.dashboard",
+    end: true,
+    requireAuth: true,
+};
 
 // Ungrouped home item
 const HOME_ITEM: NavItem = {
@@ -70,6 +79,7 @@ const ADMINISTRATION_GROUP: NavGroup = {
 // Main navigation configuration
 export const NAV_CONFIG: NavConfig = [
     HOME_ITEM,
+    DASHBOARD_ITEM,
     DAILY_REPORTS_ITEM,
     WEEKLY_REPORTS_ITEM,
     SUPERVISOR_REPORTS_ITEM,

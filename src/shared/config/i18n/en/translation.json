@@ -26,6 +26,7 @@
   },
   "navigation": {
     "title": "Navigation",
+    "dashboard": "Dashboard",
     "home": "Home",
     "dailyNotes": "Daily Notes",
     "dailyReports": "Daily Reports",
@@ -60,8 +61,46 @@
     "brand": "IUCA Reports"
   },
   "home": {
-    "welcomeTitle": "Welcome",
-    "welcomeDescription": "Record your daily work notes and generate structured weekly reports. Head over to the Templates page to manage report templates."
+    "welcomeTitle": "Simplify Your Reporting",
+    "welcomeDescription": "IUCA Reports helps university employees capture daily work notes and automatically generate structured weekly reports — saving time and ensuring consistent, transparent department activity records.",
+    "getStarted": "Get Started"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "greeting": "Welcome back, {{name}}",
+    "sections": {
+      "personalStatus": "Your Status Today",
+      "quickActions": "Quick Actions",
+      "team": "Team",
+      "systemStats": "System Statistics"
+    },
+    "cards": {
+      "todayNotes": "Notes Today",
+      "dailyReport": "Daily Report",
+      "weeklyReport": "Weekly Report",
+      "noReport": "No report yet"
+    },
+    "actions": {
+      "addNote": "Add Note",
+      "viewNotes": "View notes",
+      "viewDailyReport": "View report",
+      "viewDailyReports": "Daily Reports",
+      "viewWeeklyReport": "View report",
+      "viewWeeklyReports": "Weekly Reports",
+      "manageUsers": "Manage users",
+      "manageDepartments": "Manage departments",
+      "managePositions": "Manage positions"
+    },
+    "manager": {
+      "supervisorReports": "Department Reports",
+      "supervisorReportsDescription": "View reports submitted by your department members.",
+      "viewReports": "View Reports"
+    },
+    "stats": {
+      "totalUsers": "Total Users",
+      "totalDepartments": "Departments",
+      "totalPositions": "Positions"
+    }
   },
   "templates": {
     "pageTitle": "Templates",

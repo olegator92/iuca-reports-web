@@ -135,22 +135,23 @@ src/
 │   ├── stores/            # Redux store configuration
 │   │   └── mainStore/     # Combined store with slices
 │   └── styles/            # Global styles and Tailwind imports
-├── entities/              # Business entities (10 total)
+├── entities/              # Business entities (11 total)
 │   ├── account/          # User account management (minimal)
 │   ├── auth/             # Authentication entity (JWT, OAuth, session)
 │   ├── daily-note/       # Daily note entity (CRUD + pagination)
-│   ├── daily-report/     # Daily report entity (generate/edit/regenerate + Redux slice)
+│   ├── daily-report/     # Daily report entity (generate/edit/submit + Redux slice)
 │   ├── department/       # Department management (CRUD)
 │   ├── position/         # Position management (CRUD + department relationship)
 │   ├── role/             # Role management (CRUD + permissions)
+│   ├── supervisor-report/ # Supervisor/department report entity (read + Redux slice)
 │   ├── template/         # Template CRUD entity (reference implementation)
 │   ├── user/             # User management (CRUD + roles + status + positions)
-│   └── weekly-report/    # Weekly report entity (generate/edit/regenerate + Redux slice)
+│   └── weekly-report/    # Weekly report entity (generate/edit/submit + Redux slice)
 │   # Each entity contains:
 │   #   ├── api/          # RTK Query endpoints
 │   #   ├── model/        # Types, interfaces, state slices
 │   #   └── ui/           # Entity-specific UI components
-├── features/              # User features and interactions (55 total)
+├── features/              # User features and interactions (62 total)
 │   # Authentication Features (8)
 │   ├── auth-login/       # Login form and logic
 │   ├── auth-register/    # Registration form
@@ -164,7 +165,7 @@ src/
 │   ├── account-delete/   # Account deletion flow
 │   ├── profile-edit/     # Edit user profile
 │   └── profile-photo/    # Profile photo upload/management
-│   # Template Features (9) - Reference Implementation
+│   # Template Features (8) - Reference Implementation
 │   ├── template/         # Template drawer form (create/edit/view)
 │   ├── template-create/  # Create template
 │   ├── template-update/  # Update template
@@ -189,33 +190,38 @@ src/
 │   ├── role-update/      # Update role
 │   ├── role-delete/      # Delete role
 │   └── role-permissions/ # Manage role permissions (assign/remove)
-│   # Department Features (9)
-│   ├── department/       # Department drawer form (create/edit/view)
-│   ├── department-create/# Create department
-│   ├── department-update/# Update department
+│   # Department Features (6)
+│   ├── department/       # Department drawer form (create/edit/view + hierarchy)
 │   ├── department-delete/# Delete department (soft delete)
 │   ├── department-restore/ # Restore deleted department
 │   ├── department-search/# Search departments
 │   ├── department-filters/ # Filter & sort departments
-│   ├── department-manager/ # Assign department manager
-│   └── department-visibility/ # Manage department visibility
-│   # Position Features (9)
+│   └── department-supervisors/ # Assign/remove department supervisors
+│   # Position Features (7)
 │   ├── position/         # Position drawer form (create/edit/view)
 │   ├── position-create/  # Create position
 │   ├── position-update/  # Update position
 │   ├── position-delete/  # Delete position (soft delete)
 │   ├── position-restore/ # Restore deleted position
 │   ├── position-search/  # Search positions
-│   ├── position-filters/ # Filter & sort positions
-│   └── position-department/ # Link position to department
-│   # Daily Report Features (3)
-│   ├── daily-report-generate/    # Generate daily report (AI generation button)
-│   ├── daily-report-regenerate/  # Regenerate report (confirmation dialog + AI overwrite)
-│   └── daily-report-edit/        # Edit report content (drawer form + Zod validation)
-│   # Weekly Report Features (3)
-│   ├── weekly-report-generate/   # Generate weekly report (AI generation button)
-│   ├── weekly-report-regenerate/ # Regenerate weekly report (confirmation dialog + AI overwrite)
-│   └── weekly-report-edit/       # Edit weekly report content (drawer form + Zod validation, max 50,000 chars)
+│   └── position-filters/ # Filter & sort positions
+│   # Daily Note Features (4)
+│   ├── daily-note/       # Daily note display component
+│   ├── daily-note-create/ # Create daily note
+│   ├── daily-note-update/ # Update daily note
+│   └── daily-note-delete/ # Delete daily note
+│   # Daily Report Features (5)
+│   ├── daily-report-generate/  # Generate/regenerate daily report (AI + confirmation)
+│   ├── daily-report-create/    # Create blank daily report
+│   ├── daily-report-edit/      # Edit report content (drawer form + Zod validation)
+│   ├── daily-report-submit/    # Submit daily report for review
+│   └── daily-report-return/    # Return submitted report to in-progress
+│   # Weekly Report Features (5)
+│   ├── weekly-report-generate/  # Generate/regenerate weekly report (AI + confirmation)
+│   ├── weekly-report-create/    # Create blank weekly report
+│   ├── weekly-report-edit/      # Edit weekly report content (drawer form, max 50,000 chars)
+│   ├── weekly-report-submit/    # Submit weekly report for review
+│   └── weekly-report-return/    # Return submitted report to in-progress
 │   # UI Features (2)
 │   ├── theme-switcher/   # Dark/light mode toggle (mobile-optimized)
 │   └── language-switcher/# Language selection (mobile-optimized)
@@ -223,38 +229,41 @@ src/
 │   #   ├── ui/           # Feature UI components
 │   #   ├── model/        # Feature logic, hooks, validation
 │   #   └── index.ts      # Public API (barrel export)
-├── widgets/               # Composite UI blocks (12 total)
+├── widgets/               # Composite UI blocks (14 total)
 │   ├── header/           # App header with navigation, theme/language switchers
 │   ├── sidebar/          # Sidebar navigation with collapsible groups (Zustand)
 │   ├── crudPage/         # Reusable CRUD page layout (mobile-optimized)
-│   ├── crudList/         # Generic list rendering component
 │   ├── templateList/     # Template list with infinite scroll
 │   ├── userList/         # User list with infinite scroll
 │   ├── roleList/         # Role list widget
 │   ├── departmentList/   # Department list with infinite scroll
+│   ├── departmentHierarchy/ # Department hierarchy tree view
 │   ├── positionList/     # Position list with infinite scroll
 │   ├── dailyNoteChat/    # Daily notes chat interface with date navigation
-│   ├── dailyReportView/  # Daily report viewer with generate/edit/regenerate actions
-│   └── weeklyReportView/ # Weekly report viewer with two-tab layout (daily reports + weekly report)
-├── pages/                 # Route pages (21 total)
+│   ├── dailyReportView/  # Daily report viewer with generate/create/edit/submit actions
+│   ├── dailyView/        # Combined daily notes + daily report view (tab switching)
+│   ├── weeklyReportView/ # Weekly report viewer with two-tab layout (daily reports + weekly report)
+│   └── supervisorReportView/ # Supervisor/department report viewer
+├── pages/                 # Route pages (22 total)
 │   # Authentication Pages (5)
 │   ├── LoginPage/        # Login with email/password and Google OAuth
 │   ├── RegisterPage/     # User registration
 │   ├── VerifyEmailPage/  # Email verification from token
 │   ├── ForgotPasswordPage/ # Initiate password reset
 │   └── ResetPasswordPage/  # Reset password with token
-│   # Main Application Pages (10)
+│   # Main Application Pages (12)
 │   ├── HomePage/         # Welcome page
+│   ├── DashboardPage/    # Dashboard with activity overview and quick access
 │   ├── ProfilePage/      # User profile viewing and editing
 │   ├── TemplatesPage/    # Full CRUD for templates with filters/sorting
 │   ├── TemplateUpdatePage/ # Dedicated template edit page
 │   ├── UsersPage/        # Full CRUD for users with filters/sorting
 │   ├── RolesPage/        # Full CRUD for roles with permissions
-│   ├── DepartmentsPage/  # Full CRUD for departments with manager assignment
+│   ├── DepartmentsPage/  # Full CRUD for departments with hierarchy and supervisors
 │   ├── PositionsPage/    # Full CRUD for positions with department linking
-│   ├── DailyNotesPage/   # Daily notes chat interface
-│   ├── DailyReportsPage/ # Daily reports viewer with AI generation
-│   └── WeeklyReportsPage/ # Weekly reports viewer with AI generation (two-tab layout)
+│   ├── DailyReportsPage/ # Daily notes + daily report viewer with AI generation (tabs)
+│   ├── WeeklyReportsPage/ # Weekly report viewer with AI generation (two-tab layout)
+│   └── SupervisorReportsPage/ # Department reports viewer for supervisors/managers
 │   # Informational Pages (2)
 │   ├── PrivacyPolicyPage/ # Privacy policy content
 │   └── TermsOfUsePage/   # Terms of use content
@@ -535,6 +544,7 @@ See [src/shared/config/routes.ts](src/shared/config/routes.ts) for route constan
 ```typescript
 export const ROUTES = {
   HOME: '/',
+  DASHBOARD: '/dashboard',
   LOGIN: '/login',
   REGISTER: '/register',
   PROFILE: '/profile',
@@ -547,13 +557,13 @@ export const ROUTES = {
   DAILY_NOTES: '/daily-notes',
   DAILY_REPORTS: '/daily-reports',
   WEEKLY_REPORTS: '/weekly-reports',
+  SUPERVISOR_REPORTS: '/supervisor-reports',
   VERIFY_EMAIL: '/verify-email',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
   PRIVACY_POLICY: '/privacy-policy',
   TERMS_OF_USE: '/terms-of-use',
   FORBIDDEN: '/forbidden',
-  NOT_FOUND: '*'
 };
 ```
 
@@ -704,9 +714,10 @@ Located at [src/app/styles/index.css](src/app/styles/index.css):
   - Daily Note: `DAILY_NOTE_VIEW`
   - Daily Report: `DAILY_REPORT_VIEW`, `DAILY_REPORT_EDIT`
   - Weekly Report: `WEEKLY_REPORT_VIEW`, `WEEKLY_REPORT_EDIT`
+  - Supervisor Report: `SUPERVISOR_REPORT_VIEW`, `SUPERVISOR_DAILY_REPORT_VIEW`
 - **System Roles**: Admin, Manager, User
   - **Admin**: All permissions (`"*"` wildcard)
-  - **Manager**: `TEMPLATE_VIEW`, `TEMPLATE_EDIT`, `USER_VIEW`, `USER_EDIT`, `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`, `POSITION_VIEW`, `POSITION_EDIT`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`, `DAILY_REPORT_EDIT`, `WEEKLY_REPORT_VIEW`, `WEEKLY_REPORT_EDIT`
+  - **Manager**: `TEMPLATE_VIEW`, `TEMPLATE_EDIT`, `USER_VIEW`, `USER_EDIT`, `DEPARTMENT_VIEW`, `DEPARTMENT_EDIT`, `POSITION_VIEW`, `POSITION_EDIT`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`, `DAILY_REPORT_EDIT`, `WEEKLY_REPORT_VIEW`, `WEEKLY_REPORT_EDIT`, `SUPERVISOR_REPORT_VIEW`, `SUPERVISOR_DAILY_REPORT_VIEW`
   - **User**: `TEMPLATE_VIEW`, `DAILY_NOTE_VIEW`, `DAILY_REPORT_VIEW`, `WEEKLY_REPORT_VIEW`
 - **Permission Checks**:
   - Route-level: `ProtectedRoute` with `requiredPermissions`

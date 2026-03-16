@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { DailyNoteChat } from "@/widgets/dailyNoteChat";
 import { DailyReportView } from "@/widgets/dailyReportView";
 import { useDailyView } from "../model/useDailyView";
@@ -6,7 +7,10 @@ import { DailyDateHeader, type DailyActiveTab } from "./DailyDateHeader";
 import { PositionSelector } from "./PositionSelector";
 
 export const DailyView = () => {
-    const [activeTab, setActiveTab] = useState<DailyActiveTab>("notes");
+    const location = useLocation();
+    const [activeTab, setActiveTab] = useState<DailyActiveTab>(
+        location.state?.activeTab ?? "notes"
+    );
     const {
         currentDate,
         currentPositionId,
