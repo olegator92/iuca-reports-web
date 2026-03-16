@@ -61,8 +61,9 @@
     "brand": "IUCA Reports"
   },
   "home": {
-    "welcomeTitle": "Welcome",
-    "welcomeDescription": "Record your daily work notes and generate structured weekly reports. Head over to the Templates page to manage report templates."
+    "welcomeTitle": "Simplify Your Reporting",
+    "welcomeDescription": "IUCA Reports helps university employees capture daily work notes and automatically generate structured weekly reports — saving time and ensuring consistent, transparent department activity records.",
+    "getStarted": "Get Started"
   },
   "dashboard": {
     "title": "Dashboard",
