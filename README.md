@@ -33,7 +33,7 @@ A production-ready React 19 single-page application (SPA) for the IUCA (Internat
 - Backend-integrated localization
 
 ### CRUD Functionality
-- Complete CRUD operations for **templates, users, and roles**
+- Complete CRUD operations for **templates, users, roles, departments, and positions**
 - Advanced filtering, search, and **multi-field sorting**
 - **Infinite scroll** pagination for optimal performance
 - Soft delete with restore and permanent delete functionality
@@ -41,6 +41,8 @@ A production-ready React 19 single-page application (SPA) for the IUCA (Internat
 - **User account status management** (enable/disable)
 - **Role permissions management** (assign/remove permissions)
 - **User role assignment** (manage user roles)
+- **Department hierarchy** (tree view + supervisor assignment)
+- **Position-department linking** (positions belong to departments)
 
 ### Developer Experience
 - Feature-Sliced Design architecture for scalability
@@ -49,7 +51,7 @@ A production-ready React 19 single-page application (SPA) for the IUCA (Internat
 - React Hook Form + Zod for form validation
 - Hot Module Replacement (HMR) with Vite
 - ESLint for code quality
-- **34 feature modules** covering all common use cases
+- **62 feature modules** covering all common use cases
 - **30+ reusable UI components** in design system
 - Comprehensive documentation for AI assistance (CLAUDE.md)
 - Detailed development patterns and rules (DEVELOPMENT.md)
@@ -169,7 +171,7 @@ src/
 │   ├── router/            # Routing configuration and guards
 │   ├── stores/            # Redux store setup
 │   └── styles/            # Global styles
-├── entities/              # Business entities (auth, template, role, user)
+├── entities/              # Business entities (auth, template, user, role, department, position, daily-note, daily-report, weekly-report, supervisor-report, account)
 │   └── {entity}/
 │       ├── api/          # RTK Query endpoints
 │       ├── model/        # Types, state, logic
@@ -327,6 +329,44 @@ npm run lint         # Run ESLint
 - ✅ Permanent delete option
 - ✅ Infinite scroll pagination
 
+**Department Management:**
+- ✅ Full CRUD operations for departments
+- ✅ Department hierarchy tree view
+- ✅ Department search with debouncing
+- ✅ Multi-field sorting (name, createdAt, updatedAt)
+- ✅ Soft delete with restore functionality
+- ✅ Assign/remove supervisors to departments
+- ✅ Infinite scroll pagination
+
+**Position Management:**
+- ✅ Full CRUD operations for positions
+- ✅ Department linking (positions belong to a department)
+- ✅ Position search with debouncing
+- ✅ Filter by department
+- ✅ Multi-field sorting (name, createdAt, updatedAt)
+- ✅ Soft delete with restore functionality
+- ✅ Infinite scroll pagination
+
+**Daily Notes & Reports:**
+- ✅ Daily notes chat interface with date navigation
+- ✅ Create, edit, delete daily notes
+- ✅ AI-powered daily report generation from notes
+- ✅ Manual report creation and editing
+- ✅ Report submit/return workflow
+- ✅ Unprocessed notes banner (new notes since last generation)
+
+**Weekly Reports:**
+- ✅ Weekly report viewer with two-tab layout (daily reports + weekly report)
+- ✅ AI-powered weekly report generation from daily reports
+- ✅ Manual report creation and editing
+- ✅ Configurable detail level (1–10) for AI generation
+- ✅ Report submit/return workflow
+
+**Dashboard & Supervisor Reports:**
+- ✅ Dashboard with activity overview and quick access
+- ✅ Supervisor/department report viewer for managers
+- ✅ Department-level visibility into employee reports
+
 **UI & UX:**
 - ✅ Mobile-first responsive design
 - ✅ Dark/light mode with persistent preference
@@ -350,10 +390,10 @@ npm run lint         # Run ESLint
 - ✅ Account deletion flow
 
 **Developer Features:**
-- ✅ 34 feature modules implemented
-- ✅ 5 business entities (auth, template, user, role, account)
-- ✅ 7 composite widgets
-- ✅ 16 pages (including error pages)
+- ✅ 62 feature modules implemented
+- ✅ 11 business entities (auth, template, user, role, account, department, position, daily-note, daily-report, weekly-report, supervisor-report)
+- ✅ 14 composite widgets
+- ✅ 22 pages (including error pages)
 - ✅ 30+ reusable UI components
 - ✅ Comprehensive documentation (CLAUDE.md, DEVELOPMENT.md)
 - ✅ Mobile-first development patterns
