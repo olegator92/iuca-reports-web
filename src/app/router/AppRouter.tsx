@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DashboardPage } from '@/pages/DashboardPage';
 import { HomePage } from '@/pages/HomePage';
 import { TemplatesPage } from '@/pages/TemplatesPage';
 import { TemplateEditPage } from '@/pages/TemplateUpdatePage';
@@ -93,6 +94,14 @@ export const AppRouter = () => {
                     */}
 
                     {/* Protected routes - require authentication */}
+                    <Route
+                        path={ROUTES.DASHBOARD}
+                        element={
+                            <ProtectedRoute>
+                                <DashboardPage />
+                            </ProtectedRoute>
+                        }
+                    />
                     <Route
                         path={ROUTES.PROFILE}
                         element={

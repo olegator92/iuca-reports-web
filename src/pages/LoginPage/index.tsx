@@ -20,7 +20,7 @@ export const LoginPage = () => {
     // });
 
     const handleGoogleSuccess = () => {
-        navigate(ROUTES.HOME);
+        navigate(ROUTES.DASHBOARD);
     };
 
     return (

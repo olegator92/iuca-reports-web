@@ -26,6 +26,7 @@
   },
   "navigation": {
     "title": "Навигация",
+    "dashboard": "Панель управления",
     "home": "Главная",
     "dailyNotes": "Ежедневные заметки",
     "dailyReports": "Ежедневные отчёты",
@@ -62,6 +63,43 @@
   "home": {
     "welcomeTitle": "Добро пожаловать",
     "welcomeDescription": "Записывайте ежедневные заметки о выполненной работе и формируйте структурированные еженедельные отчёты. Перейдите на страницу Шаблоны для управления шаблонами отчётов."
+  },
+  "dashboard": {
+    "title": "Панель управления",
+    "greeting": "С возвращением, {{name}}",
+    "sections": {
+      "personalStatus": "Ваш статус сегодня",
+      "quickActions": "Быстрые действия",
+      "team": "Команда",
+      "systemStats": "Статистика системы"
+    },
+    "cards": {
+      "todayNotes": "Заметок сегодня",
+      "dailyReport": "Ежедневный отчёт",
+      "weeklyReport": "Еженедельный отчёт",
+      "noReport": "Отчёт ещё не создан"
+    },
+    "actions": {
+      "addNote": "Добавить заметку",
+      "viewNotes": "Перейти к заметкам",
+      "viewDailyReport": "Перейти к отчёту",
+      "viewDailyReports": "Ежедневные отчёты",
+      "viewWeeklyReport": "Перейти к отчёту",
+      "viewWeeklyReports": "Еженедельные отчёты",
+      "manageUsers": "Управление пользователями",
+      "manageDepartments": "Управление подразделениями",
+      "managePositions": "Управление должностями"
+    },
+    "manager": {
+      "supervisorReports": "Отчёты подразделений",
+      "supervisorReportsDescription": "Просмотр отчётов участников вашего подразделения.",
+      "viewReports": "Перейти к отчётам"
+    },
+    "stats": {
+      "totalUsers": "Всего пользователей",
+      "totalDepartments": "Подразделений",
+      "totalPositions": "Должностей"
+    }
   },
   "templates": {
     "pageTitle": "Шаблоны",

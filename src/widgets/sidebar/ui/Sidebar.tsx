@@ -25,6 +25,11 @@ const ProtectedNavItem: FC<{ item: NavItem; onClose: () => void }> = ({ item, on
     const { t } = useTranslation();
     const { isAuthenticated } = useAuth();
 
+    // Items that require auth (but no specific permission) are hidden when not authenticated
+    if (item.requireAuth && !isAuthenticated) {
+        return null;
+    }
+
     // Items without permission are always visible
     if (!item.permission) {
         return (
